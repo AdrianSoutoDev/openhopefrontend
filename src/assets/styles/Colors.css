@@ -1,0 +1,7 @@
+@tailwind utilities;
+
+@layer utilities {
+  .bg-primary {
+    @apply bg-emerald-500
+  }
+}
