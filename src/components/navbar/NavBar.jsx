@@ -22,7 +22,7 @@ function NavBar() {
       {/* Mobile view*/}
       <nav className="bg-primary text-white md:hidden">
         <div className="flex justify-between items-center p-4">
-          <Link to="/">
+          <Link to="/" onClick={() => isOpen && toggleMenu()}>
             <h1 className="text-lg font-bold">OpenHope</h1>
           </Link>
           <button
@@ -37,11 +37,11 @@ function NavBar() {
           <button className="block px-4 py-2" onClick={toggleMenuRegister}>Registrarse</button>
 
           <div className={`${isRegisterOpen ? "block pl-2" : "hidden"}`}>
-            <a href="#" className="block px-4 py-2">Crear organización</a>
-            <a href="#" className="block px-4 py-2">Crear cuenta usuario</a>
+            <a href="#" onClick={toggleMenu} className="block px-4 py-2">Crear organización</a>
+            <a href="#" onClick={toggleMenu} className="block px-4 py-2">Crear cuenta usuario</a>
           </div>
         
-          <Link to="/login" className="block px-4 py-2">Entrar</Link>
+          <Link to="/login" onClick={toggleMenu} className="block px-4 py-2">Entrar</Link>
         </div>
       </nav>
 
