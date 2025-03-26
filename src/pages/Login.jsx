@@ -1,11 +1,16 @@
-import React, { useState, useEffect  } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import useLogin from '../hooks/useLogin';
+import { useNavigate } from "react-router-dom"
+import AuthContext from '../context/AuthContext';
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { login, loading, data, error } = useLogin();
+    const navigate = useNavigate();
+    const { isAuthenticated } = useContext(AuthContext)
 
-    const { login, data, loading, error } = useLogin();
+    if(isAuthenticated) navigate("/")
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -13,14 +18,14 @@ function Login() {
     };
 
     useEffect(() => {
-      if(data){
-        console.log(data)
+      if(data?.status === 200){
+        navigate("/");
       }
 
       if(error){
         console.log(error)
       }
-    }, [data, error]);
+    }, [data, error, navigate]);
 
     return (
         <>
@@ -53,7 +58,7 @@ function Login() {
             {error && <p style={{ color: 'red' }}>Error: {error?.message || 'Login fallido, por favor intente nuevamente.'}</p>}
             {!error && data && data.status !== 200 && <p style={{ color: 'red' }}>Error: {error?.message || 'Login fallido, por favor intente nuevamente.'}</p>}
             {!error && data && data.status === 200 && (
-                <p style={{ color: 'green' }}>Login exitoso: {JSON.stringify(data)}</p>
+                <p style={{ color: 'green' }}>Login exitoso</p>
             )}
         </>
     );

@@ -1,10 +1,14 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import Icons from "../icons/Icons.jsx";
 import { Link } from "react-router-dom";
+import AuthContext from '../../context/AuthContext';
+import { useNavigate } from "react-router-dom"
 
 function NavBar() {
   const [isOpen, setIsOpen] = useState(false)
   const [isRegisterOpen, setIsRegisterOpen] = useState(false)
+  const { isAuthenticated, logout} = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen)
@@ -15,6 +19,12 @@ function NavBar() {
 
   const toggleMenuRegister = () => {
     setIsRegisterOpen(!isRegisterOpen)
+  }
+
+  const handleLogout = () => {
+    setIsOpen(false)
+    logout()
+    navigate("/");
   }
 
   return (
@@ -34,6 +44,8 @@ function NavBar() {
         </div>
 
         <div className={`${isOpen ? "block" : "hidden"}`}>
+        { !isAuthenticated &&
+          <>
           <button className="block px-4 py-2" onClick={toggleMenuRegister}>Registrarse</button>
 
           <div className={`${isRegisterOpen ? "block pl-2" : "hidden"}`}>
@@ -42,15 +54,27 @@ function NavBar() {
           </div>
         
           <Link to="/login" onClick={toggleMenu} className="block px-4 py-2">Entrar</Link>
+          </>
+        }
+        { isAuthenticated &&
+          <button className="block px-4 py-2" onClick={handleLogout}>Salir</button>
+        }
         </div>
       </nav>
 
       {/* Desktop view*/}
       <nav className="h-16 w-full hidden md:block">
         <div className='h-full flex justify-end items-center'>
-          <Link to="/register" className="block px-4 py-2 mx-2 text-white rounded-lg bg-primary min-w-28 text-center shadow-sm">Registrarse</Link>
-          <Link to="/login" className="block px-4 py-2 mx-2 text-white rounded-lg bg-primary min-w-28 text-center shadow-sm">Entrar</Link>
-        </div>
+          { !isAuthenticated &&
+            <>
+              <Link to="/register" className="block px-4 py-2 mx-2 text-white rounded-lg bg-primary min-w-28 text-center shadow-sm">Registrarse</Link>
+              <Link to="/login" className="block px-4 py-2 mx-2 text-white rounded-lg bg-primary min-w-28 text-center shadow-sm">Entrar</Link>
+            </>
+          }
+          { isAuthenticated &&
+            <button className="block px-4 py-2 mx-2 text-white rounded-lg bg-primary min-w-28 text-center shadow-sm" onClick={handleLogout}>Salir</button>
+          }
+          </div>
       </nav>
     </>
   )

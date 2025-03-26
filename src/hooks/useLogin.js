@@ -1,10 +1,11 @@
-import { useEffect } from "react";
-import { removeToken, setToken } from "../services/tokenService";
+import { useContext, useEffect } from "react";
 import useFetch from "./useFetch";
+import AuthContext from "../context/AuthContext";
 
 const useLogin = () => {
     const { data, error, loading, updateRequest } = useFetch();
-
+    const { login: setAuthLogin, logout: setAuthLogout } = useContext(AuthContext);
+    
     const login = (email, password) => {
         updateRequest('/accounts/login', {
             method: 'POST',
@@ -14,20 +15,23 @@ const useLogin = () => {
             body: JSON.stringify({ email, password }),
         })
     }
-
+    
     useEffect(() => { 
         const processData = async () => {
-            const status = data?.status;
-            const jsonData = status === 200 ? await data.json() : removeToken();
-            const token = jsonData?.token;
+            const status = data?.status
 
-            if (token?.length) {
-                setToken(token);
-            }
+            if(status == 200) {
+                const jsonData = await data?.clone().json();
+                const token = jsonData?.token
+
+                if (token?.length) {
+                    setAuthLogin(token)
+                }
+            } 
         };
 
         processData();
-    }, [data]);
+    }, [data, setAuthLogin, setAuthLogout]);
 
     return { login, data, error, loading }
   };
