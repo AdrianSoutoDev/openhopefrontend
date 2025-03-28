@@ -1,30 +1,38 @@
-import { useCallback, useContext } from "react";
+import { useCallback, useContext, useEffect } from "react";
 import useFetch from "./useFetch";
 import AuthContext from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const useLogin = () => {
 
-    const { data, error, loading, updateRequest} = useFetch();
+    const { data, error, loading, fetch } = useFetch();
     const { login: setAuthLogin} = useContext(AuthContext);
+    const navigate = useNavigate();
     
     const onSuccess = useCallback(data => {
-        console.log("onSuccess")
         const token = data?.token
-
         if (token?.length) {
             setAuthLogin(token)
         }
-    }, [setAuthLogin]);
+        navigate("/");
+    }, [setAuthLogin, navigate]);
 
     const login = (email, password) => {
-        updateRequest('/accounts/login', {
+        const endpoint = '/accounts/login'
+        const options = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email, password }),
-        }, onSuccess)
+            body: JSON.stringify({ email, password })
+        }
+        
+        fetch(endpoint, options)
     }
+
+    useEffect(() => {
+        if(data) onSuccess(data); 
+    }, [data, onSuccess]);
 
     return { login, data, error, loading }
   };

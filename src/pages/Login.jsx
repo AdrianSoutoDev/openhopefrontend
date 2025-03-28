@@ -1,31 +1,24 @@
 import React, { useContext, useEffect, useState } from 'react';
 import useLogin from '../hooks/useLogin';
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import AuthContext from '../context/AuthContext';
 
 function Login() {
+    const { isAuthenticated } = useContext(AuthContext)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { login, loading, data, error } = useLogin();
+    const { login, loading, error } = useLogin();
     const navigate = useNavigate();
-    const { isAuthenticated } = useContext(AuthContext)
-
-    if(isAuthenticated) navigate("/")
+    const location = useLocation();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         login(email, password);
     };
 
-    useEffect(() => {
-      if(data?.status === 200){
-        navigate("/");
-      }
-
-      if(error){
-        console.log(error)
-      }
-    }, [data, error, navigate]);
+    useEffect( () => {
+        if(isAuthenticated) navigate("/")
+    }, [isAuthenticated, navigate])
 
     return (
         <>
@@ -55,11 +48,9 @@ function Login() {
                     {loading ? 'Logging in...' : 'Login'}
                 </button>
             </form>
-            {error && <p style={{ color: 'red' }}>Error: {error?.message || 'Login fallido, por favor intente nuevamente.'}</p>}
-            {!error && data && data.status !== 200 && <p style={{ color: 'red' }}>Error: {error?.message || 'Login fallido, por favor intente nuevamente.'}</p>}
-            {!error && data && data.status === 200 && (
-                <p style={{ color: 'green' }}>Login exitoso</p>
-            )}
+            {error?.email && <p style={{ color: 'red' }}>{error?.email}</p>}
+            {error?.message && <p style={{ color: 'red' }}>Error: {error?.message || 'Login fallido, por favor intente nuevamente.'}</p>}
+            {location.state?.msg && <p style={{ color: 'red' }}>Error: {location.state?.msg.error || 'Login fallido, por favor intente nuevamente.'}</p>}
         </>
     );
 }

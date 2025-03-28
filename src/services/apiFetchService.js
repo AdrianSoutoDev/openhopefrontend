@@ -22,49 +22,54 @@ const apiRequest = async (endpoint, options = {}) => {
 
 export const handleOkResponse = (response, onSuccess) => {
    if (!response.ok) {
-       return false;
+	return false
    }
    
    if (!onSuccess) {
-       return true;
+	return true
    }
    
    if (response.status === 204) {
-       onSuccess();
-       return true;
+    onSuccess()
+    return true
    }
-   console.log(response)
 
    if (isJson(response)) {
-    response.clone().json().then(payload => onSuccess(payload));
+    response.clone().json().then(payload => onSuccess(payload))
    }
 
    return true;
  }
 
- export const handle4xxResponse = (response, onErrors, unauthorizedCallback) => {
+ export const handle4xxResponse = (response, onError, unauthorizedCallback) => {
 
     if (response.status < 400 || response.status >= 500) {
-        return false;
+        return false
     }
 
-    if (response.status === 401 ){
-        if(unauthorizedCallback) unauthorizedCallback();
-        return true;
+    if (response.status === 401){
+        if(unauthorizedCallback && isJson(response)) {
+            response.clone().json().then(payload => {
+                unauthorizedCallback(payload)
+            });
+        } else if(unauthorizedCallback){ 
+            unauthorizedCallback()
+        }
+        return true
     }
 
-    if (onErrors) {
+	if (isJson(response) && onError) {
         response.clone().json().then(payload => {
-            onErrors(payload);
+            onError(payload)
         });
     }
 
-    return true;
+    return true
 }
 
  export const isJson = response => {
-    const contentType = response.headers.get("content-type");
-    return contentType && contentType.indexOf("application/json") !== -1;
+    const contentType = response.headers.get("content-type")
+    return contentType && contentType.indexOf("application/json") !== -1
 }
 
 
