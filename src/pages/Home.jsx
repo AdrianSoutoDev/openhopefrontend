@@ -1,8 +1,10 @@
+import { FormattedMessage } from 'react-intl';
+
 function Home() {
 
     return (
       <>
-        <h1>Home Page</h1>
+        <h1><FormattedMessage id='homepage' /></h1>
       </>
     )
   }

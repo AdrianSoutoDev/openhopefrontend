@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import useLogin from '../hooks/useLogin';
 import { useLocation, useNavigate } from "react-router-dom"
 import AuthContext from '../context/AuthContext';
+import { FormattedMessage } from 'react-intl';
 
 function Login() {
     const { isAuthenticated } = useContext(AuthContext)
@@ -22,10 +23,10 @@ function Login() {
 
     return (
         <>
-            <h1>Login Page</h1>
+            <h1><FormattedMessage id='login_title' /></h1>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label htmlFor="email">Email:</label>
+                    <label htmlFor="email"><FormattedMessage id='email' />:</label>
                     <input
                         type="email"
                         id="email"
@@ -35,7 +36,7 @@ function Login() {
                     />
                 </div>
                 <div>
-                    <label htmlFor="password">Password:</label>
+                    <label htmlFor="password"><FormattedMessage id='password' />:</label>
                     <input
                         type="password"
                         id="password"
@@ -49,8 +50,8 @@ function Login() {
                 </button>
             </form>
             {error?.email && <p style={{ color: 'red' }}>{error?.email}</p>}
-            {error?.message && <p style={{ color: 'red' }}>Error: {error?.message || 'Login fallido, por favor intente nuevamente.'}</p>}
-            {location.state?.msg && <p style={{ color: 'red' }}>Error: {location.state?.msg.error || 'Login fallido, por favor intente nuevamente.'}</p>}
+            {error?.message && <p style={{ color: 'red' }}>Error: {error?.message || <FormattedMessage id='login_fail' /> }</p>}
+            {location.state?.msg && <p style={{ color: 'red' }}>Error: {location.state?.msg.error || <FormattedMessage id='login_fail' />}</p>}
         </>
     );
 }
