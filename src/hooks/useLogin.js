@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const useLogin = () => {
 
-    const { data, error, loading, fetch } = useFetch();
+    const { data, loading, fetch } = useFetch();
     const { login: setAuthLogin} = useContext(AuthContext);
     const navigate = useNavigate();
     
@@ -34,7 +34,7 @@ const useLogin = () => {
         if(data) onSuccess(data); 
     }, [data, onSuccess]);
 
-    return { login, data, error, loading }
+    return { login, data, loading }
   };
   
   export default useLogin;

@@ -67,7 +67,15 @@ export const handleOkResponse = (response, onSuccess) => {
     return true
 }
 
- export const isJson = response => {
+export const handleError = (response, onError) => {
+    if (isJson(response) && onError) {
+        response.clone().json().then(payload => {
+            onError(payload)
+        });
+    }
+}
+
+export const isJson = response => {
     const contentType = response.headers.get("content-type")
     return contentType && contentType.indexOf("application/json") !== -1
 }

@@ -9,5 +9,6 @@ export default {
     login_title: 'Pagina de login',
     email: 'Correo electronico', 
     password: 'password',
-    login_fail: 'Login fallido, por favor intente nuevamente.'
+    login_fail: 'Login fallido, por favor intente nuevamente.',
+    error_unhandled: 'Ha ocurrido un error.'
 }

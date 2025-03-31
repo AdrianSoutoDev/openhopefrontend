@@ -1,12 +1,13 @@
-import { useState } from 'react';
-import apiRequest, { handle4xxResponse, handleOkResponse } from '../services/apiFetchService';
+import { useContext, useState } from 'react';
+import apiRequest, { handle4xxResponse, handleOkResponse, handleError } from '../services/apiFetchService';
 import { useNavigate } from 'react-router-dom';
 import { useCallback } from 'react';
+import ErrorContext from '../context/ErrorContext';
 
 const useFetch = () => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const { showError } = useContext(ErrorContext);
 
     const navigate = useNavigate()
 
@@ -19,28 +20,25 @@ const useFetch = () => {
     const handleResponse = useCallback((response, onSuccess, onError) => {
         if (handleOkResponse(response, onSuccess)) return
         if (handle4xxResponse(response, onError, redirectToLoginPage)) return
-        //TODO: Error handler
+        handleError(response, onError)
     }, [redirectToLoginPage]);
 
     const fetch = async (endpoint, options) => {
         setLoading(true)
-        setError(null)
         
         try {
             if(endpoint){
                 const response = await apiRequest(endpoint, options)
-                handleResponse(response, setData, setError)
-            } else {
-                //TODO: Error, not endpoint
+                handleResponse(response, setData, showError)
             }
         } catch (err) {
-            setError(err)
+            showError(err.message)
         } finally {
             setLoading(false)
         }
     };
 
-    return { data, loading, error, fetch }
+    return { data, loading, fetch }
 };
 
 export default useFetch;

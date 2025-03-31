@@ -21,6 +21,10 @@ function Login() {
         if(isAuthenticated) navigate("/")
     }, [isAuthenticated, navigate])
 
+    useEffect( () => {
+        navigate(location.pathname, { replace: true })
+    }, [email, password, location.pathname, navigate])
+
     return (
         <>
             <h1><FormattedMessage id='login_title' /></h1>

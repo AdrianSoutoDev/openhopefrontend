@@ -1,11 +1,12 @@
 import React from 'react'
-import NavBar from './components/navbar/NavBar.jsx'
 import './assets/styles/App.css'
 import { BrowserRouter as Router } from "react-router-dom"
-import AppRoutes from './AppRoutes'
 import { AuthProvider } from './context/AuthContext'
+import ErrorMessage from './components/error/ErrorMessage'
 import { IntlProvider } from 'react-intl'
-import { initI18n } from './services/i18nService.js'
+import { initI18n } from './services/i18nService'
+import Layout from './components/layout/Layout'
+import { ErrorProvider } from './context/ErrorContext'
 
 function App() {
   
@@ -13,14 +14,14 @@ function App() {
 
   return (
     <AuthProvider>
-      <Router>
-        <IntlProvider locale={locale} messages={messages}>
-          <div className='md:px-16'>
-            <NavBar />
-            <AppRoutes />
-          </div>
-        </IntlProvider>
-      </Router>
+      <ErrorProvider>
+        <Router>
+          <IntlProvider locale={locale} messages={messages}>
+            <ErrorMessage />
+            <Layout />
+          </IntlProvider>
+        </Router>
+      </ErrorProvider>
     </AuthProvider>
   )
 }
