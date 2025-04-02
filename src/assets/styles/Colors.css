@@ -2,6 +2,40 @@
 
 @layer utilities {
   .bg-primary {
-    @apply bg-emerald-500
+    @apply bg-emerald-400
+  }
+
+  .text-primary {
+    @apply bg-emerald-400;
+  }
+
+  .bg-secondary {
+    @apply bg-teal-400;
+  }
+
+  .bg-success {
+    @apply bg-green-400;
+  }
+
+  .bg-danger {
+    @apply bg-red-400;
+  }
+
+  .bg-warning {
+    @apply bg-yellow-400;
+  }
+
+  .bg-info {
+    @apply bg-blue-400;
+  }
+
+  .bg-clean {
+    @apply bg-white;
+  }
+
+
+
+  .text-danger{
+    @apply text-red-900;
   }
 }

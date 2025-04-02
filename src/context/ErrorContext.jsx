@@ -1,28 +1,38 @@
 import React, { createContext, useState } from 'react';
+import { capitalize } from '../utils/utils';
 
 const ErrorContext = createContext();
 
 export const ErrorProvider = ({ children }) => {
-  const [error, setError] = useState(null);
+  const [errors, setErrors] = useState([])
+  const errorTimeout = 5000
 
-  const showError = (message) => {
+  const showErrorTimeout = (_errors) => {
+    setErrors(_errors);
+    setTimeout(() => {
+      setErrors([])
+    }, errorTimeout)
+  }
 
+  const showErrors = (message) => {
     if (message && typeof message === 'string' && message.length){
-      setError(message);
-      setTimeout(() => {
-        setError(null);
-      }, 5000);
-    } else if (message && typeof message === 'object')
-      if(Object.values(message)[0] && Object.values(message)[0].length){
-        setError(Object.values(message)[0]);
-        setTimeout(() => {
-          setError(null);
-        }, 5000);
+      showErrorTimeout(message);
+    } else if (message && typeof message === 'object') {
+      let _errors = []
+      Object.values(message).forEach((value) => {
+        if (value.length) {
+          const capitalizedValue = capitalize(value)
+          _errors.push(capitalizedValue)
+        }
+      })
+      showErrorTimeout(_errors)
     }
   };
 
+  const hideErrors = () => setErrors([])
+
   return (
-    <ErrorContext.Provider value={{ error, showError }}>
+    <ErrorContext.Provider value={{ errors, showErrors, hideErrors }}>
       {children}
     </ErrorContext.Provider>
   );

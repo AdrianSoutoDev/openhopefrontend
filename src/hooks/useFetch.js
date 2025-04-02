@@ -7,7 +7,7 @@ import ErrorContext from '../context/ErrorContext';
 const useFetch = () => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(false);
-    const { showError } = useContext(ErrorContext);
+    const { showErrors } = useContext(ErrorContext);
 
     const navigate = useNavigate()
 
@@ -29,10 +29,10 @@ const useFetch = () => {
         try {
             if(endpoint){
                 const response = await apiRequest(endpoint, options)
-                handleResponse(response, setData, showError)
+                handleResponse(response, setData, showErrors)
             }
         } catch (err) {
-            showError(err.message)
+            showErrors([err.message])
         } finally {
             setLoading(false)
         }
