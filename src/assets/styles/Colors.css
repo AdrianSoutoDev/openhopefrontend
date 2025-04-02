@@ -2,11 +2,19 @@
 
 @layer utilities {
   .bg-primary {
-    @apply bg-emerald-400
+    @apply bg-emerald-400;
+  }
+
+  .btn-primary {
+    @apply bg-white hover:bg-emerald-400 text-emerald-400 hover:text-white border border-emerald-400;
   }
 
   .text-primary {
-    @apply bg-emerald-400;
+    @apply text-emerald-400;
+  }
+
+  .border-primary {
+    @apply border-emerald-400;
   }
 
   .bg-secondary {

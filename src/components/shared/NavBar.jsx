@@ -1,9 +1,10 @@
 import { useContext, useState } from 'react'
-import Icons from "../icons/Icons.jsx"
+import Icons from "./Icons.jsx"
 import { Link } from "react-router-dom"
-import AuthContext from '../../context/AuthContext'
+import AuthContext from '../../context/AuthContext.jsx'
 import { useNavigate } from "react-router-dom"
 import { FormattedMessage } from 'react-intl'
+import { Button, ButtonLink } from './Buttons'
 
 function NavBar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -80,18 +81,18 @@ function NavBar() {
         <div className='h-full flex justify-end items-center'>
           { !isAuthenticated &&
             <>
-              <Link to="/register" className="block px-4 py-2 mx-2 text-white rounded-lg bg-primary min-w-28 text-center shadow-sm">
+              <ButtonLink link="/register" className="min-w-28">
                 <FormattedMessage id='signup' />
-              </Link>
-              <Link to="/login" className="block px-4 py-2 mx-2 text-white rounded-lg bg-primary min-w-28 text-center shadow-sm">
+              </ButtonLink>
+              <ButtonLink link="/login" className="min-w-28">
                 <FormattedMessage id='signin' />
-              </Link>
+              </ButtonLink>
             </>
           }
           { isAuthenticated &&
-            <button className="block px-4 py-2 mx-2 text-white rounded-lg bg-primary min-w-28 text-center shadow-sm" onClick={handleLogout}>
+            <Button className="min-w-28" onClickAction={handleLogout}>
               <FormattedMessage id='signout' />
-            </button>
+            </Button>
           }
           </div>
       </nav>
