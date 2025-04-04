@@ -81,16 +81,16 @@ function NavBar() {
         <div className='h-full flex justify-end items-center'>
           { !isAuthenticated &&
             <>
-              <ButtonLink link="/register" className="min-w-28">
+              <ButtonLink link="/register" className="min-w-28 px-4 py-2 mx-2">
                 <FormattedMessage id='signup' />
               </ButtonLink>
-              <ButtonLink link="/login" className="min-w-28">
+              <ButtonLink link="/login" className="min-w-28 px-4 py-2 mx-2">
                 <FormattedMessage id='signin' />
               </ButtonLink>
             </>
           }
           { isAuthenticated &&
-            <Button className="min-w-28" onClickAction={handleLogout}>
+            <Button className="min-w-28 px-4 py-2 mx-2" onClickAction={handleLogout}>
               <FormattedMessage id='signout' />
             </Button>
           }

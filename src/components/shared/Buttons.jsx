@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from "react-router-dom"
 
-export function Button({onClickAction, className, children}) {
+export function Button({onClickAction, className, type, disabled, children}) {
     return (
-        <button onClick={onClickAction} 
-        className={`block px-4 py-2 mx-2 rounded-lg text-center shadow-sm btn-primary ${className}`}>
+        <button type={type} disabled={disabled} onClick={onClickAction} 
+            className={`block rounded-lg text-center shadow-sm btn-primary border ${className}`}>
             {children}
         </button>
     );
@@ -12,7 +12,7 @@ export function Button({onClickAction, className, children}) {
 
 export function ButtonLink({link, onClickAction, className, children}) {
     return (
-        <Link to={link} onClick={onClickAction} className={`block px-4 py-2 mx-2 rounded-lg text-center shadow-sm btn-primary ${className}`}>
+        <Link to={link} onClick={onClickAction} className={`block rounded-lg text-center shadow-sm btn-primary border ${className}`}>
             {children}
         </Link>
     );

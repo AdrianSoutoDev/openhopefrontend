@@ -8,7 +8,7 @@ const ErrorMessage = () => {
 
   return (
     <div className="flex justify-center">
-      <div className="text-wrap fixed top-0 bg-danger m-2 rounded-lg p-2 text-danger z-1000" onClick={hideErrors}>
+      <div className="text-wrap fixed top-0 bg-danger m-2 rounded-lg p-2 text-danger-dark z-1000" onClick={hideErrors}>
         <ul className="list-disc bg-danger px-6">
           {errors.map((error, index) => (
               <li key={index}>{error}</li>

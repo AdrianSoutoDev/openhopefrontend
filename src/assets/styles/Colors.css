@@ -6,7 +6,11 @@
   }
 
   .btn-primary {
-    @apply bg-white hover:bg-emerald-400 text-emerald-400 hover:text-white border border-emerald-400;
+    @apply bg-white hover:bg-emerald-400 text-emerald-400 hover:text-white  border-emerald-400;
+  }
+
+  .input-primary {
+    @apply border-gray-400 focus:border-emerald-400;
   }
 
   .text-primary {
@@ -18,7 +22,15 @@
   }
 
   .bg-secondary {
-    @apply bg-teal-400;
+    @apply bg-gray-400;
+  }
+
+  .text-secondary {
+    @apply text-gray-400;
+  }
+
+  .border-secondary {
+    @apply border-gray-400;
   }
 
   .bg-success {
@@ -27,6 +39,10 @@
 
   .bg-danger {
     @apply bg-red-400;
+  }
+
+  .text-danger{
+    @apply text-red-400;
   }
 
   .bg-warning {
@@ -41,9 +57,7 @@
     @apply bg-white;
   }
 
-
-
-  .text-danger{
+  .text-danger-dark{
     @apply text-red-900;
   }
 }
