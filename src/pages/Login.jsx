@@ -49,7 +49,7 @@ function Login() {
     return (
         <>
         <div className='flex h-96 justify-center items-center'>
-            <div className='flex-col items-end rounded-lg shadow-sm border border-secondary w-2/3 max-w-96 h-fit p-4'>
+            <div className='flex flex-col items-end rounded-lg shadow-sm border border-secondary w-2/3 max-w-96 h-fit p-4'>
                 <form onSubmit={handleSubmit}>
 
                     <label htmlFor="email"><FormattedMessage id='email' className='text-secondary'/></label>
@@ -60,7 +60,7 @@ function Login() {
                         onChange={emailValidation.handleChange} 
                         required 
                         onInvalid={emailValidation.onInvalid}
-                        className='rounded-lg shadow-sm border input-primary w-full px-4 py-2 my-2'/>
+                        className='rounded-lg shadow-sm border input-primary w-full my-2  px-4 py-2'/>
                         { emailValidation.error &&
                             <p className="text-danger mb-2">{emailValidation.error}</p>
                         }
@@ -73,12 +73,12 @@ function Login() {
                         onChange={passwordValidation.handleChange} 
                         required
                         onInvalid={passwordValidation.onInvalid}
-                        className='rounded-lg shadow-sm border input-primary w-full px-4 py-2 my-2'/>   
+                        className='rounded-lg shadow-sm border input-primary w-full my-2 px-4 py-2'/>   
                     { passwordValidation.error &&
                         <p className="text-danger mb-2">{passwordValidation.error}</p>
                     }
 
-                    <Button type="submit" disabled={loading} className="w-full px-4 py-2 my-2 cursor-pointer">
+                    <Button type="submit" disabled={loading} className="w-full my-2">
                         <FormattedMessage id='signin' />
                     </Button>
 
