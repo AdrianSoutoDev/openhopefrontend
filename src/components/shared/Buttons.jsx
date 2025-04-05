@@ -1,18 +1,18 @@
 import React from 'react';
 import { Link } from "react-router-dom"
 
-export function Button({onClickAction, className, type, disabled, children}) {
+export function Button({onClick, className, type, disabled, children}) {
     return (
-        <button type={type} disabled={disabled} onClick={onClickAction} 
+        <button type={type} disabled={disabled} onClick={onClick} 
             className={`font-semibold block rounded-lg text-center shadow-sm btn-primary border px-4 py-2 cursor-pointer ${className}`}>
             {children}
         </button>
     );
 }
 
-export function ButtonLink({link, onClickAction, className, children}) {
+export function ButtonLink({link, onClick, className, children}) {
     return (
-        <Link to={link} onClick={onClickAction} className={`font-semibold block rounded-lg text-center shadow-sm btn-primary border px-4 py-2 ${className}`}>
+        <Link to={link} onClick={onClick} className={`font-semibold block rounded-lg text-center shadow-sm btn-primary border px-4 py-2 ${className}`}>
             {children}
         </Link>
     );

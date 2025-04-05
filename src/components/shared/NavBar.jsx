@@ -78,7 +78,7 @@ function NavBar() {
             </>
           }
           { isAuthenticated &&
-            <Button className="min-w-28 mx-2" onClickAction={handleLogout}>
+            <Button className="min-w-28 mx-2" onClick={handleLogout}>
               <FormattedMessage id='signout' />
             </Button>
           }
