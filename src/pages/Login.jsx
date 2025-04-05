@@ -5,6 +5,8 @@ import AuthContext from '../context/AuthContext';
 import { FormattedMessage } from 'react-intl';
 import { Button } from '../components/shared/Buttons'
 import useValidation from '../hooks/useValidation';
+import { InfoMessage } from '../components/shared/Messages';
+import PageTitle from '../components/shared/PageTitle';
 
 function Login() {
     const { isAuthenticated } = useContext(AuthContext)
@@ -48,11 +50,13 @@ function Login() {
 
     return (
         <>
+        <PageTitle/>
+
         <div className='flex h-96 justify-center items-center'>
             <div className='flex flex-col items-end rounded-lg shadow-sm border border-secondary w-2/3 max-w-96 h-fit p-4'>
                 <form onSubmit={handleSubmit}>
 
-                    <label htmlFor="email"><FormattedMessage id='email' className='text-secondary'/></label>
+                    <label htmlFor="email"><InfoMessage id='email'/></label>
                     <input 
                         type="email" 
                         id="email" 
@@ -60,12 +64,12 @@ function Login() {
                         onChange={emailValidation.handleChange} 
                         required 
                         onInvalid={emailValidation.onInvalid}
-                        className='rounded-lg shadow-sm border input-primary w-full my-2  px-4 py-2'/>
+                        className='text-info rounded-lg shadow-sm border input-primary w-full my-2 px-4 py-2'/>
                         { emailValidation.error &&
                             <p className="text-danger mb-2">{emailValidation.error}</p>
                         }
 
-                    <label htmlFor="password"><FormattedMessage id='password' className='text-secondary'/></label>
+                    <label htmlFor="password"><InfoMessage id='password'/></label>
                     <input 
                         type="password" 
                         id="password" 
@@ -73,7 +77,7 @@ function Login() {
                         onChange={passwordValidation.handleChange} 
                         required
                         onInvalid={passwordValidation.onInvalid}
-                        className='rounded-lg shadow-sm border input-primary w-full my-2 px-4 py-2'/>   
+                        className='text-info rounded-lg shadow-sm border input-primary w-full my-2 px-4 py-2'/>   
                     { passwordValidation.error &&
                         <p className="text-danger mb-2">{passwordValidation.error}</p>
                     }

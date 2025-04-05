@@ -1,2 +1,6 @@
 @import "tailwindcss";
 @import "./colors.css";
+
+body {
+    @apply font-sans;
+}   
