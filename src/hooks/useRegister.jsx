@@ -32,15 +32,13 @@ const useRegister = () => {
                 ? JSON.stringify({ email, password })
                 : formData
 
-        const contentType = isUserRegister 
-            ? 'application/json' 
-            : 'multipart/form-data';
+        const headers = isUserRegister 
+            ? { 'Content-Type': 'application/json', }
+            : {}
 
         const options = {
             method: 'POST',
-            headers: {
-                'Content-Type': contentType,
-            },
+            headers: headers,
             body: body
         }
         
