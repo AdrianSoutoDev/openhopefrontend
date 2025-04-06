@@ -7,11 +7,13 @@ import useRegister from "../hooks/useRegister";
 import { FormattedMessage } from "react-intl";
 import EmailPasswordForm from "../components/shared/EmailPasswordForm";
 import Spinner from "../components/shared/Spinner";
+import TextEditor from "../components/shared/TextEditor";
 
 function Register() {
   const [typeAccount, setTypeAccount] = useState('')
   const [moreInfoEnabled, setMoreInfoEnable] = useState(false)
   const { register, loading } = useRegister();
+  const [description, setDescription] = useState('')
   
   const emailValidation = useValidation("", {
     required: true,
@@ -40,6 +42,10 @@ function Register() {
     setMoreInfoEnable(true)
   }
 
+  const handleEditorChange = (text) => {
+    setDescription(text);
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     const isEmailValid = emailValidation.validate()
@@ -54,7 +60,7 @@ function Register() {
 
     if(typeAccount === 'organization' ){
       if (isEmailValid && isPasswordValid && isNameValid) { 
-        register(emailValidation.value, passwordValidation.value, nameValidation.value, null, null, typeAccount)
+        register(emailValidation.value, passwordValidation.value, nameValidation.value, description, null, typeAccount)
       }
     } 
   };
@@ -106,7 +112,14 @@ function Register() {
 
 
                     { moreInfoEnabled 
-                      ? <div>optional info</div>
+                      ? <div>
+                          <input 
+                          type="hidden" 
+                          id="description" 
+                          value={description} />
+                            
+                          <TextEditor handleEditorChange={handleEditorChange}/>
+                        </div>
                       : <Button type="button" onClick={showMoreInfo}>
                           <FormattedMessage id="add_more_info" /> 
                         </Button>
