@@ -8,12 +8,14 @@ import useValidation from '../hooks/useValidation';
 import PageTitle from '../components/shared/PageTitle';
 import EmailPasswordForm from '../components/shared/EmailPasswordForm';
 import Spinner from '../components/shared/Spinner';
+import { SuccessMessage } from '../components/shared/Messages';
 
 function Login() {
     const { isAuthenticated } = useContext(AuthContext)
     const { login, loading } = useLogin();
     const navigate = useNavigate();
     const location = useLocation();
+    const registered = location.state?.registered;
 
     const emailValidation = useValidation("", {
         required: true,
@@ -45,16 +47,15 @@ function Login() {
         if(isAuthenticated) navigate("/")
     }, [isAuthenticated, navigate])
 
-    useEffect( () => {
-        navigate(location.pathname, { replace: true })
-    }, [emailValidation.value, passwordValidation.value, location.pathname, navigate])
-
     return (
         <>
         <PageTitle/>
-
         <div className='flex h-96 justify-center items-center'>
-            <div className='flex flex-col items-end rounded-lg shadow-sm border border-secondary w-2/3 max-w-96 h-fit p-4'>
+            <div className='flex flex-col items-end rounded-lg shadow-sm border border-secondary mx-2 max-w-96 h-fit p-4'>
+                { registered &&  
+                        <SuccessMessage id='register_success' className='w-full mb-4' />
+                }
+
                 <form onSubmit={handleSubmit}>
                     <EmailPasswordForm emailValidation={emailValidation} passwordValidation={passwordValidation} />
 

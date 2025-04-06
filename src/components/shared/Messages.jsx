@@ -17,3 +17,13 @@ export const Message = ({id}) => {
         </>
     );
 }
+
+export const SuccessMessage = ({id, className}) => {
+    return (
+        <>
+            <span className={`text-primary ${className}`}>
+                <FormattedMessage id={id}/>
+            </span>
+        </>
+    );
+}

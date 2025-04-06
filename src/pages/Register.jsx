@@ -3,18 +3,15 @@ import { Button } from "../components/shared/Buttons";
 import PageTitle from "../components/shared/PageTitle";
 import { InfoMessage, Message} from "../components/shared/Messages";
 import useValidation from "../hooks/useValidation";
-import useLogin from "../hooks/useLogin";
+import useRegister from "../hooks/useRegister";
 import { FormattedMessage } from "react-intl";
 import EmailPasswordForm from "../components/shared/EmailPasswordForm";
 import Spinner from "../components/shared/Spinner";
-import Icons from "../components/shared/Icons";
 
 function Register() {
   const [typeAccount, setTypeAccount] = useState('')
   const [moreInfoEnabled, setMoreInfoEnable] = useState(false)
-
-  //TODO cambiar login por register
-  const { loading } = useLogin();
+  const { register, loading } = useRegister();
   
   const emailValidation = useValidation("", {
     required: true,
@@ -47,10 +44,19 @@ function Register() {
     e.preventDefault()
     const isEmailValid = emailValidation.validate()
     const isPasswordValid = passwordValidation.validate()
+    const isNameValid = nameValidation.validate()
 
-    if (isEmailValid && isPasswordValid) {
-      //TODO register
-    }
+    if(typeAccount === 'user' ){
+      if (isEmailValid && isPasswordValid) { 
+        register(emailValidation.value, passwordValidation.value, null, null, null, typeAccount)
+      }
+    } 
+
+    if(typeAccount === 'organization' ){
+      if (isEmailValid && isPasswordValid && isNameValid) { 
+        register(emailValidation.value, passwordValidation.value, nameValidation.value, null, null, typeAccount)
+      }
+    } 
   };
 
   return (
