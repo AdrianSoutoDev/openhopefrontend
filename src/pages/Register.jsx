@@ -91,7 +91,7 @@ function Register() {
           }
 
           { typeAccount && 
-            <div className='flex flex-col h-96 justify-center items-center'>
+            <div className='flex flex-col justify-center items-center'>
               <form onSubmit={handleSubmit}>
                 <EmailPasswordForm emailValidation={emailValidation} passwordValidation={passwordValidation} />
 
@@ -111,27 +111,32 @@ function Register() {
                       }
 
 
-                    { moreInfoEnabled 
-                      ? <div>
+                    { moreInfoEnabled &&
+                        <>
                           <input 
                           type="hidden" 
                           id="description" 
                           value={description} />
                             
                           <TextEditor handleEditorChange={handleEditorChange}/>
-                        </div>
-                      : <Button type="button" onClick={showMoreInfo}>
-                          <FormattedMessage id="add_more_info" /> 
-                        </Button>
+                        </>
                     }
                     </>
                 }
 
-                <Button type="submit" disabled={loading} className="w-full my-2">
-                  { loading ? <Spinner />
-                            : <FormattedMessage id="signup" />
-                  }
-                </Button>
+                <div className="flex">
+                  { typeAccount === 'organization' &&
+                    <Button type="button" onClick={showMoreInfo} disabled={moreInfoEnabled} className="w-1/2 my-2 mr-2">
+                      <FormattedMessage id="add_more_info" /> 
+                    </Button>
+                  } 
+
+                  <Button type="submit" disabled={loading} className="w-full my-2 ml-2">
+                    { loading ? <Spinner />
+                              : <FormattedMessage id="signup" />
+                    }
+                  </Button>
+                </div>
               </form>
             </div>
           }
