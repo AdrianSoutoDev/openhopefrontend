@@ -28,30 +28,32 @@ const uploadHandler = (blobInfo) => new Promise( (resolve, reject) => {
   });
 })
 
-const TextEditor = ({ handleEditorChange }) => {
+const TextEditor = ({ handleEditorChange, className }) => {
   return (
-    <Editor
-      tinymceScriptSrc="/tinymce/tinymce.min.js"
-      initialValue=""
-      init={{    
-        selector: 'textarea',
-        file_picker_types: 'image',
-        height: 500,
-        menubar: false,
-        statusbar: false,
-        plugins: [
-          'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview', 'anchor',
-          'searchreplace', 'visualblocks', 'code', 'fullscreen',
-          'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount',
-        ],
-        plugin_base_url: '/tinymce/plugins',
-        toolbar:
-          'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | image | bullist numlist outdent indent | removeformat | help',
-        automatic_uploads: true,
-        images_upload_handler: uploadHandler,
-      }}
-      onEditorChange={handleEditorChange}
-    />
+    <div className={className}>
+      <Editor
+        tinymceScriptSrc="/tinymce/tinymce.min.js"
+        initialValue=""
+        init={{    
+          selector: 'textarea',
+          file_picker_types: 'image',
+          height: 500,
+          menubar: false,
+          statusbar: false,
+          plugins: [
+            'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview', 'anchor',
+            'searchreplace', 'visualblocks', 'code', 'fullscreen',
+            'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount',
+          ],
+          plugin_base_url: '/tinymce/plugins',
+          toolbar:
+            'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | image | bullist numlist outdent indent | removeformat | help',
+          automatic_uploads: true,
+          images_upload_handler: uploadHandler,
+        }}
+        onEditorChange={handleEditorChange}
+      />
+    </div>
   );
 };
 

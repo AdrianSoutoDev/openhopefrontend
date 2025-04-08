@@ -14,6 +14,7 @@ function Register() {
   const [moreInfoEnabled, setMoreInfoEnable] = useState(false)
   const { register, loading } = useRegister();
   const [description, setDescription] = useState('')
+  const [image, setImage] = useState(null)
   
   const emailValidation = useValidation("", {
     required: true,
@@ -43,8 +44,14 @@ function Register() {
   }
 
   const handleEditorChange = (text) => {
-    setDescription(text);
+    setDescription(text)
   }
+
+  const handleImageChange = (event) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setImage(event.target.files[0])
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -60,7 +67,7 @@ function Register() {
 
     if(typeAccount === 'organization' ){
       if (isEmailValid && isPasswordValid && isNameValid) { 
-        register(emailValidation.value, passwordValidation.value, nameValidation.value, description, null, typeAccount)
+        register(emailValidation.value, passwordValidation.value, nameValidation.value, description, image, typeAccount)
       }
     } 
   };
@@ -105,7 +112,7 @@ function Register() {
                       onChange={nameValidation.handleChange} 
                       required 
                       onInvalid={nameValidation.onInvalid}
-                      className='text-info rounded-lg shadow-sm border input-primary w-full my-2 px-4 py-2'/>
+                      className='text-info rounded-lg shadow-sm border input-primary w-full my-2 px-4 py-2 focus:outline-none'/>
                       { nameValidation.error &&
                           <p className="text-danger mb-2">{nameValidation.error}</p>
                       }
@@ -113,27 +120,43 @@ function Register() {
 
                     { moreInfoEnabled &&
                         <>
+                          <label htmlFor="image"><InfoMessage id='organization_profile_image'/></label>
+                          <input 
+                            type="file" 
+                            id="image" 
+                            onChange={handleImageChange} 
+                            className="px-4 py-3 my-2 block w-full text-sm  shadow-sm rounded-lg text-info border input-primary cursor-pointer focus:outline-none hover:border-emerald-400"
+                            />
+
+                          <label htmlFor="description"><InfoMessage id='organization_description'/></label>
                           <input 
                           type="hidden" 
                           id="description" 
-                          value={description} />
+                          value={description} 
+                          className="focus:outline-none"/>
                             
-                          <TextEditor handleEditorChange={handleEditorChange}/>
+                          <TextEditor handleEditorChange={handleEditorChange} className="my-2"/>
                         </>
                     }
                     </>
                 }
 
-                <div className="flex">
+                <div className="md:flex">
                   { typeAccount === 'organization' &&
-                    <Button type="button" onClick={showMoreInfo} disabled={moreInfoEnabled} className="w-1/2 my-2 mr-2">
+                    <Button type="button" onClick={showMoreInfo} disabled={moreInfoEnabled} className="w-full md:w-1/2 my-2 md:mr-2">
                       <FormattedMessage id="add_more_info" /> 
                     </Button>
                   } 
 
-                  <Button type="submit" disabled={loading} className="w-full my-2 ml-2">
-                    { loading ? <Spinner />
-                              : <FormattedMessage id="signup" />
+                  <Button type="submit" disabled={loading} className={`w-full my-2 ${typeAccount === 'organization' && 'md:ml-2'}`}>
+                    { loading && <Spinner /> }
+                    { !loading && 
+                      <>
+                        { typeAccount === 'organization'
+                            ? <FormattedMessage id="create_organization" /> 
+                            : <FormattedMessage id="signup" />
+                        }
+                      </>
                     }
                   </Button>
                 </div>

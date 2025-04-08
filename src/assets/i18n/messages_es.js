@@ -17,6 +17,8 @@ export default {
     info_register_user: 'Si deseas registrarte para realizar donaciones y así poder mantener un historial de las donaciones realizadas crea una cuenta de usuario.',
     info_register_organization: 'Si eres una organización y deseas crear campañas de recaudación de fondos para tu causa, crea una cuenta de organización.',
     organization_name: 'Nombre de la organización',
+    organization_description: 'Descripción',
+    organization_profile_image: 'Imagen de perfil de la organización',
     add_more_info: 'Añadir más informacion',
     register_success: 'Cuenta creada, ya puedes acceder a tu cuenta'
 }

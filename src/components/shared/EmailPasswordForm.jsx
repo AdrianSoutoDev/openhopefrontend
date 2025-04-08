@@ -12,7 +12,7 @@ function EmailPasswordForm({emailValidation, passwordValidation}) {
                onChange={emailValidation.handleChange} 
                required 
                onInvalid={emailValidation.onInvalid}
-               className='text-info rounded-lg shadow-sm border input-primary w-full my-2 px-4 py-2'/>
+               className='text-info rounded-lg shadow-sm border input-primary w-full my-2 px-4 py-2 focus:outline-none'/>
                { emailValidation.error &&
                    <p className="text-danger mb-2">{emailValidation.error}</p>
                }
@@ -25,7 +25,7 @@ function EmailPasswordForm({emailValidation, passwordValidation}) {
                onChange={passwordValidation.handleChange} 
                required
                onInvalid={passwordValidation.onInvalid}
-               className='text-info rounded-lg shadow-sm border input-primary w-full my-2 px-4 py-2'/> 
+               className='text-info rounded-lg shadow-sm border input-primary w-full my-2 px-4 py-2 focus:outline-none'/> 
             { passwordValidation.error &&
                 <p className="text-danger mb-2">{passwordValidation.error}</p>
             }
