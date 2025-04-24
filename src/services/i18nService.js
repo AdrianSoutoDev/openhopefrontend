@@ -1,15 +1,18 @@
-import messages from '../assets/i18n/messages';
+import messages from '../assets/i18n/messages'
 
 export const initI18n = () => {
-    let locale = (navigator.languages && navigator.languages[0]) ||
-        navigator.language || navigator.userLanguage || 'es'
+  let locale =
+    (navigator.languages && navigator.languages[0]) ||
+    navigator.language ||
+    navigator.userLanguage ||
+    'es'
 
-    const localeWithoutRegionCode = locale.toLowerCase().split(/[_-]+/)[0]
-    
-    const localeMessages = messages[locale] || 
-        messages[localeWithoutRegionCode] || messages['es']
+  const localeWithoutRegionCode = locale.toLowerCase().split(/[_-]+/)[0]
 
-    locale = localeMessages === messages['es'] ? 'es' : locale
+  const localeMessages =
+    messages[locale] || messages[localeWithoutRegionCode] || messages['es']
 
-    return {locale, messages: localeMessages}
+  locale = localeMessages === messages['es'] ? 'es' : locale
+
+  return { locale, messages: localeMessages }
 }

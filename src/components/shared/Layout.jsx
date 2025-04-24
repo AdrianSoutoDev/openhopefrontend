@@ -1,6 +1,6 @@
-import React from 'react';
-import NavBar from './NavBar';
-import AppRoutes from '../../AppRoutes';
+import React from 'react'
+import NavBar from './NavBar'
+import AppRoutes from '../../AppRoutes'
 
 const Layout = () => {
   return (
@@ -8,7 +8,7 @@ const Layout = () => {
       <NavBar />
       <AppRoutes />
     </div>
-  );
-};
+  )
+}
 
-export default Layout;
+export default Layout
