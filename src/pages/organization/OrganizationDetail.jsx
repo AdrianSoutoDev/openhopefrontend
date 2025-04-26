@@ -1,5 +1,4 @@
 import { useContext, useEffect, useRef, useState } from 'react'
-import { FormattedMessage } from 'react-intl'
 import { useParams } from 'react-router-dom'
 import useFetch from '../../hooks/useFetch'
 import Spinner from '../../components/shared/Spinner'

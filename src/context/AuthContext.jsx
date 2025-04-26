@@ -15,9 +15,9 @@ export const AuthProvider = ({ children }) => {
       if (token) {
         const res = await validateToken()
         if (res.status === 200) {
+          const json = await res.json()
+          setWhoAmI(json.email)
           setIsAuthenticated(true)
-          const email = await res.json()
-          setWhoAmI(email)
         } else {
           removeToken()
         }
@@ -28,8 +28,9 @@ export const AuthProvider = ({ children }) => {
     hasValidated.current = true
   }, [])
 
-  const login = (token) => {
+  const login = (token, email) => {
     setToken(token)
+    setWhoAmI(email)
     setIsAuthenticated(true)
   }
 
