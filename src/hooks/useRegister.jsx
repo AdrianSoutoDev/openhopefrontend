@@ -10,7 +10,15 @@ const useRegister = () => {
     navigate('/login', { state: { registered: true } })
   }, [navigate])
 
-  const register = (email, password, name, description, file, typeAccount) => {
+  const register = (
+    email,
+    password,
+    name,
+    description,
+    categories,
+    file,
+    typeAccount,
+  ) => {
     const isUserRegister = typeAccount === 'user'
 
     const endpoint = isUserRegister ? '/users' : '/organizations'
@@ -22,6 +30,7 @@ const useRegister = () => {
       formData.append('password', password)
       formData.append('name', name)
       formData.append('description', description)
+      formData.append('categories', categories.join(','))
       formData.append('file', file)
     }
 

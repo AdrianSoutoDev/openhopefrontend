@@ -23,4 +23,7 @@ export default {
   organization_profile_image: 'Imagen de perfil de la organización',
   add_more_info: 'Añadir más informacion',
   register_success: 'Cuenta creada, ya puedes acceder a tu cuenta',
+  label_categories: 'Categorias',
+  select_categories: 'Selecciona las categorias',
+  loading: 'Cargando...',
 }

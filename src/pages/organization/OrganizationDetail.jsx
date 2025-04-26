@@ -17,8 +17,8 @@ function OrganizationDetail() {
       const endpoint = `/organizations/${id}`
       const options = { method: 'GET' }
       fetch(endpoint, options)
+      hasFetched.current = true
     }
-    hasFetched.current = true
   }, [fetch, id])
 
   useEffect(() => {

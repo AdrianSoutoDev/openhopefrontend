@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Button } from '../components/shared/Buttons'
 import PageTitle from '../components/shared/PageTitle'
 import { InfoMessage, Message } from '../components/shared/Messages'
+import MultipleSelector from '../components/shared/MultipleSelector'
 import useValidation from '../hooks/useValidation'
 import useRegister from '../hooks/useRegister'
 import { FormattedMessage } from 'react-intl'
@@ -15,6 +16,12 @@ function Register() {
   const { register, loading } = useRegister()
   const [description, setDescription] = useState('')
   const [image, setImage] = useState(null)
+  const [categoriesSelected, setCategoriesSelected] = useState([])
+
+  const categoriesSource = {
+    endpoint: '/categories',
+    options: { method: 'GET' },
+  }
 
   const emailValidation = useValidation('', {
     required: true,
@@ -67,6 +74,7 @@ function Register() {
           null,
           null,
           null,
+          null,
           typeAccount,
         )
       }
@@ -79,6 +87,7 @@ function Register() {
           passwordValidation.value,
           nameValidation.value,
           description,
+          categoriesSelected,
           image,
           typeAccount,
         )
@@ -147,15 +156,31 @@ function Register() {
 
                     {moreInfoEnabled && (
                       <>
-                        <label htmlFor="image">
-                          <InfoMessage id="organization_profile_image" />
-                        </label>
-                        <input
-                          type="file"
-                          id="image"
-                          onChange={handleImageChange}
-                          className="px-4 py-3 my-2 block w-full text-sm  shadow-sm rounded-lg text-info border input-primary cursor-pointer focus:outline-none hover:border-emerald-400"
-                        />
+                        <div className="md:flex">
+                          <div className="w-full md:mr-1">
+                            <label htmlFor="image">
+                              <InfoMessage id="organization_profile_image" />
+                            </label>
+                            <input
+                              type="file"
+                              id="image"
+                              onChange={handleImageChange}
+                              className="w-full px-4 py-3 my-2 block text-sm shadow-sm rounded-lg text-info border input-primary cursor-pointer focus:outline-none hover:border-emerald-400"
+                            />
+                          </div>
+
+                          <div className="w-full md:ml-1">
+                            <label htmlFor="categories">
+                              <InfoMessage id="label_categories" />
+                            </label>
+                            <MultipleSelector
+                              source={categoriesSource}
+                              selectedItems={categoriesSelected}
+                              setSelectedItems={setCategoriesSelected}
+                              className="my-2"
+                            />
+                          </div>
+                        </div>
 
                         <label htmlFor="description">
                           <InfoMessage id="organization_description" />
