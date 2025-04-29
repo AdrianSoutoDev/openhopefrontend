@@ -26,4 +26,11 @@ export default {
   label_categories: 'Categorias',
   select_categories: 'Selecciona las categorias',
   loading: 'Cargando...',
+  datatable_previous: 'Anterior',
+  datatable_next: 'Siguiente',
+  table_headers_name: 'Nombre',
+  table_headers_start_at: 'Fecha de inicio',
+  table_headers_state: 'Estado',
+  table_headers_amount_collected: 'Cantidad recaudada',
+  campaigns: 'Campañas',
 }
