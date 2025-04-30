@@ -1,0 +1,62 @@
+@tailwind utilities;
+
+@layer utilities {
+
+  /* primary */
+
+  .bg-primary {
+    @apply bg-emerald-400;
+  }
+
+  .btn-primary {
+    @apply bg-white hover:bg-emerald-400 text-emerald-400 hover:text-white  border-emerald-400;
+  }
+
+  .input-primary {
+    @apply border-gray-400 focus:border-emerald-400;
+  }
+
+  .text-primary {
+    @apply text-emerald-400;
+  }
+
+  .border-primary {
+    @apply border-emerald-400;
+  }
+
+  /* secondary */
+
+  .bg-secondary {
+    @apply bg-gray-400;
+  }
+
+  .border-secondary {
+    @apply border-gray-400;
+  }
+
+  /* danger */
+
+  .bg-danger {
+    @apply bg-red-400;
+  }
+
+  .text-danger{
+    @apply text-red-400;
+  }
+
+  .text-danger-dark{
+    @apply text-red-900;
+  }
+
+  /* warning */
+
+  .bg-warning {
+    @apply bg-yellow-400;
+  }
+
+  /* info */
+
+  .text-info {
+    @apply text-gray-900;
+  }
+}
