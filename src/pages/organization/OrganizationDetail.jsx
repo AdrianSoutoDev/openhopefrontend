@@ -83,6 +83,7 @@ function OrganizationDetail() {
             <h1 className="mb-5 font-semibold text-5xl text-gray-900">
               {organization.name}
             </h1>
+
             {organization.categories && (
               <div className="mt-2 w-full flex justify-evenly text-xs text-primary">
                 {organization.categories.map((cat) => (
@@ -91,7 +92,9 @@ function OrganizationDetail() {
               </div>
             )}
 
-            <div className="mt-3">
+            {/* mobile */}
+
+            <div className="mt-3 md:hidden">
               <img
                 src={
                   organization.image
@@ -100,11 +103,32 @@ function OrganizationDetail() {
                 }
               />
             </div>
+
             {organization.description && (
-              <div className="mt-3">
+              <div className="mt-3 p-2 md:hidden">
                 <RenderHTML htmlString={organization.description} />
               </div>
             )}
+
+            {/* desktop */}
+
+            <div className="mt-3 hidden md:inline-block">
+              <div className="p-5 min-w-72 max-w-2xl float-left">
+                <img
+                  src={
+                    organization.image
+                      ? getImgFromServer(organization.image)
+                      : '/img/default-image.jpg'
+                  }
+                />
+              </div>
+
+              {organization.description && (
+                <div className="p-3">
+                  <RenderHTML htmlString={organization.description} />
+                </div>
+              )}
+            </div>
 
             <div className="w-full">
               <h3 className="text-center mt-10 font-semibold text-3xl text-gray-900">
