@@ -79,7 +79,7 @@ function OrganizationDetail() {
           <Spinner />
         </div>
       ) : (
-        <div className="mt-12 px-2 flex justify-center">
+        <div className="mt-12 px-2 flex justify-center overflow-hidden">
           <div className="md:max-w-8/12 flex flex-col justify-center items-center">
             <h1 className="mb-5 font-semibold text-5xl text-gray-900">
               {organization.name}
@@ -149,16 +149,16 @@ function OrganizationDetail() {
                 <h3 className="text-center mt-10 font-semibold text-3xl text-gray-900">
                   <InfoMessage id="organization_admin" />
                 </h3>
-                <div className="flex w-full mb-16">
+                <div className="flex flex-col mt-3 md:flex-row w-full mb-16">
                   <ButtonLink
                     to={`/organization/${organization.id}/edit`}
-                    className="my-3 mr-1 w-1/2"
+                    className="md:mr-1 w-full md:w-1/2"
                   >
                     <FormattedMessage id="organization_edit" />
                   </ButtonLink>
                   <ButtonLink
                     to={`/organization/${organization.id}/edit`}
-                    className="my-3 ml-1 w-1/2"
+                    className="mt-2 md:mt-0 md:ml-1 w-full md:w-1/2"
                   >
                     <FormattedMessage id="campaing_create" />
                   </ButtonLink>

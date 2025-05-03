@@ -56,12 +56,14 @@ function DataTable({ source, tableHeaders, mapper, handleClickRow }) {
               <InfoMessage id="no_results" />
             </div>
           ) : (
-            <div className="my-5 w-full">
-              <table className="min-w-full border-collapse border border-gray-300 shadow-xs">
+            <div className="my-5 w-screen md:w-full overflow-x-auto">
+              <table className="w-full border-collapse border border-gray-300 shadow-xs">
                 <thead className="text-left text-info">
                   <tr className="bg-gray-200">
-                    {tableHeaders.map((header) => (
-                      <th className="px-4 py-2">{header}</th>
+                    {tableHeaders.map((header, index) => (
+                      <th key={index} className="px-4 py-2 whitespace-nowrap">
+                        {header}
+                      </th>
                     ))}
                   </tr>
                 </thead>
@@ -73,7 +75,7 @@ function DataTable({ source, tableHeaders, mapper, handleClickRow }) {
                       className={`cursor-pointer hover:bg-gray-300 ${items.indexOf(item) % 2 !== 0 ? 'bg-gray-100' : 'bg-white'}`}
                     >
                       {item.values.map((value) => (
-                        <td className="px-4 py-2">{value}</td>
+                        <td className="px-4 py-2 whitespace-nowrap">{value}</td>
                       ))}
                     </tr>
                   ))}
