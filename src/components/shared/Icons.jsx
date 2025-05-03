@@ -34,6 +34,23 @@ const Icons = {
       />
     </svg>
   ),
+
+  BackArrow: () => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 30 30" // Tamaño ampliado
+      strokeWidth={3} // Grosor mantenido
+      stroke="currentColor"
+      className="size-6"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M26 15H4M14 6l-10 9 10 9" // Brazos aún más largos
+      />
+    </svg>
+  ),
 }
 
 export default Icons

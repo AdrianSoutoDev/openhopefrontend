@@ -7,6 +7,8 @@ import { initI18n } from './services/i18nService'
 import Layout from './components/shared/Layout'
 import { ErrorProvider } from './context/ErrorContext'
 import ErrorMessage from './components/shared/ErrorMessage'
+import { GoBackProvider } from './context/GoBackContext'
+import RestartGoBack from './context/RestartGoBack'
 
 function App() {
   const { locale, messages } = initI18n()
@@ -15,10 +17,13 @@ function App() {
     <AuthProvider>
       <ErrorProvider>
         <Router>
-          <IntlProvider locale={locale} messages={messages}>
-            <ErrorMessage />
-            <Layout />
-          </IntlProvider>
+          <GoBackProvider>
+            <RestartGoBack routesAvoidToGoBack={['/organization/:id/edit']} />
+            <IntlProvider locale={locale} messages={messages}>
+              <ErrorMessage />
+              <Layout />
+            </IntlProvider>
+          </GoBackProvider>
         </Router>
       </ErrorProvider>
     </AuthProvider>

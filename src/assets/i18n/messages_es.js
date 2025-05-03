@@ -38,4 +38,6 @@ export default {
   save_changes: 'Guardar cambios',
   campaing_create: 'Crear nueva campaña',
   organization_admin: 'Administración',
+  editing: 'Editando',
+  goBack: 'Volver atrás',
 }

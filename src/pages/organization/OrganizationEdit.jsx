@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import useFetch from '../../hooks/useFetch'
 import useValidation from '../../hooks/useValidation'
 import { FormattedMessage } from 'react-intl'
@@ -9,6 +9,8 @@ import TextEditor from '../../components/shared/TextEditor'
 import { Button } from '../../components/shared/Buttons'
 import useUpdateOrganization from '../../hooks/useUpdateOrganization'
 import Spinner from '../../components/shared/Spinner'
+import PageTitle from '../../components/shared/PageTitle'
+import GoBackContext from '../../context/GoBackContext'
 
 function OrganizationEdit() {
   const { id } = useParams()
@@ -17,6 +19,7 @@ function OrganizationEdit() {
   const [initialDescription, setInitialDescription] = useState('')
   const [image, setImage] = useState(null)
   const [name, setName] = useState('')
+  const { setShowGoBack, setWhereWeGo } = useContext(GoBackContext)
 
   const hasFetched = useRef(false)
   const { data, loading, fetch } = useFetch()
@@ -28,6 +31,11 @@ function OrganizationEdit() {
       required: <FormattedMessage id="name_error_empty" />,
     },
   })
+
+  useEffect(() => {
+    setShowGoBack(true)
+    setWhereWeGo(`/organization/${id}`)
+  }, [id, setShowGoBack, setWhereWeGo])
 
   useEffect(() => {
     if (!hasFetched.current) {
@@ -77,6 +85,8 @@ function OrganizationEdit() {
 
   return (
     <>
+      <PageTitle title={<FormattedMessage id="editing" />} className="mb-5" />
+
       {loading ? (
         <div className="h-128 flex justify-center items-center">
           <Spinner />

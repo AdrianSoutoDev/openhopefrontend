@@ -8,6 +8,7 @@ import DataTable from '../../components/shared/DataTable'
 import { FormattedMessage } from 'react-intl'
 import { InfoMessage } from '../../components/shared/Messages'
 import { ButtonLink } from '../../components/shared/Buttons'
+import PageTitle from '../../components/shared/PageTitle'
 
 function OrganizationDetail() {
   const { id } = useParams()
@@ -81,9 +82,7 @@ function OrganizationDetail() {
       ) : (
         <div className="mt-12 px-2 flex justify-center overflow-hidden">
           <div className="md:max-w-8/12 flex flex-col justify-center items-center">
-            <h1 className="mb-5 font-semibold text-5xl text-gray-900">
-              {organization.name}
-            </h1>
+            <PageTitle title={organization.name} className="mb-5" />
 
             {organization.categories && (
               <div className="mt-2 w-full flex justify-evenly text-xs text-primary">

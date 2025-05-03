@@ -5,10 +5,13 @@ import AuthContext from '../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
 import { Button, ButtonLink } from './Buttons'
+import GoBackContext from '../../context/GoBackContext.jsx'
 
 function NavBar() {
   const [isOpen, setIsOpen] = useState(false)
   const { isAuthenticated, logout } = useContext(AuthContext)
+  const { showGoBack, whereWeGo } = useContext(GoBackContext)
+
   const navigate = useNavigate()
 
   const toggleMenu = () => {
@@ -26,11 +29,17 @@ function NavBar() {
       {/* Mobile view*/}
       <nav className="bg-primary text-white md:hidden">
         <div className="flex justify-between items-center p-4">
-          <Link to="/" onClick={() => isOpen && toggleMenu()}>
-            <h1 className="text-lg font-bold">
-              <FormattedMessage id="app_title" />
-            </h1>
-          </Link>
+          {showGoBack ? (
+            <Link to={whereWeGo}>
+              <Icons.BackArrow />
+            </Link>
+          ) : (
+            <Link to="/" onClick={() => isOpen && toggleMenu()}>
+              <h1 className="text-lg font-bold">
+                <FormattedMessage id="app_title" />
+              </h1>
+            </Link>
+          )}
           <button onClick={toggleMenu} className="focus:outline-none">
             <Icons.Hamburger isOpen={isOpen} />
           </button>
@@ -66,7 +75,21 @@ function NavBar() {
 
       {/* Desktop view*/}
       <nav className="h-16 w-full hidden md:block">
-        <div className="h-full flex justify-end items-center">
+        <div className="h-full flex justify-between items-center">
+          {showGoBack ? (
+            <Link to={whereWeGo}>
+              <h2 className="text-lg font-bold text-info">
+                <FormattedMessage id="goBack" />
+              </h2>
+            </Link>
+          ) : (
+            <Link to="/" onClick={() => isOpen && toggleMenu()}>
+              <h2 className="text-lg font-bold text-info">
+                <FormattedMessage id="app_title" />
+              </h2>
+            </Link>
+          )}
+
           {!isAuthenticated && (
             <>
               <ButtonLink
