@@ -25,16 +25,15 @@ function MultipleSelector({
 
   useEffect(() => {
     if (data) {
-      console.log('categories: ', data)
       setItems(data)
     }
   }, [data])
 
-  const handleSelection = (item) => {
-    if (selectedItems.includes(item)) {
-      setSelectedItems(selectedItems.filter((i) => i !== item))
+  const handleSelection = (itemName) => {
+    if (selectedItems.includes(itemName)) {
+      setSelectedItems(selectedItems.filter((i) => i !== itemName))
     } else if (selectedItems.length < 3) {
-      setSelectedItems([...selectedItems, item])
+      setSelectedItems([...selectedItems, itemName])
     }
   }
 

@@ -35,6 +35,7 @@ export default {
   campaigns: 'Campañas',
   no_results: 'No se encuentran resultados',
   organization_edit: 'Editar organización',
+  save_changes: 'Guardar cambios',
   campaing_create: 'Crear nueva campaña',
   organization_admin: 'Administración',
 }

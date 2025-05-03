@@ -32,12 +32,12 @@ const uploadHandler = (blobInfo) =>
       })
   })
 
-const TextEditor = ({ handleEditorChange, className }) => {
+const TextEditor = ({ handleEditorChange, className, initialValue }) => {
   return (
     <div className={className}>
       <Editor
         tinymceScriptSrc="/tinymce/tinymce.min.js"
-        initialValue=""
+        initialValue={initialValue || ''}
         init={{
           selector: 'textarea',
           file_picker_types: 'image',
@@ -65,8 +65,7 @@ const TextEditor = ({ handleEditorChange, className }) => {
             'wordcount',
           ],
           plugin_base_url: '/tinymce/plugins',
-          toolbar:
-            'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | image | bullist numlist outdent indent | removeformat | help',
+          toolbar: 'undo redo | formatselect | bold italic | image |  help',
           automatic_uploads: true,
           images_upload_handler: uploadHandler,
         }}

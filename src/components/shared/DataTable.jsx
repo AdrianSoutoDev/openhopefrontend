@@ -74,8 +74,10 @@ function DataTable({ source, tableHeaders, mapper, handleClickRow }) {
                       onClick={() => handleClickRow(item.id)}
                       className={`cursor-pointer hover:bg-gray-300 ${items.indexOf(item) % 2 !== 0 ? 'bg-gray-100' : 'bg-white'}`}
                     >
-                      {item.values.map((value) => (
-                        <td className="px-4 py-2 whitespace-nowrap">{value}</td>
+                      {item.values.map((value, index) => (
+                        <td key={index} className="px-4 py-2 whitespace-nowrap">
+                          {value}
+                        </td>
                       ))}
                     </tr>
                   ))}

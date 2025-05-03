@@ -1,8 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const useValidation = (initialState, validations) => {
   const [value, setValue] = useState(initialState)
   const [error, setError] = useState('')
+
+  useEffect(() => {
+    setValue(initialState)
+  }, [initialState])
 
   const validate = () => {
     if (validations.required && !value) {
