@@ -113,7 +113,7 @@ function OrganizationDetail() {
             {/* desktop */}
 
             <div className="mt-3 hidden md:inline-block">
-              <div className="p-5 min-w-72 max-w-2xl float-left">
+              <div className="p-5 min-w-72 max-w-128 float-left">
                 <img
                   src={
                     organization.image

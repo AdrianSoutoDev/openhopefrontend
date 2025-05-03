@@ -91,7 +91,7 @@ function NavBar() {
           )}
 
           {!isAuthenticated && (
-            <>
+            <div className="flex">
               <ButtonLink
                 link="/register"
                 onClick={toggleMenu}
@@ -102,7 +102,7 @@ function NavBar() {
               <ButtonLink link="/login" className="min-w-28 mx-2">
                 <FormattedMessage id="signin" />
               </ButtonLink>
-            </>
+            </div>
           )}
           {isAuthenticated && (
             <Button className="min-w-28 mx-2" onClick={handleLogout}>
