@@ -40,4 +40,8 @@ export default {
   organization_admin: 'Administración',
   editing: 'Editando',
   goBack: 'Volver atrás',
+  campaign_start_date: 'Fecha de inicio',
+  campaign_name: 'Nombre de la campaña',
+  create_campaign: 'Crear campaña',
+  campaign_date_limit: 'Fecha límite',
 }
