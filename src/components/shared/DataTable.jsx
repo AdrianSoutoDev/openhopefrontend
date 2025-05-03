@@ -49,51 +49,59 @@ function DataTable({ source, tableHeaders, mapper, handleClickRow }) {
     <>
       {loading && <Spinner />}
 
-      {!loading && items && (
-        <div className="my-5 w-full">
-          <table className="min-w-full border-collapse border border-gray-300 shadow-xs">
-            <thead className="text-left text-info">
-              <tr className="bg-gray-200">
-                {tableHeaders.map((header) => (
-                  <th className="px-4 py-2">{header}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {items.map((item) => (
-                <tr
-                  key={item.id}
-                  onClick={() => handleClickRow(item.id)}
-                  className={`cursor-pointer hover:bg-gray-300 ${items.indexOf(item) % 2 !== 0 ? 'bg-gray-100' : 'bg-white'}`}
-                >
-                  {item.values.map((value) => (
-                    <td className="px-4 py-2">{value}</td>
+      {!loading && (
+        <>
+          {!items.length ? (
+            <div className="mt-5">
+              <InfoMessage id="no_results" />
+            </div>
+          ) : (
+            <div className="my-5 w-full">
+              <table className="min-w-full border-collapse border border-gray-300 shadow-xs">
+                <thead className="text-left text-info">
+                  <tr className="bg-gray-200">
+                    {tableHeaders.map((header) => (
+                      <th className="px-4 py-2">{header}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {items.map((item) => (
+                    <tr
+                      key={item.id}
+                      onClick={() => handleClickRow(item.id)}
+                      className={`cursor-pointer hover:bg-gray-300 ${items.indexOf(item) % 2 !== 0 ? 'bg-gray-100' : 'bg-white'}`}
+                    >
+                      {item.values.map((value) => (
+                        <td className="px-4 py-2">{value}</td>
+                      ))}
+                    </tr>
                   ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <div
-            className={`flex mt-4 px-2 ${pageInfo.first ? 'justify-end' : pageInfo.last ? 'justify-start' : 'justify-between'}`}
-          >
-            {!pageInfo.first && (
-              <Link onClick={previousPage}>
-                <InfoMessage
-                  id="datatable_previous"
-                  className="text-sm hover:text-emerald-400"
-                />
-              </Link>
-            )}
-            {!pageInfo.last && (
-              <Link onClick={nextPage}>
-                <InfoMessage
-                  id="datatable_next"
-                  className="text-sm hover:text-emerald-400"
-                />
-              </Link>
-            )}
-          </div>
-        </div>
+                </tbody>
+              </table>
+              <div
+                className={`flex mt-4 px-2 ${pageInfo.first ? 'justify-end' : pageInfo.last ? 'justify-start' : 'justify-between'}`}
+              >
+                {!pageInfo.first && (
+                  <Link onClick={previousPage}>
+                    <InfoMessage
+                      id="datatable_previous"
+                      className="text-sm hover:text-emerald-400"
+                    />
+                  </Link>
+                )}
+                {!pageInfo.last && (
+                  <Link onClick={nextPage}>
+                    <InfoMessage
+                      id="datatable_next"
+                      className="text-sm hover:text-emerald-400"
+                    />
+                  </Link>
+                )}
+              </div>
+            </div>
+          )}
+        </>
       )}
     </>
   )

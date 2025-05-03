@@ -107,7 +107,7 @@ function OrganizationDetail() {
             )}
 
             <div className="w-full">
-              <h3 className="text-center md:text-left mt-10 font-semibold text-3xl text-gray-900">
+              <h3 className="text-center mt-10 font-semibold text-3xl text-gray-900">
                 <InfoMessage id="campaigns" />
               </h3>
             </div>

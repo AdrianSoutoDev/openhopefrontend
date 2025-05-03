@@ -33,4 +33,5 @@ export default {
   table_headers_state: 'Estado',
   table_headers_amount_collected: 'Cantidad recaudada',
   campaigns: 'Campañas',
+  no_results: 'No se encuentran resultados',
 }
