@@ -7,6 +7,7 @@ import { getImgFromServer } from '../../utils/utils'
 import DataTable from '../../components/shared/DataTable'
 import { FormattedMessage } from 'react-intl'
 import { InfoMessage } from '../../components/shared/Messages'
+import { ButtonLink } from '../../components/shared/Buttons'
 
 function OrganizationDetail() {
   const { id } = useParams()
@@ -144,7 +145,25 @@ function OrganizationDetail() {
             />
 
             {isAuthenticated && whoAmI === organization.email && (
-              <div className="mt-2">Editar</div>
+              <>
+                <h3 className="text-center mt-10 font-semibold text-3xl text-gray-900">
+                  <InfoMessage id="organization_admin" />
+                </h3>
+                <div className="flex w-full mb-16">
+                  <ButtonLink
+                    to={`/organization/${organization.id}/edit`}
+                    className="my-3 mr-1 w-1/2"
+                  >
+                    <FormattedMessage id="organization_edit" />
+                  </ButtonLink>
+                  <ButtonLink
+                    to={`/organization/${organization.id}/edit`}
+                    className="my-3 ml-1 w-1/2"
+                  >
+                    <FormattedMessage id="campaing_create" />
+                  </ButtonLink>
+                </div>
+              </>
             )}
           </div>
         </div>

@@ -34,4 +34,7 @@ export default {
   table_headers_amount_collected: 'Cantidad recaudada',
   campaigns: 'Campañas',
   no_results: 'No se encuentran resultados',
+  organization_edit: 'Editar organización',
+  campaing_create: 'Crear nueva campaña',
+  organization_admin: 'Administración',
 }
