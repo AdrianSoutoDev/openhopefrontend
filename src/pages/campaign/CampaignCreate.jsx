@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom'
 import useValidation from '../../hooks/useValidation'
 import DatePicker from 'react-datepicker'
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { InfoMessage } from '../../components/shared/Messages'
 import Icons from '../../components/shared/Icons'
@@ -12,6 +12,7 @@ import { format } from 'date-fns'
 import useFetch from '../../hooks/useFetch'
 import MultipleSelector from '../../components/shared/MultipleSelector'
 import PageTitle from '../../components/shared/PageTitle'
+import GoBackContext from '../../context/GoBackContext'
 
 function CampaignCreate() {
   const { id } = useParams()
@@ -23,6 +24,12 @@ function CampaignCreate() {
   const [dateLimit, setDateLimit] = useState(null)
   const [image, setImage] = useState(null)
   const [categoriesSelected, setCategoriesSelected] = useState([])
+  const { setShowGoBack, setWhereWeGo } = useContext(GoBackContext)
+
+  useEffect(() => {
+    setShowGoBack(true)
+    setWhereWeGo(`/organization/${id}`)
+  }, [id, setShowGoBack, setWhereWeGo])
 
   useEffect(() => {
     if (!hasFetched.current) {

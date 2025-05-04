@@ -18,7 +18,12 @@ function App() {
       <ErrorProvider>
         <Router>
           <GoBackProvider>
-            <RestartGoBack routesAvoidToGoBack={['/organization/:id/edit']} />
+            <RestartGoBack
+              routesAvoidToGoBack={[
+                '/organization/:id/edit',
+                '/organization/:id/create-campaign',
+              ]}
+            />
             <IntlProvider locale={locale} messages={messages}>
               <ErrorMessage />
               <Layout />
