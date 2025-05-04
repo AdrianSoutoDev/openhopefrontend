@@ -5,23 +5,24 @@ import { InfoMessage } from './Messages'
 
 function MultipleSelector({
   source,
+  sourceItems,
   selectedItems,
   setSelectedItems,
+  maxCategories,
   className,
 }) {
-  const { endpoint, options } = source
   const { data, loading, fetch } = useFetch()
-  const [items, setItems] = useState([])
+  const [items, setItems] = useState(sourceItems || [])
   const hasFetched = useRef(false)
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef(null)
 
   useEffect(() => {
-    if (!hasFetched.current) {
-      fetch(endpoint, options)
+    if (!hasFetched.current && source) {
+      fetch(source.endpoint, source.options)
       hasFetched.current = true
     }
-  }, [fetch, endpoint, options])
+  }, [fetch, source])
 
   useEffect(() => {
     if (data) {
@@ -29,10 +30,14 @@ function MultipleSelector({
     }
   }, [data])
 
+  useEffect(() => {
+    setItems(sourceItems)
+  }, [sourceItems])
+
   const handleSelection = (itemName) => {
     if (selectedItems.includes(itemName)) {
       setSelectedItems(selectedItems.filter((i) => i !== itemName))
-    } else if (selectedItems.length < 3) {
+    } else if (selectedItems.length < (maxCategories || 3)) {
       setSelectedItems([...selectedItems, itemName])
     }
   }
@@ -63,7 +68,8 @@ function MultipleSelector({
       >
         <div className="flex justify-between">
           <span>
-            <InfoMessage id="select_categories" /> ({selectedItems.length}/3)
+            <InfoMessage id="select_categories" /> {selectedItems.length}/
+            {maxCategories || 3}
           </span>
           <span
             className={`transform transition-transform text-end ${isOpen ? 'rotate-180' : ''}`}

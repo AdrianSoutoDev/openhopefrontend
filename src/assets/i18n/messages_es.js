@@ -21,6 +21,7 @@ export default {
   organization_name: 'Nombre de la organización',
   organization_description: 'Descripción',
   organization_profile_image: 'Imagen de perfil de la organización',
+  campaign_profile_image: 'Imagen principal de campaña',
   add_more_info: 'Añadir más informacion',
   register_success: 'Cuenta creada, ya puedes acceder a tu cuenta',
   label_categories: 'Categorias',
@@ -44,4 +45,6 @@ export default {
   campaign_name: 'Nombre de la campaña',
   create_campaign: 'Crear campaña',
   campaign_date_limit: 'Fecha límite',
+  optional: 'Opcional',
+  organization: 'Organización',
 }
