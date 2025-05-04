@@ -14,7 +14,17 @@ const useCreateCampaign = () => {
     [navigate],
   )
 
-  const create = (organizationId, name, startAt, dateLimit, file) => {
+  const create = (
+    organizationId,
+    name,
+    startAt,
+    dateLimit,
+    economicTarget,
+    minimumDonation,
+    description,
+    categories,
+    file,
+  ) => {
     const endpoint = '/campaigns'
 
     const formData = new FormData()
@@ -23,6 +33,10 @@ const useCreateCampaign = () => {
     formData.append('name', name)
     formData.append('startAt', startAt)
     if (dateLimit) formData.append('dateLimit', dateLimit)
+    if (economicTarget) formData.append('economicTarget', economicTarget)
+    if (minimumDonation) formData.append('minimumDonation', minimumDonation)
+    if (description) formData.append('description', description)
+    if (categories) formData.append('categories', categories.join(','))
 
     formData.append('file', file)
 

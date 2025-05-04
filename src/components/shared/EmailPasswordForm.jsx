@@ -4,7 +4,7 @@ function EmailPasswordForm({ emailValidation, passwordValidation }) {
   return (
     <>
       <label htmlFor="email">
-        <InfoMessage id="email" />
+        <InfoMessage id="email" /> *
       </label>
       <input
         type="email"
@@ -20,7 +20,7 @@ function EmailPasswordForm({ emailValidation, passwordValidation }) {
       )}
 
       <label htmlFor="password">
-        <InfoMessage id="password" />
+        <InfoMessage id="password" /> *
       </label>
       <input
         type="password"

@@ -22,6 +22,7 @@ export default {
   organization_description: 'Descripción',
   organization_profile_image: 'Imagen de perfil de la organización',
   campaign_profile_image: 'Imagen principal de campaña',
+  campaign_economic_taget: 'Objetivo económico',
   add_more_info: 'Añadir más informacion',
   register_success: 'Cuenta creada, ya puedes acceder a tu cuenta',
   label_categories: 'Categorias',
@@ -47,4 +48,7 @@ export default {
   campaign_date_limit: 'Fecha límite',
   optional: 'Opcional',
   organization: 'Organización',
+  integer_error_format: 'El formato es incorrecto',
+  decimal_error_format: 'El formato es incorrecto',
+  campaign_minimum_donation: 'Donación mínima',
 }

@@ -139,7 +139,7 @@ function Register() {
                 {typeAccount === 'organization' && (
                   <>
                     <label htmlFor="name">
-                      <InfoMessage id="organization_name" />
+                      <InfoMessage id="organization_name" /> *
                     </label>
                     <input
                       type="text"

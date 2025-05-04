@@ -13,9 +13,11 @@ import useFetch from '../../hooks/useFetch'
 import MultipleSelector from '../../components/shared/MultipleSelector'
 import PageTitle from '../../components/shared/PageTitle'
 import GoBackContext from '../../context/GoBackContext'
+import TextEditor from '../../components/shared/TextEditor'
 
 function CampaignCreate() {
   const { id } = useParams()
+  const { setShowGoBack, setWhereWeGo } = useContext(GoBackContext)
   const { create, loading } = useCreateCampaign()
   const [organization, setOrganization] = useState({})
   const { data, fetch } = useFetch()
@@ -24,7 +26,7 @@ function CampaignCreate() {
   const [dateLimit, setDateLimit] = useState(null)
   const [image, setImage] = useState(null)
   const [categoriesSelected, setCategoriesSelected] = useState([])
-  const { setShowGoBack, setWhereWeGo } = useContext(GoBackContext)
+  const [description, setDescription] = useState('')
 
   useEffect(() => {
     setShowGoBack(true)
@@ -53,6 +55,20 @@ function CampaignCreate() {
     },
   })
 
+  const economicTargetValidation = useValidation('', {
+    format: /^\d*$/,
+    messages: {
+      format: <FormattedMessage id="integer_error_format" />,
+    },
+  })
+
+  const minimumDonationValidation = useValidation('', {
+    format: /^\d+([.,]\d+)?$/,
+    messages: {
+      format: <FormattedMessage id="decimal_error_format" />,
+    },
+  })
+
   const handleImageChange = (event) => {
     if (event.target.files && event.target.files.length > 0) {
       setImage(event.target.files[0])
@@ -62,8 +78,17 @@ function CampaignCreate() {
   const handleSubmit = (e) => {
     e.preventDefault()
     const isNameValid = nameValidation.validate()
+    const isEconomicTargetValid =
+      !economicTargetValidation.value ||
+      Number(economicTargetValidation.value) === 0 ||
+      economicTargetValidation.validate()
 
-    if (isNameValid) {
+    const isMinimumDonationValid =
+      !minimumDonationValidation.value ||
+      Number(minimumDonationValidation.value) === 0 ||
+      minimumDonationValidation.validate()
+
+    if (isNameValid && isEconomicTargetValid && isMinimumDonationValid) {
       const localDateFormat = 'yyyy-MM-dd'
       const startAtFormated = format(startAt, localDateFormat)
       let dateLimitFormated = dateLimit
@@ -74,6 +99,9 @@ function CampaignCreate() {
         nameValidation.value,
         startAtFormated,
         dateLimitFormated,
+        economicTargetValidation.value,
+        minimumDonationValidation.value,
+        description,
         image,
       )
     }
@@ -88,7 +116,7 @@ function CampaignCreate() {
             <form onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="name">
-                  <InfoMessage id="campaign_name" />
+                  <InfoMessage id="campaign_name" /> *
                 </label>
                 <input
                   type="text"
@@ -107,7 +135,7 @@ function CampaignCreate() {
               <div className="flex flex-col md:flex-row">
                 <div className="w-full">
                   <label htmlFor="startAt">
-                    <InfoMessage id="campaign_start_date" />
+                    <InfoMessage id="campaign_start_date" /> *
                   </label>
                   <div className="flex w-full md:mr-1 text-info rounded-lg shadow-sm border input-primary my-2 px-4 py-2 focus:outline-none">
                     <div className="pt-1">
@@ -127,8 +155,7 @@ function CampaignCreate() {
 
                 <div className="w-full">
                   <label htmlFor="dateLimit">
-                    <InfoMessage id="campaign_date_limit" /> (
-                    <InfoMessage id="optional" />)
+                    <InfoMessage id="campaign_date_limit" />
                   </label>
                   <div className="flex w-full md:ml-1 text-info rounded-lg shadow-sm border input-primary my-2 px-4 py-2 focus:outline-none">
                     <div className="pt-1">
@@ -178,6 +205,59 @@ function CampaignCreate() {
                   />
                 </div>
               </div>
+
+              <div className="md:flex">
+                <div className="w-full md:mr-1">
+                  <label htmlFor="economicTarget">
+                    <InfoMessage id="campaign_economic_taget" />
+                  </label>
+                  <input
+                    type="number"
+                    id="economicTarget"
+                    value={economicTargetValidation.value}
+                    onChange={economicTargetValidation.handleChange}
+                    className="w-full px-4 py-3 my-2 block text-sm shadow-sm rounded-lg text-info border input-primary focus:outline-none hover:border-emerald-400"
+                  />
+                </div>
+
+                <div className="w-full md:mr-1">
+                  <label htmlFor="minimumDonation">
+                    <InfoMessage id="campaign_minimum_donation" />
+                  </label>
+                  <input
+                    type="number"
+                    id="minimumDonation"
+                    value={minimumDonationValidation.value}
+                    onChange={minimumDonationValidation.handleChange}
+                    className="w-full px-4 py-3 my-2 block text-sm shadow-sm rounded-lg text-info border input-primary focus:outline-none hover:border-emerald-400"
+                  />
+                </div>
+              </div>
+              {economicTargetValidation.error && (
+                <p className="text-danger mb-2">
+                  {economicTargetValidation.error}
+                </p>
+              )}
+              {minimumDonationValidation.error && (
+                <p className="text-danger mb-2">
+                  {minimumDonationValidation.error}
+                </p>
+              )}
+
+              <label htmlFor="description">
+                <InfoMessage id="organization_description" />
+              </label>
+              <input
+                type="hidden"
+                id="description"
+                value={description}
+                className="focus:outline-none"
+              />
+
+              <TextEditor
+                handleEditorChange={setDescription}
+                className="my-2"
+              />
 
               <div className="md:flex">
                 <Button

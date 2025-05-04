@@ -97,7 +97,7 @@ function OrganizationEdit() {
             <div className="flex flex-col justify-center items-center">
               <form onSubmit={handleSubmit}>
                 <label htmlFor="name">
-                  <InfoMessage id="organization_name" />
+                  <InfoMessage id="organization_name" /> *
                 </label>
                 <input
                   type="text"
