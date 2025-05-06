@@ -5,7 +5,7 @@ import Spinner from '../../components/shared/Spinner'
 import AuthContext from '../../context/AuthContext'
 import { getImgFromServer } from '../../utils/utils'
 import DataTable from '../../components/shared/DataTable'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, FormattedDate, FormattedNumber } from 'react-intl'
 import { InfoMessage } from '../../components/shared/Messages'
 import { ButtonLink } from '../../components/shared/Buttons'
 import PageTitle from '../../components/shared/PageTitle'
@@ -32,13 +32,37 @@ function OrganizationDetail() {
 
   const campaignsMapper = (objects) => {
     const mappedObjects = []
-
     objects.forEach((obj) => {
       const values = [
         obj.name,
-        obj.startAt,
-        obj.isOnGoing ? 'En Curso' : 'Finalizado en ' + obj.finalizedDate,
-        obj.amountCollected + '€',
+        <FormattedDate
+          value={new Date(obj.startAt)}
+          year="numeric"
+          month="2-digit"
+          day="2-digit"
+        />,
+        obj.isOnGoing ? (
+          <FormattedMessage id="in_course" />
+        ) : (
+          <FormattedMessage
+            id="ended_on"
+            values={{
+              date: (
+                <FormattedDate
+                  value={new Date(obj.finalizedDate)}
+                  year="numeric"
+                  month="2-digit"
+                  day="2-digit"
+                />
+              ),
+            }}
+          />
+        ),
+        <FormattedNumber
+          value={obj.amountCollected}
+          style="currency"
+          currency="EUR"
+        />,
       ]
 
       mappedObjects.push({

@@ -209,7 +209,7 @@ function CampaignCreate() {
               <div className="md:flex">
                 <div className="w-full md:mr-1">
                   <label htmlFor="economicTarget">
-                    <InfoMessage id="campaign_economic_taget" />
+                    <InfoMessage id="campaign_economic_target" />
                   </label>
                   <input
                     type="number"

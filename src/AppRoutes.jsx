@@ -6,6 +6,7 @@ import Register from './pages/Register.jsx'
 import OrganizationDetail from './pages/organization/OrganizationDetail.jsx'
 import OrganizationEdit from './pages/organization/OrganizationEdit.jsx'
 import CampaignCreate from './pages/campaign/CampaignCreate.jsx'
+import CampaignDetail from './pages/campaign/CampaignDetail.jsx'
 
 const AppRoutes = () => (
   <Routes>
@@ -18,6 +19,7 @@ const AppRoutes = () => (
       path="/organization/:id/create-campaign"
       element={<CampaignCreate />}
     />
+    <Route path="/campaign/:id" element={<CampaignDetail />} />
   </Routes>
 )
 

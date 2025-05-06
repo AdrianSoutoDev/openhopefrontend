@@ -1,10 +1,10 @@
 import { FormattedMessage } from 'react-intl'
 
-export const InfoMessage = ({ id, className }) => {
+export const InfoMessage = ({ id, values, className }) => {
   return (
     <>
       <span className={`text-info ${className}`}>
-        <FormattedMessage id={id} />
+        <FormattedMessage id={id} values={values} />
       </span>
     </>
   )
