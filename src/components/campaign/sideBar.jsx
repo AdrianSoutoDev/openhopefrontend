@@ -1,7 +1,14 @@
-function CampaignSideBar({ className }) {
+import DoDonation from './doDonation'
+
+function CampaignSideBar({ className, doDonationData, minimumDonation }) {
   return (
     <>
-      <div className={`md:w-4/12 bg-blue-700 ${className}`}>ads fasd</div>
+      <div className={`md:w-4/12 ${className}`}>
+        <DoDonation
+          suggestions={doDonationData.suggestions}
+          minimumDonation={minimumDonation}
+        />
+      </div>
     </>
   )
 }

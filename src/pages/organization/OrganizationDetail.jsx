@@ -144,6 +144,7 @@ function OrganizationDetail() {
                       ? getImgFromServer(organization.image)
                       : '/img/default-image.jpg'
                   }
+                  className="rounded-sm"
                 />
               </div>
 

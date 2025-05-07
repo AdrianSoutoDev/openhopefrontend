@@ -58,4 +58,10 @@ export default {
   ends_on: 'Finaliza el {date}',
   target: 'Objetivo: {target} ',
   has_been_collected_of_target: 'Se ha recaudado el {percentage} del objetivo',
+  do_donation: 'Realizar donación',
+  suggestions: 'Sugerencias',
+  another_amount: 'Otra Cantidad {minimum}',
+  minimum_amount: '(Cantidad mínima {amount})',
+  donate: 'Donar',
+  insert_in_euros: 'Inserte la cantidad en €',
 }
