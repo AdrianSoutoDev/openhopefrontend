@@ -102,6 +102,7 @@ function CampaignCreate() {
         economicTargetValidation.value,
         minimumDonationValidation.value,
         description,
+        categoriesSelected,
         image,
       )
     }

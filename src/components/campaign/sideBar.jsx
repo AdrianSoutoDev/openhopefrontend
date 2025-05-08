@@ -1,6 +1,12 @@
+import CampaignCategories from './categories'
 import DoDonation from './doDonation'
 
-function CampaignSideBar({ className, doDonationData, minimumDonation }) {
+function CampaignSideBar({
+  className,
+  doDonationData,
+  minimumDonation,
+  categories,
+}) {
   return (
     <>
       <div className={`md:w-4/12 ${className}`}>
@@ -8,6 +14,7 @@ function CampaignSideBar({ className, doDonationData, minimumDonation }) {
           suggestions={doDonationData.suggestions}
           minimumDonation={minimumDonation}
         />
+        <CampaignCategories categories={categories} />
       </div>
     </>
   )

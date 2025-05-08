@@ -72,8 +72,8 @@ function CampaignDetail() {
                     className="rounded-sm"
                   />
                 </div>
-                <div>
-                  <div className="mt-2 text-lg font-medium text-center md:text-start md:float-left md:pl-3">
+                <div className="my-2 mx-3 p-3 border border-gray-200 rounded-sm">
+                  <div className="text-lg font-medium text-center md:text-start md:float-left md:pl-3">
                     {campaign.dateLimit && (
                       <FormattedMessage
                         id="ends_on"
@@ -90,7 +90,7 @@ function CampaignDetail() {
                       />
                     )}
                   </div>
-                  <div className="mt-2 text-lg font-medium flex flex-col text-center md:text-right md:float-right md:pr-3">
+                  <div className="text-lg font-medium flex flex-col text-center md:text-right md:float-right md:pr-3">
                     {campaign.economicTarget && (
                       <>
                         <div>
@@ -151,6 +151,7 @@ function CampaignDetail() {
               <CampaignSideBar
                 doDonationData={doDonationData}
                 minimumDonation={campaign.minimumDonation}
+                categories={campaign.categories}
               />
             </div>
 

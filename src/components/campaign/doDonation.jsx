@@ -17,13 +17,14 @@ function DoDonation({ suggestions, minimumDonation }) {
 
   return (
     <>
-      <div className="flex flex-col mx-2 p-3 border border-gray-200  rounded-sm">
+      <div className="flex flex-col mx-2 p-3 border border-gray-200 rounded-sm">
         <InfoMessage id="do_donation" className="text-xl font-semibold" />
         <FormattedMessage id="suggestions" className="mt-2" />
         <div className="flex w-full justify-center">
           <div className="flex flex-wrap w-full 2xl:w-8/12 justify-between my-5">
-            {suggestions.map((suggestion) => (
+            {suggestions.map((suggestion, index) => (
               <button
+                key={index}
                 onClick={() => handleFastDonation(suggestion)}
                 className="rounded-full w-19 h-19 aspect-square bg-emerald-400 hover:bg-emerald-600 cursor-pointer shadow-sm mx-2 mt-2 flex justify-center items-center"
               >
