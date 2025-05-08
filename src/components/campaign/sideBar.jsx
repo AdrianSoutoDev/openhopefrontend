@@ -1,3 +1,4 @@
+import CampaignMoreCampaigns from './Campaigns'
 import CampaignCategories from './categories'
 import DoDonation from './doDonation'
 
@@ -6,6 +7,8 @@ function CampaignSideBar({
   doDonationData,
   minimumDonation,
   categories,
+  organizationId,
+  campaignId,
 }) {
   return (
     <>
@@ -15,6 +18,10 @@ function CampaignSideBar({
           minimumDonation={minimumDonation}
         />
         <CampaignCategories categories={categories} />
+        <CampaignMoreCampaigns
+          organizationId={organizationId}
+          campaignId={campaignId}
+        />
       </div>
     </>
   )

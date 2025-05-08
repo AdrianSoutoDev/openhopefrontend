@@ -4,7 +4,7 @@ function CampaignCategories({ categories }) {
   return (
     <>
       {categories && categories.length > 0 && (
-        <div className="flex flex-col m-2 p-3 border border-gray-200  rounded-sm">
+        <div className="flex flex-col m-2 p-3 border border-gray-200 rounded-sm">
           <InfoMessage
             id="label_categories"
             className="text-xl font-semibold"

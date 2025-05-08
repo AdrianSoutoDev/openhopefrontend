@@ -64,4 +64,5 @@ export default {
   minimum_amount: '(Cantidad mínima {amount})',
   donate: 'Donar',
   insert_in_euros: 'Inserte la cantidad en €',
+  other_campaigns: 'Otras campañas',
 }

@@ -14,6 +14,10 @@ function CampaignDetail() {
   const hasFetched = useRef(false)
   const [campaign, setCampaign] = useState({})
 
+  useEffect(() => {
+    hasFetched.current = false
+  }, [id])
+
   //TODO Añadir sugerencias de donaciones;
   const doDonationData = {
     suggestions: [0.5, 5, 25],
@@ -152,6 +156,8 @@ function CampaignDetail() {
                 doDonationData={doDonationData}
                 minimumDonation={campaign.minimumDonation}
                 categories={campaign.categories}
+                organizationId={campaign.organization?.id}
+                campaignId={campaign.id}
               />
             </div>
 
