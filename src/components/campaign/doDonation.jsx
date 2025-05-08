@@ -21,7 +21,7 @@ function DoDonation({ suggestions, minimumDonation }) {
         <InfoMessage id="do_donation" className="text-xl font-semibold" />
         <FormattedMessage id="suggestions" className="mt-2" />
         <div className="flex w-full justify-center">
-          <div className="flex flex-wrap w-full 2xl:w-8/12 justify-between my-5">
+          <div className="flex flex-wrap w-full justify-around my-5">
             {suggestions.map((suggestion, index) => (
               <button
                 key={index}
