@@ -1,9 +1,15 @@
 import { FormattedMessage, FormattedNumber, useIntl } from 'react-intl'
 import { InfoMessage } from '../shared/Messages'
 import { useState } from 'react'
-import { Button } from '../shared/Buttons'
+import { Button, ButtonLink } from '../shared/Buttons'
 
-function DoDonation({ suggestions, minimumDonation }) {
+function DoDonation({
+  campaignId,
+  suggestions,
+  minimumDonation,
+  hasBankAccount,
+  isOwner,
+}) {
   const [amount, setAmount] = useState('')
   const intl = useIntl()
 
@@ -24,9 +30,12 @@ function DoDonation({ suggestions, minimumDonation }) {
           <div className="flex flex-wrap w-full justify-around my-5">
             {suggestions.map((suggestion, index) => (
               <button
+                disabled={!hasBankAccount}
                 key={index}
                 onClick={() => handleFastDonation(suggestion)}
-                className="rounded-full w-19 h-19 aspect-square bg-emerald-400 hover:bg-emerald-600 cursor-pointer shadow-sm mx-2 mt-2 flex justify-center items-center"
+                className="rounded-full w-19 h-19 aspect-square bg-emerald-400 hover:bg-emerald-600 cursor-pointer shadow-sm mx-2 mt-2 flex justify-center items-center
+                disabled:bg-gray-300 disabled:hover:bg-gray-300 disabled:text-gray-600 disabled:cursor-default
+                disabled:hover:text-gray-600 disabled:border-gray-600"
               >
                 <span className="text-white font-semibold">
                   <FormattedNumber
@@ -64,14 +73,18 @@ function DoDonation({ suggestions, minimumDonation }) {
           </label>
           <div className="flex flex-wrap">
             <input
+              disabled={!hasBankAccount}
               type="number"
               id="minimumDonation"
               value={amount}
               placeholder={intl.formatMessage({ id: 'insert_in_euros' })}
               onChange={(e) => setAmount(e.target.value)}
-              className="px-4 py-3 mr-2 mt-2 block text-sm shadow-sm rounded-lg text-info border input-primary focus:outline-none hover:border-emerald-400"
+              className="px-4 py-3 mr-2 mt-2 block text-sm shadow-sm rounded-lg text-info border input-primary focus:outline-none hover:border-emerald-400
+              disabled:bg-gray-300 disabled:hover:bg-gray-300 disabled:text-gray-600 disabled:cursor-default
+              disabled:hover:text-gray-600 disabled:border-gray-600"
             />
             <Button
+              disabled={!hasBankAccount}
               onClick={handleDonation}
               type="button"
               className="ml-2 mt-2"
@@ -79,6 +92,16 @@ function DoDonation({ suggestions, minimumDonation }) {
               <FormattedMessage id="donate" />
             </Button>
           </div>
+          {isOwner && !hasBankAccount && (
+            <div>
+              <ButtonLink
+                link={`/openbanking/bank-selection?campaign=${campaignId}`}
+                className="mt-2 w-full"
+              >
+                <FormattedMessage id="enable_donations" />
+              </ButtonLink>
+            </div>
+          )}
         </div>
       </div>
     </>

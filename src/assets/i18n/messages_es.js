@@ -38,6 +38,7 @@ export default {
   no_results: 'No se encuentran resultados',
   organization_edit: 'Editar organización',
   save_changes: 'Guardar cambios',
+  save: 'Guardar',
   campaing_create: 'Crear nueva campaña',
   organization_admin: 'Administración',
   editing: 'Editando',
@@ -65,4 +66,7 @@ export default {
   donate: 'Donar',
   insert_in_euros: 'Inserte la cantidad en €',
   other_campaigns: 'Otras campañas',
+  enable_donations: 'Habilitar donaciones',
+  select_an_option: 'Selecciona una opción',
+  access: 'Acceder',
 }

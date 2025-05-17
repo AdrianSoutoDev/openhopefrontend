@@ -9,6 +9,8 @@ function CampaignSideBar({
   categories,
   organizationId,
   campaignId,
+  hasBankAccount,
+  isOwner,
 }) {
   return (
     <>
@@ -16,6 +18,9 @@ function CampaignSideBar({
         <DoDonation
           suggestions={doDonationData.suggestions}
           minimumDonation={minimumDonation}
+          hasBankAccount={hasBankAccount}
+          isOwner={isOwner}
+          campaignId={campaignId}
         />
         <CampaignCategories categories={categories} />
         <CampaignMoreCampaigns

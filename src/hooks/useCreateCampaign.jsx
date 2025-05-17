@@ -9,7 +9,7 @@ const useCreateCampaign = () => {
   const onSuccess = useCallback(
     (data) => {
       const id = data.id
-      navigate(`/campaign/${id}`)
+      navigate(`/openbanking/bank-selection?campaign=${id}`)
     },
     [navigate],
   )

@@ -7,6 +7,7 @@ import OrganizationDetail from './pages/organization/OrganizationDetail.jsx'
 import OrganizationEdit from './pages/organization/OrganizationEdit.jsx'
 import CampaignCreate from './pages/campaign/CampaignCreate.jsx'
 import CampaignDetail from './pages/campaign/CampaignDetail.jsx'
+import BankAccountSelection from './pages/openbanking/BankAccountSelection.jsx'
 
 const AppRoutes = () => (
   <Routes>
@@ -20,6 +21,10 @@ const AppRoutes = () => (
       element={<CampaignCreate />}
     />
     <Route path="/campaign/:id" element={<CampaignDetail />} />
+    <Route
+      path="/openbanking/bank-selection"
+      element={<BankAccountSelection />}
+    />
   </Routes>
 )
 

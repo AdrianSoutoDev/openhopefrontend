@@ -1,18 +1,20 @@
 import { Link, useParams } from 'react-router-dom'
 import useFetch from '../../hooks/useFetch'
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import Spinner from '../../components/shared/Spinner'
 import { getImgFromServer } from '../../utils/utils'
 import { FormattedDate, FormattedNumber, FormattedMessage } from 'react-intl'
 import CampaignSideBar from '../../components/campaign/sideBar'
 import CampaignDonations from '../../components/campaign/donations'
 import { InfoMessage } from '../../components/shared/Messages'
+import AuthContext from '../../context/AuthContext'
 
 function CampaignDetail() {
   const { id } = useParams()
   const { data, loading, fetch } = useFetch()
   const hasFetched = useRef(false)
   const [campaign, setCampaign] = useState({})
+  const { isAuthenticated, whoAmI } = useContext(AuthContext)
 
   useEffect(() => {
     hasFetched.current = false
@@ -145,10 +147,12 @@ function CampaignDetail() {
                     className="hidden md:block mx-3"
                   />
                 ) : (
-                  <InfoMessage
-                    id="be_the_first"
-                    className="text-2xl font-semibold w-full text-center my-5 hidden md:block"
-                  />
+                  campaign.hasBankAccount && (
+                    <InfoMessage
+                      id="be_the_first"
+                      className="text-2xl font-semibold w-full text-center my-5 hidden md:block"
+                    />
+                  )
                 )}
               </div>
 
@@ -158,6 +162,12 @@ function CampaignDetail() {
                 categories={campaign.categories}
                 organizationId={campaign.organization?.id}
                 campaignId={campaign.id}
+                hasBankAccount={campaign.hasBankAccount}
+                isOwner={
+                  isAuthenticated &&
+                  campaign.organization &&
+                  whoAmI === campaign.organization.email
+                }
               />
             </div>
 
