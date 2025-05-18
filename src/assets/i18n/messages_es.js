@@ -69,4 +69,5 @@ export default {
   enable_donations: 'Habilitar donaciones',
   select_an_option: 'Selecciona una opción',
   access: 'Acceder',
+  accept_consents: 'Aceptar Permisos',
 }

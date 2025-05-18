@@ -9,17 +9,20 @@ import Spinner from '../../components/shared/Spinner'
 function BankAccountSelection() {
   const [searchParams] = useSearchParams()
   const campaignId = searchParams.get('campaign')
+  const aspspParam = searchParams.get('aspsp')
+
   const [bankAccounts, setBankAccounts] = useState()
   const [accountSelected, setAccountSelected] = useState()
 
   const { data: dataAccounts, fetch: fetchAccounts } = useFetch()
   const hasFetchedAccounts = useRef(false)
 
-  const { data, loading, fetch } = useFetch()
   const [aspspSelected, setAspspSelected] = useState()
-  const hasFetched = useRef(false)
 
   const { data: authData, fetch: authfetch } = useFetch()
+
+  const { data, loading, fetch } = useFetch()
+  const hasFetched = useRef(false)
 
   // const [aspsps, setAspsps] = useState([])
   const [aspsps, setAspsps] = useState([
@@ -50,6 +53,13 @@ function BankAccountSelection() {
   }, [data])
 
   useEffect(() => {
+    if (aspsps) {
+      const aspspFinded = aspsps.find((aspsp) => aspsp.code === aspspParam)
+      setAspspSelected(aspspFinded)
+    }
+  }, [aspspParam, aspsps])
+
+  useEffect(() => {
     if (dataAccounts) {
       setBankAccounts(dataAccounts)
     }
@@ -57,7 +67,9 @@ function BankAccountSelection() {
 
   useEffect(() => {
     if (aspspSelected && !hasFetchedAccounts.current) {
-      const endpoint = `/providers/${aspspSelected.provider}/${aspspSelected.code}/accounts`
+      let endpoint = `/providers/${aspspSelected.provider}/${aspspSelected.code}/accounts`
+      endpoint = campaignId ? `${endpoint}?campaign=${campaignId}` : endpoint
+
       const options = {
         method: 'GET',
         credentials: 'include',
@@ -65,7 +77,7 @@ function BankAccountSelection() {
       fetchAccounts(endpoint, options)
       hasFetchedAccounts.current = true
     }
-  }, [aspspSelected, fetchAccounts])
+  }, [aspspSelected, campaignId, fetchAccounts])
 
   useEffect(() => {
     if (authData) {
@@ -97,6 +109,11 @@ function BankAccountSelection() {
     console.log('saving account: ', accountSelected)
   }
 
+  const handleAcceptConsent = () => {
+    if (bankAccounts.redirection)
+      window.location.href = bankAccounts.redirection
+  }
+
   return (
     <>
       {loading ? (
@@ -110,6 +127,7 @@ function BankAccountSelection() {
               <SimpleSelector
                 sourceItems={aspsps}
                 setItemSelected={handleAspspSelectedChange}
+                defaultItem={aspspSelected}
               />
             </div>
 
@@ -126,7 +144,9 @@ function BankAccountSelection() {
             <div className="flex flex-col justify-center items-center">
               <SimpleSelector
                 disabled={
-                  !bankAccounts || (bankAccounts && bankAccounts.notAllowed)
+                  !bankAccounts ||
+                  (bankAccounts &&
+                    (bankAccounts.notAllowed || bankAccounts.redirection))
                 }
                 sourceItems={bankAccounts?.accounts}
                 setItemSelected={setAccountSelected}
@@ -139,6 +159,14 @@ function BankAccountSelection() {
               disabled={!accountSelected}
             >
               <FormattedMessage id="save" />
+            </Button>
+
+            <Button
+              type="button"
+              onClick={handleAcceptConsent}
+              disabled={!(bankAccounts && bankAccounts.redirection)}
+            >
+              <FormattedMessage id="accept_consents" />
             </Button>
           </div>
         </div>

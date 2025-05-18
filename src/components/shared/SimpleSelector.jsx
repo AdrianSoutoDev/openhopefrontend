@@ -9,13 +9,14 @@ function SimpleSelector({
   setItemSelected,
   className,
   disabled,
+  defaultItem,
 }) {
   const { data, loading, fetch } = useFetch()
   const [items, setItems] = useState(sourceItems || [])
   const hasFetched = useRef(false)
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef(null)
-  const [itemSelection, setItemSelection] = useState()
+  const [itemSelection, setItemSelection] = useState(defaultItem || null)
 
   useEffect(() => {
     if (!hasFetched.current && source) {
@@ -29,6 +30,12 @@ function SimpleSelector({
       setItems(data)
     }
   }, [data])
+
+  useEffect(() => {
+    if (defaultItem) {
+      setItemSelection(defaultItem)
+    }
+  }, [defaultItem])
 
   useEffect(() => {
     setItems(sourceItems)
@@ -60,7 +67,7 @@ function SimpleSelector({
 
   return (
     <div
-      // Añadir clases para disabled
+      //TODO Añadir clases para disabled
       className={`${className} relative ${disabled ? 'pointer-events-none' : ''}`}
       ref={dropdownRef}
     >
