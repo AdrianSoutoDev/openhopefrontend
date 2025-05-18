@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import useFetch from '../../hooks/useFetch'
 import SimpleSelector from '../../components/shared/SimpleSelector'
 import { Button } from '../../components/shared/Buttons'
@@ -10,6 +10,7 @@ function BankAccountSelection() {
   const [searchParams] = useSearchParams()
   const campaignId = searchParams.get('campaign')
   const aspspParam = searchParams.get('aspsp')
+  const navigate = useNavigate()
 
   const [bankAccounts, setBankAccounts] = useState()
   const [accountSelected, setAccountSelected] = useState()
@@ -20,6 +21,8 @@ function BankAccountSelection() {
   const [aspspSelected, setAspspSelected] = useState()
 
   const { data: authData, fetch: authfetch } = useFetch()
+
+  const { data: dataSave, loading: loadingSave, fetch: fetchSave } = useFetch()
 
   const { data, loading, fetch } = useFetch()
   const hasFetched = useRef(false)
@@ -106,8 +109,30 @@ function BankAccountSelection() {
   }
 
   const handleSaveAccount = () => {
-    console.log('saving account: ', accountSelected)
+    if (campaignId) {
+      updateCampaign()
+    }
   }
+
+  const updateCampaign = () => {
+    let endpoint = `/campaigns/${campaignId}`
+
+    const options = {
+      method: 'PUT',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(accountSelected),
+    }
+
+    fetchSave(endpoint, options)
+  }
+
+  useEffect(() => {
+    if (dataSave) {
+      if (campaignId) navigate(`/campaign/${campaignId}`)
+    }
+  }, [campaignId, dataSave, navigate])
 
   const handleAcceptConsent = () => {
     if (bankAccounts.redirection)
