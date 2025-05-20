@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import useAspsps from './useAspsps'
 import useFetch from './useFetch'
 
-const useBankAccountSelection = (aspspParam, campaignId) => {
+const useBankAccountSelection = (aspspParam, { campaignId, userId }) => {
   const [bankAccounts, setBankAccounts] = useState()
   const [accountSelected, setAccountSelected] = useState()
   const { data, loading: loadingBankAccounts, fetch } = useFetch()
