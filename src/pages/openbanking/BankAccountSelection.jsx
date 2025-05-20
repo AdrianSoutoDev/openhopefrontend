@@ -1,86 +1,33 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import useFetch from '../../hooks/useFetch'
 import SimpleSelector from '../../components/shared/SimpleSelector'
 import { Button } from '../../components/shared/Buttons'
 import { FormattedMessage } from 'react-intl'
 import Spinner from '../../components/shared/Spinner'
+import useBankAccountSelection from '../../hooks/useBankAccountSelection'
 
 function BankAccountSelection() {
   const [searchParams] = useSearchParams()
   const campaignId = searchParams.get('campaign')
   const aspspParam = searchParams.get('aspsp')
-  const navigate = useNavigate()
-
-  const [bankAccounts, setBankAccounts] = useState()
-  const [accountSelected, setAccountSelected] = useState()
-
-  const { data: dataAccounts, fetch: fetchAccounts } = useFetch()
-  const hasFetchedAccounts = useRef(false)
-
-  const [aspspSelected, setAspspSelected] = useState()
 
   const { data: authData, fetch: authfetch } = useFetch()
-
   const { data: dataSave, loading: loadingSave, fetch: fetchSave } = useFetch()
 
-  const { data, loading, fetch } = useFetch()
-  const hasFetched = useRef(false)
+  const navigate = useNavigate()
 
-  // const [aspsps, setAspsps] = useState([])
-  const [aspsps, setAspsps] = useState([
-    { name: 'BANCO CETELEM, S.A.', code: 'CETELEM', provider: 'REDSSYS' },
-    {
-      name: 'CBNK Banco de Colectivos, S.A',
-      code: 'CBNK',
-      provider: 'REDSSYS',
-    },
-    { name: 'EVO BANCO S.A.U.', code: 'EVOBANCO', provider: 'REDSSYS' },
-  ])
-
-  // useEffect(() => {
-  //   if (!hasFetched.current) {
-  //     const endpoint = '/providers/aspsp'
-  //     const options = {
-  //       method: 'GET',
-  //     }
-  //     fetch(endpoint, options)
-  //     hasFetched.current = true
-  //   }
-  // }, [fetch])
-
-  useEffect(() => {
-    if (data) {
-      setAspsps(data)
-    }
-  }, [data])
-
-  useEffect(() => {
-    if (aspsps) {
-      const aspspFinded = aspsps.find((aspsp) => aspsp.code === aspspParam)
-      setAspspSelected(aspspFinded)
-    }
-  }, [aspspParam, aspsps])
-
-  useEffect(() => {
-    if (dataAccounts) {
-      setBankAccounts(dataAccounts)
-    }
-  }, [dataAccounts])
-
-  useEffect(() => {
-    if (aspspSelected && !hasFetchedAccounts.current) {
-      let endpoint = `/providers/${aspspSelected.provider}/${aspspSelected.code}/accounts`
-      endpoint = campaignId ? `${endpoint}?campaign=${campaignId}` : endpoint
-
-      const options = {
-        method: 'GET',
-        credentials: 'include',
-      }
-      fetchAccounts(endpoint, options)
-      hasFetchedAccounts.current = true
-    }
-  }, [aspspSelected, campaignId, fetchAccounts])
+  const {
+    aspsps,
+    loadignAspsps,
+    aspspSelected,
+    setAspspSelected,
+    bankAccounts,
+    loadingBankAccounts,
+    clearBankAccounts,
+    accountSelected,
+    setAccountSelected,
+  } = useBankAccountSelection(aspspParam, campaignId)
 
   useEffect(() => {
     if (authData) {
@@ -99,19 +46,6 @@ function BankAccountSelection() {
     }
 
     authfetch(endpoint, options)
-  }
-
-  const handleAspspSelectedChange = (aspsp) => {
-    setAccountSelected(null)
-    setBankAccounts(null)
-    hasFetchedAccounts.current = false
-    setAspspSelected(aspsp)
-  }
-
-  const handleSaveAccount = () => {
-    if (campaignId) {
-      updateCampaign()
-    }
   }
 
   const updateCampaign = () => {
@@ -139,9 +73,20 @@ function BankAccountSelection() {
       window.location.href = bankAccounts.redirection
   }
 
+  const handleAspspSelectedChange = (aspsp) => {
+    clearBankAccounts()
+    setAspspSelected(aspsp)
+  }
+
+  const handleSaveAccount = () => {
+    if (campaignId) {
+      updateCampaign()
+    }
+  }
+
   return (
     <>
-      {loading ? (
+      {loadignAspsps ? (
         <div className="h-128 flex justify-center items-center">
           <Spinner />
         </div>
