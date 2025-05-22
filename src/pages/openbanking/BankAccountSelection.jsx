@@ -1,20 +1,27 @@
-import { useEffect } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
-import useFetch from '../../hooks/useFetch'
+import { useSearchParams } from 'react-router-dom'
 import SimpleSelector from '../../components/shared/SimpleSelector'
 import { Button } from '../../components/shared/Buttons'
 import { FormattedMessage } from 'react-intl'
 import Spinner from '../../components/shared/Spinner'
 import useBankAccountSelection from '../../hooks/useBankAccountSelection'
 import useSaveBankAccount from '../../hooks/useSaveBankAccount'
+import useOAuth from '../../hooks/useOAuth'
 
 function BankAccountSelection() {
   const [searchParams] = useSearchParams()
   const campaignId = searchParams.get('campaign')
+  const userId = searchParams.get('user')
   const aspspParam = searchParams.get('aspsp')
 
-  const { data: authData, fetch: authfetch } = useFetch()
-  const { saveBankAccount } = useSaveBankAccount({ campaignId: campaignId })
+  const { oAuthAutenticate, loadingOAuth } = useOAuth({
+    campaignId: campaignId,
+    userId: userId,
+  })
+
+  const { saveBankAccount, loadingSaveBankAccount } = useSaveBankAccount({
+    campaignId: campaignId,
+    userId: userId,
+  })
 
   const {
     aspsps,
@@ -26,26 +33,10 @@ function BankAccountSelection() {
     clearBankAccounts,
     accountSelected,
     setAccountSelected,
-  } = useBankAccountSelection(aspspParam, { campaignId: campaignId })
-
-  useEffect(() => {
-    if (authData) {
-      window.location.href = authData.uri
-    }
-  }, [authData])
-
-  const handleAccess = () => {
-    let endpoint = `/providers/${aspspSelected.provider}/${aspspSelected.code}/oauth`
-    if (campaignId) {
-      endpoint = `${endpoint}?campaign=${campaignId}`
-    }
-
-    const options = {
-      method: 'GET',
-    }
-
-    authfetch(endpoint, options)
-  }
+  } = useBankAccountSelection(aspspParam, {
+    campaignId: campaignId,
+    userId: userId,
+  })
 
   const handleAcceptConsent = () => {
     if (bankAccounts.redirection)
@@ -59,6 +50,10 @@ function BankAccountSelection() {
 
   const handleSaveAccount = () => {
     saveBankAccount(accountSelected)
+  }
+
+  const handleAccess = () => {
+    oAuthAutenticate(aspspSelected)
   }
 
   return (
