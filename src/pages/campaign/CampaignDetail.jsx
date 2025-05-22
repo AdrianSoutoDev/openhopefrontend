@@ -1,6 +1,5 @@
 import { Link, useParams } from 'react-router-dom'
-import useFetch from '../../hooks/useFetch'
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useContext } from 'react'
 import Spinner from '../../components/shared/Spinner'
 import { getImgFromServer } from '../../utils/utils'
 import { FormattedDate, FormattedNumber, FormattedMessage } from 'react-intl'
@@ -8,17 +7,12 @@ import CampaignSideBar from '../../components/campaign/sideBar'
 import CampaignDonations from '../../components/campaign/donations'
 import { InfoMessage } from '../../components/shared/Messages'
 import AuthContext from '../../context/AuthContext'
+import useCampaign from '../../hooks/useCampaign'
 
 function CampaignDetail() {
   const { id } = useParams()
-  const { data, loading, fetch } = useFetch()
-  const hasFetched = useRef(false)
-  const [campaign, setCampaign] = useState({})
+  const { campaign, loading } = useCampaign(id)
   const { isAuthenticated, whoAmI } = useContext(AuthContext)
-
-  useEffect(() => {
-    hasFetched.current = false
-  }, [id])
 
   //TODO Añadir sugerencias de donaciones;
   const doDonationData = {
@@ -28,21 +22,6 @@ function CampaignDetail() {
   function RenderHTML({ htmlString }) {
     return <div dangerouslySetInnerHTML={{ __html: htmlString }} />
   }
-
-  useEffect(() => {
-    if (!hasFetched.current) {
-      const endpoint = `/campaigns/${id}`
-      const options = { method: 'GET' }
-      fetch(endpoint, options)
-      hasFetched.current = true
-    }
-  }, [fetch, id])
-
-  useEffect(() => {
-    if (data) {
-      setCampaign(data)
-    }
-  }, [data])
 
   return (
     <>
