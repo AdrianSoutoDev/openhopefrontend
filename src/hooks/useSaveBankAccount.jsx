@@ -6,16 +6,18 @@ const useSaveBankAccount = ({ campaignId, userId }) => {
   const { data, loading: loadingSaveBankAccount, fetch } = useFetch()
   const navigate = useNavigate()
 
-  const saveBankAccount = (accountSelected) => {
+  const saveBankAccount = (accountSelected, aspspSelected) => {
     if (campaignId) {
-      updateCampaignBankAccount(accountSelected)
+      updateCampaignBankAccount(accountSelected, aspspSelected)
     } else if (userId) {
       //Add user bank account
     }
   }
 
-  const updateCampaignBankAccount = (accountSelected) => {
+  const updateCampaignBankAccount = (accountSelected, aspspSelected) => {
     let endpoint = `/campaigns/${campaignId}`
+
+    accountSelected.aspsp = aspspSelected
 
     const options = {
       method: 'PUT',

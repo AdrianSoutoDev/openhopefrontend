@@ -70,4 +70,18 @@ export default {
   select_an_option: 'Selecciona una opción',
   access: 'Acceder',
   accept_consents: 'Aceptar Permisos',
+  select_bank_entity_campaign:
+    'Selecciona el banco donde quieres que se depositen las donaciones a esta campaña.',
+  bank_connection: 'Open banking',
+  selection_bank_entity: 'Seleccione su entidad bancaria',
+  selection_bank_account: 'Seleccione su cuenta bancaria',
+  select_bank_account: 'Ya puedes seleccionar tu cuenta bancaria',
+  bank_entity_label: 'Entidad bancaria',
+  bank_account_label: 'Cuenta bancaria',
+  save_bank_account_campaign:
+    'Pulsa en guardar para asignar esta cuenta bancaría a tu campaña: ',
+  authenticate_bank_entity:
+    'Necesitamos que te identifiques a través de tu entidad bancaria, pulsa en Acceder para autenticarte',
+  accept_consent_bank_entity:
+    'Es necesario que aceptes los permisos para poder acceder a tu información, pulsa en Aceptar permisos para seguir adelante.',
 }

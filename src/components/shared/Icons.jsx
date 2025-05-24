@@ -75,6 +75,28 @@ const Icons = {
       ></path>
     </svg>
   ),
+
+  Info: ({ className }) => (
+    <div className={`${className}`}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="48"
+        height="48"
+        viewBox="0 0 48 48"
+      >
+        <circle
+          cx="24"
+          cy="24"
+          r="20"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="4"
+        />
+        <circle cx="24" cy="14" r="2" fill="currentColor" />
+        <rect x="22" y="20" width="4" height="12" fill="currentColor" />
+      </svg>
+    </div>
+  ),
 }
 
 export default Icons

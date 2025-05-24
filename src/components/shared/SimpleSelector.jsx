@@ -10,6 +10,7 @@ function SimpleSelector({
   className,
   disabled,
   defaultItem,
+  emptyText,
 }) {
   const { data, loading, fetch } = useFetch()
   const [items, setItems] = useState(sourceItems || [])
@@ -66,19 +67,20 @@ function SimpleSelector({
   }, [isOpen])
 
   return (
-    <div
-      //TODO Añadir clases para disabled
-      className={`${className} relative ${disabled ? 'pointer-events-none' : ''}`}
-      ref={dropdownRef}
-    >
+    <div className="relative" ref={dropdownRef}>
       <button
+        disabled={disabled}
         type="button"
-        className="block w-full px-4 py-3 my-2 text-start text-sm shadow-sm rounded-lg text-info border border-gray-400 cursor-pointer focus:outline-none hover:border-emerald-400"
+        className={`${className} block w-full px-4 py-3 my-2 text-start text-sm shadow-sm rounded-lg text-info border border-gray-400 cursor-pointer focus:outline-none hover:border-emerald-400
+            disabled:bg-gray-300 disabled:hover:bg-gray-300 disabled:text-gray-600 disabled:cursor-default
+              disabled:hover:text-gray-600 disabled:border-gray-600`}
         onClick={toggleDropdown}
       >
         <div className="flex justify-between">
-          <span>
-            {itemSelection?.name || <InfoMessage id="select_an_option" />}
+          <span className="block text-ellipsis whitespace-break-spaces">
+            {itemSelection?.name || emptyText || (
+              <InfoMessage id="select_an_option" />
+            )}
           </span>
           <span
             className={`transform transition-transform text-end ${isOpen ? 'rotate-180' : ''}`}
