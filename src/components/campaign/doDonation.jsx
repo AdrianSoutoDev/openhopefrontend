@@ -9,6 +9,7 @@ function DoDonation({
   minimumDonation,
   hasBankAccount,
   isOwner,
+  donationsDisabled,
 }) {
   const [amount, setAmount] = useState('')
   const intl = useIntl()
@@ -30,7 +31,7 @@ function DoDonation({
           <div className="flex flex-wrap w-full justify-around my-5">
             {suggestions.map((suggestion, index) => (
               <button
-                disabled={!hasBankAccount}
+                disabled={!hasBankAccount || donationsDisabled}
                 key={index}
                 onClick={() => handleFastDonation(suggestion)}
                 className="rounded-full w-19 h-19 aspect-square bg-emerald-400 hover:bg-emerald-600 cursor-pointer shadow-sm mx-2 mt-2 flex justify-center items-center
@@ -73,7 +74,7 @@ function DoDonation({
           </label>
           <div className="flex flex-wrap">
             <input
-              disabled={!hasBankAccount}
+              disabled={!hasBankAccount || donationsDisabled}
               type="number"
               id="minimumDonation"
               value={amount}
@@ -84,7 +85,7 @@ function DoDonation({
               disabled:hover:text-gray-600 disabled:border-gray-600"
             />
             <Button
-              disabled={!hasBankAccount}
+              disabled={!hasBankAccount || donationsDisabled}
               onClick={handleDonation}
               type="button"
               className="ml-2 mt-2"
@@ -92,7 +93,7 @@ function DoDonation({
               <FormattedMessage id="donate" />
             </Button>
           </div>
-          {isOwner && !hasBankAccount && (
+          {isOwner && !hasBankAccount && !donationsDisabled && (
             <div>
               <ButtonLink
                 link={`/openbanking/bank-selection?campaign=${campaignId}`}

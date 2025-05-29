@@ -59,21 +59,36 @@ function CampaignDetail() {
                 </div>
                 <div className="my-2 mx-3 p-3 border border-gray-200 rounded-sm">
                   <div className="text-lg font-medium text-center md:text-start md:float-left md:pl-3">
-                    {campaign.dateLimit && (
-                      <FormattedMessage
-                        id="ends_on"
-                        values={{
-                          date: (
-                            <FormattedDate
-                              value={new Date(campaign.dateLimit)}
-                              year="numeric"
-                              month="2-digit"
-                              day="2-digit"
-                            />
-                          ),
-                        }}
-                      />
-                    )}
+                    {campaign.dateLimit &&
+                      (campaign.isOnGoing ? (
+                        <FormattedMessage
+                          id="ends_on"
+                          values={{
+                            date: (
+                              <FormattedDate
+                                value={new Date(campaign.dateLimit)}
+                                year="numeric"
+                                month="2-digit"
+                                day="2-digit"
+                              />
+                            ),
+                          }}
+                        />
+                      ) : (
+                        <FormattedMessage
+                          id="ended_on"
+                          values={{
+                            date: (
+                              <FormattedDate
+                                value={new Date(campaign.finalizedDate)}
+                                year="numeric"
+                                month="2-digit"
+                                day="2-digit"
+                              />
+                            ),
+                          }}
+                        />
+                      ))}
                   </div>
                   <div className="text-lg font-medium flex flex-col text-center md:text-right md:float-right md:pr-3">
                     {campaign.economicTarget && (
@@ -147,6 +162,7 @@ function CampaignDetail() {
                   campaign.organization &&
                   whoAmI === campaign.organization.email
                 }
+                donationsDisabled={!campaign.isOnGoing}
               />
             </div>
 

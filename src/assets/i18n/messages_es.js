@@ -55,7 +55,7 @@ export default {
   we_have_already_raised: 'Ya hemos recaudado {amount}',
   be_the_first: '¡Se el primero en realizar una donación a esta campaña!',
   in_course: 'En curso',
-  ended_on: 'Finalizado en {date}',
+  ended_on: 'Finalizado el {date}',
   ends_on: 'Finaliza el {date}',
   target: 'Objetivo: {target} ',
   has_been_collected_of_target: 'Se ha recaudado el {percentage} del objetivo',

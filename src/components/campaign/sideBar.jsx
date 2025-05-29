@@ -11,6 +11,7 @@ function CampaignSideBar({
   campaignId,
   hasBankAccount,
   isOwner,
+  donationsDisabled,
 }) {
   return (
     <>
@@ -21,6 +22,7 @@ function CampaignSideBar({
           hasBankAccount={hasBankAccount}
           isOwner={isOwner}
           campaignId={campaignId}
+          donationsDisabled={donationsDisabled}
         />
         <CampaignCategories categories={categories} />
         <CampaignMoreCampaigns
