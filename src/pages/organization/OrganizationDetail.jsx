@@ -161,32 +161,36 @@ function OrganizationDetail() {
               </h3>
             </div>
 
-            <DataTable
-              source={campaignsSource}
-              tableHeaders={campaignTableHeaders}
-              mapper={campaignsMapper}
-              handleClickRow={clickRow}
-            />
-
-            {isAuthenticated && whoAmI === organization.email && (
+            {organization?.id && (
               <>
-                <h3 className="text-center mt-10 font-semibold text-3xl text-gray-900">
-                  <InfoMessage id="organization_admin" />
-                </h3>
-                <div className="flex flex-col mt-5 md:flex-row w-full mb-16">
-                  <ButtonLink
-                    link={`/organization/${organization.id}/edit`}
-                    className="md:mr-1 w-full md:w-1/2"
-                  >
-                    <FormattedMessage id="organization_edit" />
-                  </ButtonLink>
-                  <ButtonLink
-                    link={`/organization/${organization.id}/create-campaign`}
-                    className="mt-2 md:mt-0 md:ml-1 w-full md:w-1/2"
-                  >
-                    <FormattedMessage id="campaing_create" />
-                  </ButtonLink>
-                </div>
+                <DataTable
+                  source={campaignsSource}
+                  tableHeaders={campaignTableHeaders}
+                  mapper={campaignsMapper}
+                  handleClickRow={clickRow}
+                />
+
+                {isAuthenticated && whoAmI === organization.email && (
+                  <>
+                    <h3 className="text-center mt-10 font-semibold text-3xl text-gray-900">
+                      <InfoMessage id="organization_admin" />
+                    </h3>
+                    <div className="flex flex-col mt-5 md:flex-row w-full mb-16">
+                      <ButtonLink
+                        link={`/organization/${organization.id}/edit`}
+                        className="md:mr-1 w-full md:w-1/2"
+                      >
+                        <FormattedMessage id="organization_edit" />
+                      </ButtonLink>
+                      <ButtonLink
+                        link={`/organization/${organization.id}/create-campaign`}
+                        className="mt-2 md:mt-0 md:ml-1 w-full md:w-1/2"
+                      >
+                        <FormattedMessage id="campaing_create" />
+                      </ButtonLink>
+                    </div>
+                  </>
+                )}
               </>
             )}
           </div>
