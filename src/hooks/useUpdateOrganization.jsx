@@ -10,7 +10,7 @@ const useUpdateOrganization = (id) => {
     navigate(`/organization/${id}`)
   }, [navigate, id])
 
-  const update = (name, description, categories, file) => {
+  const update = (name, description, categories, file, topics) => {
     const endpoint = '/organizations'
     const formData = new FormData()
 
@@ -19,6 +19,7 @@ const useUpdateOrganization = (id) => {
     formData.append('description', description)
     formData.append('categories', categories.join(','))
     formData.append('file', file)
+    formData.append('topics', topics.join(','))
 
     const body = formData
 

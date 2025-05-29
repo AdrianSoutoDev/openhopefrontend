@@ -84,4 +84,6 @@ export default {
     'Necesitamos que te identifiques a través de tu entidad bancaria, pulsa en Acceder para autenticarte',
   accept_consent_bank_entity:
     'Es necesario que aceptes los permisos para poder acceder a tu información, pulsa en Aceptar permisos para seguir adelante.',
+  label_topics: 'Palabras clave para el buscador',
+  topics_max_exceeded: 'Número de palabras clave excedido',
 }

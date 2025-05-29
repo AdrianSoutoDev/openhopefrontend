@@ -18,6 +18,7 @@ const useRegister = () => {
     categories,
     file,
     typeAccount,
+    topics,
   ) => {
     const isUserRegister = typeAccount === 'user'
 
@@ -31,6 +32,7 @@ const useRegister = () => {
       formData.append('name', name)
       formData.append('description', description)
       formData.append('categories', categories.join(','))
+      formData.append('topics', topics.join(','))
       formData.append('file', file)
     }
 
