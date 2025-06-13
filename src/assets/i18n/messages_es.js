@@ -35,6 +35,7 @@ export default {
   table_headers_state: 'Estado',
   table_headers_amount_collected: 'Cantidad recaudada',
   campaigns: 'Campañas',
+  organizations: 'Organizaciones',
   no_results: 'No se encuentran resultados',
   organization_edit: 'Editar organización',
   save_changes: 'Guardar cambios',
@@ -86,4 +87,7 @@ export default {
     'Es necesario que aceptes los permisos para poder acceder a tu información, pulsa en Aceptar permisos para seguir adelante.',
   label_topics: 'Palabras clave para el buscador',
   topics_max_exceeded: 'Número de palabras clave excedido',
+  welcome: 'Bienvenido a OpenHope',
+  what_search: '¿Que estás buscando?',
+  search: 'Buscar',
 }
