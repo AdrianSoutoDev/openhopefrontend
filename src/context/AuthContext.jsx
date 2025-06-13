@@ -1,18 +1,22 @@
-import React, { createContext, useState, useEffect } from 'react';
-import { removeToken, setToken, getToken } from '../services/tokenService';
-import { sendLogout, validateToken } from '../services/authService';
+import React, { createContext, useState, useEffect, useRef } from 'react'
+import { removeToken, setToken, getToken } from '../services/tokenService'
+import { sendLogout, validateToken } from '../services/authService'
 
-const AuthContext = createContext();
+const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [whoAmI, setWhoAmI] = useState('')
+  const hasValidated = useRef(false)
 
   useEffect(() => {
     const validate = async () => {
       const token = getToken()
       if (token) {
         const res = await validateToken()
-        if(res.status === 200) {
+        if (res.status === 200) {
+          const json = await res.json()
+          setWhoAmI(json.email)
           setIsAuthenticated(true)
         } else {
           removeToken()
@@ -20,11 +24,13 @@ export const AuthProvider = ({ children }) => {
       }
     }
 
-    validate()
+    if (!hasValidated.current) validate()
+    hasValidated.current = true
   }, [])
 
-  const login = (token) => {
+  const login = (token, email) => {
     setToken(token)
+    setWhoAmI(email)
     setIsAuthenticated(true)
   }
 
@@ -32,13 +38,14 @@ export const AuthProvider = ({ children }) => {
     sendLogout()
     removeToken()
     setIsAuthenticated(false)
+    setWhoAmI('')
   }
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, whoAmI, login, logout }}>
       {children}
     </AuthContext.Provider>
   )
 }
 
-export default AuthContext;
+export default AuthContext

@@ -1,6 +1,11 @@
-@import "tailwindcss";
-@import "./colors.css";
+@import 'tailwindcss';
+@import './colors.css';
+@import 'react-datepicker/dist/react-datepicker.css';
 
 body {
-    @apply font-sans;
-}   
+  @apply font-sans;
+}
+
+pre {
+  @apply font-sans whitespace-normal break-words;
+}
