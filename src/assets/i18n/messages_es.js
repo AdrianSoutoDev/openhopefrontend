@@ -60,6 +60,7 @@ export default {
   ends_on: 'Finaliza el {date}',
   target: 'Objetivo: {target} ',
   has_been_collected_of_target: 'Se ha recaudado el {percentage} del objetivo',
+  collected_of_target: 'Recaudado el {percentage} del objetivo',
   do_donation: 'Realizar donación',
   suggestions: 'Sugerencias',
   another_amount: 'Otra Cantidad {minimum}',
@@ -90,4 +91,9 @@ export default {
   welcome: 'Bienvenido a OpenHope',
   what_search: '¿Que estás buscando?',
   search: 'Buscar',
+  new_campaigns: 'Nuevas campañas',
+  show_more: 'Ver más',
+  starts_at: 'Iniciada el {date}',
+  close_to_finish_campaigns: 'Campañas próximas a terminar',
+  close_to_target_camapigns: 'Campañas cercanas a cumplir su objetivo',
 }
