@@ -40,8 +40,8 @@ function SimpleSelector({
 
   useEffect(() => {
     setItems(sourceItems)
-    setItemSelection(null)
-  }, [sourceItems])
+    setItemSelection(defaultItem)
+  }, [defaultItem, sourceItems])
 
   const handleSelection = (item) => {
     setItemSelection(item)
