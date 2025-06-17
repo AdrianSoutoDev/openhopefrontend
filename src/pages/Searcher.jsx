@@ -4,13 +4,15 @@ import SideBarFilters from '../components/searcher/SideBarFilters'
 import { FormattedMessage, useIntl } from 'react-intl'
 import SimpleSelector from '../components/shared/SimpleSelector'
 import SearchResults from '../components/searcher/SearchResults'
+import { useCallback, useEffect, useState } from 'react'
 
 function Searcher() {
   const intl = useIntl()
   const location = useLocation()
   const searchParams = location.state?.searchParams
+  const [previousScroll, setPreviousScroll] = useState(0)
 
-  const { data, setParams } = useSearch({
+  const { results, updateParams, nextPage } = useSearch({
     searchParams: searchParams,
   })
 
@@ -63,11 +65,32 @@ function Searcher() {
   ]
 
   const handleOrderBy = (item) => {
-    setParams((prevParams) => ({
+    updateParams((prevParams) => ({
       ...prevParams,
       sortCriteria: item.sortCriteria,
     }))
   }
+
+  const handleShowMoreCampaigns = useCallback(() => {
+    nextPage()
+  }, [nextPage])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = document.documentElement
+
+      if (scrollTop > previousScroll) {
+        if (scrollTop + clientHeight >= scrollHeight - 5) {
+          handleShowMoreCampaigns()
+        }
+      }
+
+      setPreviousScroll(scrollTop)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [previousScroll, handleShowMoreCampaigns])
 
   return (
     <>
@@ -96,7 +119,7 @@ function Searcher() {
               }
             />
           </div>
-          <SearchResults items={data?.content} type={searchParams?.show} />
+          <SearchResults items={results} type={searchParams?.show} />
         </div>
       </div>
     </>

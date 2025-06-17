@@ -38,23 +38,25 @@ function CampaignResult({ item }) {
             </div>
           )}
 
-          <div className="text-info mt-2">
-            <FormattedMessage
-              id="start_date"
-              values={{
-                date: (
-                  <FormattedDate
-                    value={new Date(item.startAt)}
-                    year="numeric"
-                    month="2-digit"
-                    day="2-digit"
-                  />
-                ),
-              }}
-            />
-          </div>
+          {item?.startAt && (
+            <div className="text-info mt-2">
+              <FormattedMessage
+                id="start_date"
+                values={{
+                  date: (
+                    <FormattedDate
+                      value={new Date(item.startAt)}
+                      year="numeric"
+                      month="2-digit"
+                      day="2-digit"
+                    />
+                  ),
+                }}
+              />
+            </div>
+          )}
 
-          {item.dateLimit && (
+          {item?.dateLimit && (
             <div className="text-info mt-2">
               <FormattedMessage
                 id="finish_date"
@@ -72,7 +74,7 @@ function CampaignResult({ item }) {
             </div>
           )}
 
-          {item.economicTarget && (
+          {item?.economicTarget && (
             <div className="text-info">
               <FormattedMessage
                 id="target_and_collected"
@@ -96,7 +98,7 @@ function CampaignResult({ item }) {
           )}
 
           <div className="text-info line-clamp-3 mt-2">
-            {item.description
+            {item?.description
               ?.replace(/<\/?[^>]+(>|$)/g, '')
               .replace(/\n/g, ' ')
               .replace(/&nbsp;/g, ' ')}
@@ -117,21 +119,23 @@ function CampaignResult({ item }) {
                   </div>
                 )}
               </div>
-              <div className="text-info">
-                <FormattedMessage
-                  id="start_date"
-                  values={{
-                    date: (
-                      <FormattedDate
-                        value={new Date(item.startAt)}
-                        year="numeric"
-                        month="2-digit"
-                        day="2-digit"
-                      />
-                    ),
-                  }}
-                />
-              </div>
+              {item?.startAt && (
+                <div className="text-info">
+                  <FormattedMessage
+                    id="start_date"
+                    values={{
+                      date: (
+                        <FormattedDate
+                          value={new Date(item.startAt)}
+                          year="numeric"
+                          month="2-digit"
+                          day="2-digit"
+                        />
+                      ),
+                    }}
+                  />
+                </div>
+              )}
             </div>
 
             <div className="text-info text-xl">{item.organization?.name}</div>
@@ -155,7 +159,7 @@ function CampaignResult({ item }) {
                 </div>
               )}
 
-              {item.economicTarget && (
+              {item?.economicTarget && (
                 <div className="text-info">
                   <FormattedMessage
                     id="target_and_collected"
@@ -181,7 +185,7 @@ function CampaignResult({ item }) {
           </div>
 
           <div className="text-info line-clamp-3">
-            {item.description
+            {item?.description
               ?.replace(/<\/?[^>]+(>|$)/g, '')
               .replace(/\n/g, ' ')
               .replace(/&nbsp;/g, ' ')}

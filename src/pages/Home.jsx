@@ -24,13 +24,15 @@ function Home() {
     campaignFinalizeType: 'TARGET',
   }
 
-  const { data: newCampaignsData, loading: newCampaignsLoading } = useSearch({
-    pageSize: 3,
-    searchParams: searchParamsNewCampaign,
-  })
+  const { results: newCampaignsData, loading: newCampaignsLoading } = useSearch(
+    {
+      pageSize: 3,
+      searchParams: searchParamsNewCampaign,
+    },
+  )
 
   const {
-    data: closeToFinishCampaignsData,
+    results: closeToFinishCampaignsData,
     loading: closeToFinishCampaignsLoading,
   } = useSearch({
     pageSize: 3,
@@ -38,7 +40,7 @@ function Home() {
   })
 
   const {
-    data: closeToTargetCampaignsData,
+    results: closeToTargetCampaignsData,
     loading: closeToTargetCampaignsLoading,
   } = useSearch({
     pageSize: 3,
@@ -60,7 +62,7 @@ function Home() {
         <div className="mt-5 flex justify-center w-full">
           <div className="mt-5 flex flex-col items-center max-w-8xl">
             <ResumeCampaigns
-              data={newCampaignsData?.content}
+              data={newCampaignsData}
               loading={newCampaignsLoading}
               title={<FormattedMessage id="new_campaigns" />}
               resumeType="newCampaigns"
@@ -68,7 +70,7 @@ function Home() {
               searchParams={searchParamsNewCampaign}
             />
             <ResumeCampaigns
-              data={closeToFinishCampaignsData?.content}
+              data={closeToFinishCampaignsData}
               loading={closeToFinishCampaignsLoading}
               title={<FormattedMessage id="close_to_finish_campaigns" />}
               resumeType="closeToFinish"
@@ -76,7 +78,7 @@ function Home() {
               searchParams={searchParamsCloseToFinishCampaign}
             />
             <ResumeCampaigns
-              data={closeToTargetCampaignsData?.content}
+              data={closeToTargetCampaignsData}
               loading={closeToTargetCampaignsLoading}
               title={<FormattedMessage id="close_to_target_camapigns" />}
               resumeType="closeToTarget"
