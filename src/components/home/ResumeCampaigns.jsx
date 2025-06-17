@@ -1,8 +1,19 @@
 import { FormattedMessage } from 'react-intl'
 import ResumeItem from './ResumeItem'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
-function ResumeCampaigns({ className, data, title, link, resumeType }) {
+function ResumeCampaigns({ className, data, title, resumeType, searchParams }) {
+  const navigate = useNavigate()
+
+  const onClickShowMore = (e) => {
+    e.preventDefault()
+    navigate('/searcher', {
+      state: {
+        searchParams: searchParams,
+      },
+    })
+  }
+
   return (
     <>
       <div className={`my-5 ${className}`}>
@@ -16,7 +27,8 @@ function ResumeCampaigns({ className, data, title, link, resumeType }) {
         </div>
         <div className="flex justify-end">
           <Link
-            to={link}
+            to="/"
+            onClick={onClickShowMore}
             className="px-4 py-2 text-emerald-500 hover:underline"
           >
             <FormattedMessage id="show_more" />

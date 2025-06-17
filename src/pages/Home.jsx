@@ -1,16 +1,32 @@
 import { FormattedMessage } from 'react-intl'
 import PageTitle from '../components/shared/PageTitle'
-import Searcher from '../components/home/Searcher'
+import TextSearcher from '../components/home/TextSearcher'
 import ResumeCampaigns from '../components/home/ResumeCampaigns'
 import useSearch from '../hooks/useSearch'
 
 function Home() {
+  const searchParamsNewCampaign = {
+    show: 'CAMPAIGN',
+    sortCriteria: 'START_DATE_DESC',
+  }
+
+  const searchParamsCloseToFinishCampaign = {
+    show: 'CAMPAIGN',
+    sortCriteria: 'END_DATE_ASC',
+    campaignState: 'ONGOING',
+    campaignFinalizeType: 'DATE',
+  }
+
+  const searchParamsCloseToTargetCampaign = {
+    show: 'CAMPAIGN',
+    sortCriteria: 'CLOSEST_TO_GOAL',
+    campaignState: 'ONGOING',
+    campaignFinalizeType: 'TARGET',
+  }
+
   const { data: newCampaignsData, loading: newCampaignsLoading } = useSearch({
     pageSize: 3,
-    searchParams: {
-      show: 'CAMPAIGN',
-      sortCriteria: 'START_DATE_DESC',
-    },
+    searchParams: searchParamsNewCampaign,
   })
 
   const {
@@ -18,12 +34,7 @@ function Home() {
     loading: closeToFinishCampaignsLoading,
   } = useSearch({
     pageSize: 3,
-    searchParams: {
-      show: 'CAMPAIGN',
-      sortCriteria: 'END_DATE_ASC',
-      campaignState: 'ONGOING',
-      campaignFinalizeType: 'DATE',
-    },
+    searchParams: searchParamsCloseToFinishCampaign,
   })
 
   const {
@@ -31,12 +42,7 @@ function Home() {
     loading: closeToTargetCampaignsLoading,
   } = useSearch({
     pageSize: 3,
-    searchParams: {
-      show: 'CAMPAIGN',
-      sortCriteria: 'CLOSEST_TO_GOAL',
-      campaignState: 'ONGOING',
-      campaignFinalizeType: 'TARGET',
-    },
+    searchParams: searchParamsCloseToTargetCampaign,
   })
 
   return (
@@ -48,7 +54,7 @@ function Home() {
             className={'text-center'}
           />
           <div className="mt-10 p-2 flex justify-center w-full">
-            <Searcher className={'w-full max-w-96 md:max-w-xl '} />
+            <TextSearcher className={'w-full max-w-96 md:max-w-xl '} />
           </div>
         </div>
         <div className="mt-5 flex justify-center w-full">
@@ -59,6 +65,7 @@ function Home() {
               title={<FormattedMessage id="new_campaigns" />}
               resumeType="newCampaigns"
               className="w-full"
+              searchParams={searchParamsNewCampaign}
             />
             <ResumeCampaigns
               data={closeToFinishCampaignsData?.content}
@@ -66,6 +73,7 @@ function Home() {
               title={<FormattedMessage id="close_to_finish_campaigns" />}
               resumeType="closeToFinish"
               className="w-full"
+              searchParams={searchParamsCloseToFinishCampaign}
             />
             <ResumeCampaigns
               data={closeToTargetCampaignsData?.content}
@@ -73,6 +81,7 @@ function Home() {
               title={<FormattedMessage id="close_to_target_camapigns" />}
               resumeType="closeToTarget"
               className="w-full"
+              searchParams={searchParamsCloseToTargetCampaign}
             />
           </div>
         </div>

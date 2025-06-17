@@ -2,15 +2,23 @@ import { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Button } from '../shared/Buttons'
 import { InfoMessage } from '../shared/Messages'
+import { useNavigate } from 'react-router-dom'
 
-function Searcher({ className }) {
+function TextSearcher({ className }) {
   const [searchValue, setSearchValue] = useState('')
   const [entityType, setEntityType] = useState('CAMPAIGN')
+  const navigate = useNavigate()
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    //TODO navegar a buscador con el valor de busqueda de searchValue
-    console.log(searchValue)
+    navigate('/searcher', {
+      state: {
+        searchParams: {
+          text: searchValue,
+          show: entityType,
+        },
+      },
+    })
   }
 
   const handleRadio = (e) => {
@@ -77,4 +85,4 @@ function Searcher({ className }) {
   )
 }
 
-export default Searcher
+export default TextSearcher
