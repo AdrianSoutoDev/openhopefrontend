@@ -17,7 +17,7 @@ function ResumeItem({ className, item, resumeType }) {
         className={`flex flex-col md:flex-row p-2 cursor-pointer ${className} w-full items-center md:items-end`}
         onClick={handleClick}
       >
-        <div className="min-w-32 max-w-68 float-left">
+        <div className="min-w-32 max-w-68 float-left mr-2">
           <img
             src={
               item?.image

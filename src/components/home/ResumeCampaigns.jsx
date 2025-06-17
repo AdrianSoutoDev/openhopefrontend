@@ -18,7 +18,7 @@ function ResumeCampaigns({ className, data, title, resumeType, searchParams }) {
     <>
       <div className={`my-5 ${className}`}>
         <h2 className="mb-2 text-2xl text-info font-semibold">{title}</h2>
-        <div className="w-full text-info rounded-lg shadow-sm border flex flex-col justify-around md:flex-row p-2">
+        <div className="w-full text-info rounded-lg shadow-sm border border-gray-200 flex flex-col justify-around md:flex-row p-2">
           {data?.map((item, index) => (
             <div key={index} className="flex flex-1">
               <ResumeItem item={item} resumeType={resumeType} />
