@@ -466,7 +466,7 @@ function SideBarFilters({
           </div>
         </div>
 
-        <div className="flex justify-between">
+        <div className="flex justify-around md:justify-start">
           <div className="my-5 md:hidden flex">
             <Button type="button" onClick={() => toggleSideBar()}>
               <FormattedMessage id="search" />

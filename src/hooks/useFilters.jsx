@@ -71,7 +71,23 @@ const useFilters = (searchParams, updateParams, updateShow) => {
     } else return amount
   }
 
-  const reset = useCallback(() => {}, [])
+  const reset = useCallback(() => {
+    setSearchText('')
+    setDebouncedText('')
+    setCategoriesSelected([])
+    setStartAtFrom(null)
+    setStartAtTo(null)
+    setCampaignState('ALL')
+    setCampaignFinalizeType('ALL')
+    setHasMinimumDonation(false)
+    setHasCampaignsOnGoing(false)
+    setFinalizeDateFrom(null)
+    setFinalizeDateTo(null)
+    setEconomicTargetFrom('')
+    setEconomicTargetTo('')
+    setMinimumDonationFrom('')
+    setMinimumDonationTo('')
+  }, [])
 
   useEffect(() => {
     updateShow(entityType)
