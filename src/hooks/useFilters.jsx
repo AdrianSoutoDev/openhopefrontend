@@ -18,6 +18,9 @@ const useFilters = (searchParams, updateParams, updateShow) => {
   const [campaignFinalizeType, setCampaignFinalizeType] = useState(
     searchParams.campaignFinalizeType || 'ALL',
   )
+  const [hasMinimumDonation, setHasMinimumDonation] = useState(
+    searchParams.hasMinimumDonation || false,
+  )
 
   const localDateFormat = 'yyyy-MM-dd'
 
@@ -37,56 +40,38 @@ const useFilters = (searchParams, updateParams, updateShow) => {
   }, [debouncedText, updateParams])
 
   useEffect(() => {
-    updateShow(entityType)
-    updateParams((prevParams) => ({
-      ...prevParams,
-      show: entityType,
-    }))
-  }, [entityType, updateParams, updateShow])
-
-  useEffect(() => {
-    updateParams((prevParams) => ({
-      ...prevParams,
-      categories: categoriesSelected,
-    }))
-  }, [categoriesSelected, updateParams])
-
-  useEffect(() => {
-    const dateFormated = startAtFrom
+    const startAtFromFormated = startAtFrom
       ? format(startAtFrom, localDateFormat)
       : startAtFrom
 
-    updateParams((prevParams) => ({
-      ...prevParams,
-      startDateFrom: dateFormated,
-    }))
-  }, [startAtFrom, updateParams])
-
-  useEffect(() => {
-    const dateFormated = startAtTo
+    const startAtToFormated = startAtTo
       ? format(startAtTo, localDateFormat)
       : startAtTo
 
-    updateParams((prevParams) => ({
-      ...prevParams,
-      startDateTo: dateFormated,
-    }))
-  }, [startAtTo, updateParams])
+    updateShow(entityType)
 
-  useEffect(() => {
     updateParams((prevParams) => ({
       ...prevParams,
+      show: entityType,
+      categories: categoriesSelected,
+      startDateFrom: startAtFromFormated,
+      startDateTo: startAtToFormated,
       campaignState: campaignState === 'ALL' ? null : campaignState,
-    }))
-  }, [campaignState, updateParams])
-
-  useEffect(() => {
-    updateParams((prevParams) => ({
-      ...prevParams,
       campaignFinalizeType:
         campaignFinalizeType === 'ALL' ? null : campaignFinalizeType,
+      hasMinimumDonation: hasMinimumDonation,
     }))
-  }, [campaignFinalizeType, updateParams])
+  }, [
+    entityType,
+    categoriesSelected,
+    startAtFrom,
+    startAtTo,
+    campaignState,
+    campaignFinalizeType,
+    hasMinimumDonation,
+    updateParams,
+    updateShow,
+  ])
 
   return {
     entityType,
@@ -103,6 +88,8 @@ const useFilters = (searchParams, updateParams, updateShow) => {
     setCampaignState,
     campaignFinalizeType,
     setCampaignFinalizeType,
+    hasMinimumDonation,
+    setHasMinimumDonation,
   }
 }
 
