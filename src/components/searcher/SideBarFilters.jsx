@@ -1,4 +1,4 @@
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 import Icons from '../shared/Icons'
 import { Button } from '../shared/Buttons'
 import { InfoMessage } from '../shared/Messages'
@@ -12,6 +12,8 @@ function SideBarFilters({
   toggleSideBar,
   updateShow,
 }) {
+  const intl = useIntl()
+
   const {
     entityType,
     searchText,
@@ -35,6 +37,15 @@ function SideBarFilters({
     setFinalizeDateFrom,
     finalizeDateTo,
     setFinalizeDateTo,
+    economicTargetFrom,
+    setEconomicTargetFrom,
+    economicTargetTo,
+    setEconomicTargetTo,
+    minimumDonationFrom,
+    setMinimumDonationFrom,
+    minimumDonationTo,
+    setMinimumDonationTo,
+    reset,
   } = useFilters(searchParams, updateParams, updateShow)
 
   const categoriesSource = {
@@ -66,6 +77,7 @@ function SideBarFilters({
           <input
             type="text"
             id="searchText"
+            placeholder={intl.formatMessage({ id: 'write_here' })}
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
             className="text-info rounded-lg shadow-sm border input-primary w-full my-2 px-4 py-2 focus:outline-none"
@@ -142,6 +154,9 @@ function SideBarFilters({
                     selected={startAtFrom}
                     onChange={setStartAtFrom}
                     className="focus:outline-none "
+                    placeholderText={intl.formatMessage({
+                      id: 'select_date_start',
+                    })}
                   />
                 </div>
               </div>
@@ -165,6 +180,9 @@ function SideBarFilters({
                     selected={startAtTo}
                     onChange={setStartAtTo}
                     className="focus:outline-none"
+                    placeholderText={intl.formatMessage({
+                      id: 'select_date_start',
+                    })}
                   />
                 </div>
               </div>
@@ -331,6 +349,9 @@ function SideBarFilters({
                     id="finalize-date-from"
                     selected={finalizeDateFrom}
                     onChange={setFinalizeDateFrom}
+                    placeholderText={intl.formatMessage({
+                      id: 'select_date_start',
+                    })}
                     className="focus:outline-none "
                   />
                 </div>
@@ -354,6 +375,9 @@ function SideBarFilters({
                     id="finalize-date-to"
                     selected={finalizeDateTo}
                     onChange={setFinalizeDateTo}
+                    placeholderText={intl.formatMessage({
+                      id: 'select_date_start',
+                    })}
                     className="focus:outline-none"
                   />
                 </div>
@@ -362,10 +386,98 @@ function SideBarFilters({
           </div>
         </div>
 
-        <div className="my-5 md:hidden">
-          <Button type="button" onClick={() => toggleSideBar()}>
-            <FormattedMessage id="search" />
-          </Button>
+        <div className="mt-2 pt-2">
+          <FormattedMessage id="campaign_economic_target" />
+          <div className="flex">
+            <div className="mt-2 pt-1 mr-1">
+              <label htmlFor="economicTargetFrom" className="text-sm">
+                <FormattedMessage id="from" />
+              </label>
+              <input
+                type="number"
+                id="economicTargetFrom"
+                value={economicTargetFrom}
+                onChange={(e) => setEconomicTargetFrom(e.target.value)}
+                disabled={entityType !== 'CAMPAIGN'}
+                className="text-info rounded-lg shadow-sm border input-primary w-full my-2 px-4 py-2 focus:outline-none disabled:bg-gray-300 disabled:hover:bg-gray-300 disabled:text-gray-600 disabled:cursor-default
+              disabled:hover:text-gray-600 disabled:border-gray-600"
+                placeholder={intl.formatMessage({
+                  id: 'default_euros',
+                })}
+              />
+            </div>
+            <div className="mt-2 pt-1 ml-1">
+              <label htmlFor="economicTargetTo" className="text-sm">
+                <FormattedMessage id="to" />
+              </label>
+              <input
+                type="number"
+                id="economicTargetTo"
+                value={economicTargetTo}
+                onChange={(e) => setEconomicTargetTo(e.target.value)}
+                disabled={entityType !== 'CAMPAIGN'}
+                className="text-info rounded-lg shadow-sm border input-primary w-full my-2 px-4 py-2 focus:outline-none disabled:bg-gray-300 disabled:hover:bg-gray-300 disabled:text-gray-600 disabled:cursor-default
+              disabled:hover:text-gray-600 disabled:border-gray-600"
+                placeholder={intl.formatMessage({
+                  id: 'default_euros',
+                })}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-2 pt-2">
+          <FormattedMessage id="campaign_minimum_donation" />
+          <div className="flex">
+            <div className="mt-2 pt-1 mr-1">
+              <label htmlFor="minimumDonationFrom" className="text-sm">
+                <FormattedMessage id="from" />
+              </label>
+              <input
+                type="number"
+                id="minimumDonationFrom"
+                value={minimumDonationFrom}
+                onChange={(e) => setMinimumDonationFrom(e.target.value)}
+                disabled={entityType !== 'CAMPAIGN'}
+                className="text-info rounded-lg shadow-sm border input-primary w-full my-2 px-4 py-2 focus:outline-none disabled:bg-gray-300 disabled:hover:bg-gray-300 disabled:text-gray-600 disabled:cursor-default
+              disabled:hover:text-gray-600 disabled:border-gray-600"
+                placeholder={intl.formatMessage({
+                  id: 'default_euros',
+                })}
+              />
+            </div>
+            <div className="mt-2 pt-1 ml-1">
+              <label htmlFor="minimumDonationTo" className="text-sm">
+                <FormattedMessage id="to" />
+              </label>
+              <input
+                type="number"
+                id="minimumDonationTo"
+                value={minimumDonationTo}
+                onChange={(e) => setMinimumDonationTo(e.target.value)}
+                disabled={entityType !== 'CAMPAIGN'}
+                className="text-info rounded-lg shadow-sm border input-primary w-full my-2 px-4 py-2 focus:outline-none disabled:bg-gray-300 disabled:hover:bg-gray-300 disabled:text-gray-600 disabled:cursor-default
+              disabled:hover:text-gray-600 disabled:border-gray-600"
+                placeholder={intl.formatMessage({
+                  id: 'default_euros',
+                })}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="flex justify-between">
+          <div className="my-5 md:hidden flex">
+            <Button type="button" onClick={() => toggleSideBar()}>
+              <FormattedMessage id="search" />
+            </Button>
+          </div>
+
+          <div className="my-5 flex">
+            <Button type="button" onClick={() => reset()}>
+              <FormattedMessage id="clear" />
+            </Button>
+          </div>
         </div>
       </div>
     </>

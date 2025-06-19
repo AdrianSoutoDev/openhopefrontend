@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 import { Button } from '../shared/Buttons'
 import { InfoMessage } from '../shared/Messages'
 import { useNavigate } from 'react-router-dom'
 
 function TextSearcher({ className }) {
+  const intl = useIntl()
   const [searchValue, setSearchValue] = useState('')
   const [entityType, setEntityType] = useState('CAMPAIGN')
   const navigate = useNavigate()
@@ -39,6 +40,9 @@ function TextSearcher({ className }) {
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
             className="text-info rounded-lg shadow-sm border input-primary w-full my-2 px-4 py-2 focus:outline-none"
+            placeholder={intl.formatMessage({
+              id: 'write_here',
+            })}
           />
 
           <div className="px-2 flex w-full justify-between">

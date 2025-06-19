@@ -1,5 +1,5 @@
 import { format } from 'date-fns'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 const useFilters = (searchParams, updateParams, updateShow) => {
   const [searchText, setSearchText] = useState(searchParams.text || '')
@@ -30,6 +30,19 @@ const useFilters = (searchParams, updateParams, updateShow) => {
   const [finalizeDateTo, setFinalizeDateTo] = useState(
     searchParams.finalizeDateTo || null,
   )
+  const [economicTargetFrom, setEconomicTargetFrom] = useState(
+    searchParams.economicTargetFrom || '',
+  )
+  const [economicTargetTo, setEconomicTargetTo] = useState(
+    searchParams.economicTargetTo || '',
+  )
+
+  const [minimumDonationFrom, setMinimumDonationFrom] = useState(
+    searchParams.minimumDonationFrom || '',
+  )
+  const [minimumDonationTo, setMinimumDonationTo] = useState(
+    searchParams.minimumDonationTo || '',
+  )
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -51,6 +64,15 @@ const useFilters = (searchParams, updateParams, updateShow) => {
     return date ? format(date, localDateFormat) : date
   }
 
+  const formatToLong = (amount) => {
+    if (amount) {
+      const parsed = parseFloat(amount)
+      return isNaN(parsed) ? null : Math.floor(parsed)
+    } else return amount
+  }
+
+  const reset = useCallback(() => {}, [])
+
   useEffect(() => {
     updateShow(entityType)
     updateParams((prevParams) => ({
@@ -66,6 +88,10 @@ const useFilters = (searchParams, updateParams, updateShow) => {
       hasCampaignsOnGoing: hasCampaignsOnGoing,
       finalizeDateFrom: formatDate(finalizeDateFrom),
       finalizeDateTo: formatDate(finalizeDateTo),
+      economicTargetFrom: formatToLong(economicTargetFrom),
+      economicTargetTo: formatToLong(economicTargetTo),
+      minimumDonationFrom: formatToLong(minimumDonationFrom),
+      minimumDonationTo: formatToLong(minimumDonationTo),
     }))
   }, [
     entityType,
@@ -78,6 +104,10 @@ const useFilters = (searchParams, updateParams, updateShow) => {
     hasCampaignsOnGoing,
     finalizeDateFrom,
     finalizeDateTo,
+    economicTargetFrom,
+    economicTargetTo,
+    minimumDonationFrom,
+    minimumDonationTo,
     updateParams,
     updateShow,
   ])
@@ -105,6 +135,15 @@ const useFilters = (searchParams, updateParams, updateShow) => {
     setFinalizeDateFrom,
     finalizeDateTo,
     setFinalizeDateTo,
+    economicTargetFrom,
+    setEconomicTargetFrom,
+    economicTargetTo,
+    setEconomicTargetTo,
+    minimumDonationFrom,
+    setMinimumDonationFrom,
+    minimumDonationTo,
+    setMinimumDonationTo,
+    reset,
   }
 }
 

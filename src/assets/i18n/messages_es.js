@@ -126,4 +126,8 @@ export default {
   dont_has_minimum_donation: 'Sin donación mínima',
   has_campaigns_in_course: 'Con campañas en curso',
   campaign_finalize_date: 'Fecha de finalización',
+  write_here: 'Escribe aquí...',
+  select_date_start: 'selecciona aquí la fecha',
+  default_euros: '0€',
+  clear: 'limpiar',
 }
