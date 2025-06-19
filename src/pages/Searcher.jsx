@@ -82,6 +82,14 @@ function Searcher() {
   }, [nextPage])
 
   useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add('no-scroll')
+    } else {
+      document.body.classList.remove('no-scroll')
+    }
+  }, [isOpen])
+
+  useEffect(() => {
     const handleScroll = () => {
       const { scrollTop, scrollHeight, clientHeight } = document.documentElement
 
@@ -102,7 +110,7 @@ function Searcher() {
     <>
       <div className="flex">
         <div
-          className={`${isOpen ? 'flex' : 'hidden'} md:flex md:static fixed inset-0 z-40 bg-white px-2`}
+          className={`${isOpen ? 'flex' : 'hidden'} md:flex md:static fixed inset-0 z-40 bg-white px-2 overflow-y-auto h-screen`}
         >
           <SideBarFilters
             updateParams={updateParams}
