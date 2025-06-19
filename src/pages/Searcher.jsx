@@ -11,6 +11,7 @@ function Searcher() {
   const intl = useIntl()
   const location = useLocation()
   const searchParams = location.state?.searchParams
+  const [show, setShow] = useState(searchParams.show || 'CAMPAIGN')
   const [previousScroll, setPreviousScroll] = useState(0)
   const [isOpen, setIsOpen] = useState(false)
 
@@ -116,6 +117,7 @@ function Searcher() {
             updateParams={updateParams}
             searchParams={searchParams}
             toggleSideBar={toggleSideBar}
+            updateShow={setShow}
           />
         </div>
         <div className="w-full flex flex-col justify-between mt-5 md:mt-10 px-2">
@@ -145,7 +147,7 @@ function Searcher() {
               }
             />
           </div>
-          <SearchResults items={results} type={searchParams?.show} />
+          <SearchResults items={results} type={show} />
         </div>
       </div>
     </>

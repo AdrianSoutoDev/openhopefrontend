@@ -1,30 +1,17 @@
 import { FormattedMessage } from 'react-intl'
 import Icons from '../shared/Icons'
 import { Button } from '../shared/Buttons'
-import { useEffect, useState } from 'react'
+import { InfoMessage } from '../shared/Messages'
+import useFilters from '../../hooks/useFilters'
 
-function SideBarFilters({ updateParams, searchParams, toggleSideBar }) {
-  const [searchText, setSearchText] = useState(searchParams.text || '')
-  const [debouncedText, setDebouncedText] = useState(searchParams.text || '')
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedText(searchText)
-    }, 750)
-
-    return () => clearTimeout(handler)
-  }, [searchText])
-
-  useEffect(() => {
-    updateParams((prevParams) => ({
-      ...prevParams,
-      text: debouncedText,
-    }))
-  }, [debouncedText, updateParams])
-
-  const updateSearchText = (e) => {
-    setSearchText(e.target.value)
-  }
+function SideBarFilters({
+  updateParams,
+  searchParams,
+  toggleSideBar,
+  updateShow,
+}) {
+  const { entityType, searchText, setSearchText, handleRadioEntityType } =
+    useFilters(searchParams, updateParams, updateShow)
 
   return (
     <>
@@ -49,12 +36,45 @@ function SideBarFilters({ updateParams, searchParams, toggleSideBar }) {
             type="text"
             id="search"
             value={searchText}
-            onChange={updateSearchText}
+            onChange={(e) => setSearchText(e.target.value)}
             className="text-info rounded-lg shadow-sm border input-primary w-full my-2 px-4 py-2 focus:outline-none"
           />
         </div>
 
-        <div className="mt-2 md:hidden">
+        <div className="mt-2 pt-1">
+          <FormattedMessage id="show" />
+          <div className="items-center">
+            <input
+              type="radio"
+              name="entityTypes"
+              id="radioCampaign"
+              value="CAMPAIGN"
+              checked={entityType === 'CAMPAIGN'}
+              onChange={handleRadioEntityType}
+              className="h-4 w-4 text-emerald-500 mr-1"
+            />
+            <label htmlFor="radioCampaign">
+              <InfoMessage id="campaigns" />
+            </label>
+          </div>
+
+          <div className="items-center">
+            <input
+              type="radio"
+              name="entityTypes"
+              id="radioOrganization"
+              value="ORGANIZATION"
+              checked={entityType === 'ORGANIZATION'}
+              onChange={handleRadioEntityType}
+              className="h-4 w-4 text-emerald-500 mr-1 mt-1"
+            />
+            <label htmlFor="radioOrganization">
+              <InfoMessage id="organizations" />
+            </label>
+          </div>
+        </div>
+
+        <div className="my-5 md:hidden">
           <Button type="button" onClick={() => toggleSideBar()}>
             <FormattedMessage id="search" />
           </Button>

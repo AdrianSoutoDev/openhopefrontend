@@ -114,4 +114,5 @@ export default {
   target_and_collected: 'Objetivo {amount}, Recaudado {percentage}',
   campaign_closed: 'Cerrada',
   filter: 'Filtrar',
+  show: 'Mostrar',
 }
