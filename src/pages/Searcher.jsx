@@ -111,7 +111,7 @@ function Searcher() {
     <>
       <div className="flex">
         <div
-          className={`${isOpen ? 'flex' : 'hidden'} md:flex md:static fixed inset-0 z-40 bg-white px-2 overflow-y-auto h-screen`}
+          className={`${isOpen ? 'flex' : 'hidden'} md:flex md:static fixed inset-0 z-40 bg-white px-2 overflow-y-auto h-screen md:h-max`}
         >
           <SideBarFilters
             updateParams={updateParams}

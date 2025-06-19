@@ -124,4 +124,5 @@ export default {
   by_target: 'Por objetivo económico',
   donations: 'Donaciones',
   dont_has_minimum_donation: 'Sin donación mínima',
+  has_campaigns_in_course: 'Con campañas en curso',
 }

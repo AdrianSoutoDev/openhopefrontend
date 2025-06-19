@@ -21,6 +21,9 @@ const useFilters = (searchParams, updateParams, updateShow) => {
   const [hasMinimumDonation, setHasMinimumDonation] = useState(
     searchParams.hasMinimumDonation || false,
   )
+  const [hasCampaignsOnGoing, setHasCampaignsOnGoing] = useState(
+    searchParams.hasCampaignsOnGoing || false,
+  )
 
   const localDateFormat = 'yyyy-MM-dd'
 
@@ -60,6 +63,7 @@ const useFilters = (searchParams, updateParams, updateShow) => {
       campaignFinalizeType:
         campaignFinalizeType === 'ALL' ? null : campaignFinalizeType,
       hasMinimumDonation: hasMinimumDonation,
+      hasCampaignsOnGoing: hasCampaignsOnGoing,
     }))
   }, [
     entityType,
@@ -69,6 +73,7 @@ const useFilters = (searchParams, updateParams, updateShow) => {
     campaignState,
     campaignFinalizeType,
     hasMinimumDonation,
+    hasCampaignsOnGoing,
     updateParams,
     updateShow,
   ])
@@ -90,6 +95,8 @@ const useFilters = (searchParams, updateParams, updateShow) => {
     setCampaignFinalizeType,
     hasMinimumDonation,
     setHasMinimumDonation,
+    hasCampaignsOnGoing,
+    setHasCampaignsOnGoing,
   }
 }
 

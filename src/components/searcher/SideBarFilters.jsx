@@ -29,6 +29,8 @@ function SideBarFilters({
     setCampaignFinalizeType,
     hasMinimumDonation,
     setHasMinimumDonation,
+    hasCampaignsOnGoing,
+    setHasCampaignsOnGoing,
   } = useFilters(searchParams, updateParams, updateShow)
 
   const categoriesSource = {
@@ -284,6 +286,24 @@ function SideBarFilters({
             />
             <label htmlFor="campaign-has-minimum-donation">
               <InfoMessage id="dont_has_minimum_donation" />
+            </label>
+          </div>
+        </div>
+
+        <div className="mt-2 pt-2">
+          <FormattedMessage id="organizations" />
+
+          <div className="items-center">
+            <input
+              type="checkbox"
+              id="organizations-has-campaigns"
+              checked={hasCampaignsOnGoing}
+              onChange={(e) => setHasCampaignsOnGoing(e.target.checked)}
+              className="h-4 w-4 text-emerald-500 mr-1"
+              disabled={entityType !== 'ORGANIZATION'}
+            />
+            <label htmlFor="organizations-has-campaigns">
+              <InfoMessage id="has_campaigns_in_course" />
             </label>
           </div>
         </div>
