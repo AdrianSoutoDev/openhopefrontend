@@ -4,6 +4,7 @@ import { Button } from '../shared/Buttons'
 import { InfoMessage } from '../shared/Messages'
 import useFilters from '../../hooks/useFilters'
 import MultipleSelector from '../shared/MultipleSelector'
+import DatePicker from 'react-datepicker'
 
 function SideBarFilters({
   updateParams,
@@ -18,6 +19,10 @@ function SideBarFilters({
     setEntityType,
     categoriesSelected,
     setCategoriesSelected,
+    startAtFrom,
+    setStartAtFrom,
+    startAtTo,
+    setStartAtTo,
   } = useFilters(searchParams, updateParams, updateShow)
 
   const categoriesSource = {
@@ -101,6 +106,58 @@ function SideBarFilters({
             setSelectedItems={setCategoriesSelected}
             className="my-2"
           />
+        </div>
+
+        <div className="mt-2 pt-2">
+          <label htmlFor="start-date">
+            <FormattedMessage id="campaign_start_date" />
+          </label>
+          <div id="start">
+            <div className="mt-2">
+              <label htmlFor="start-date-from" className="text-sm">
+                <FormattedMessage id="from" />
+              </label>
+              <div
+                className={`flex w-full md:ml-1 rounded-lg shadow-sm border input-primary my-2 px-4 py-2 focus:outline-none ${entityType !== 'CAMPAIGN' ? 'bg-gray-300 hover:bg-gray-300 text-gray-600 cursor-default border-gray-600' : 'text-info'}`}
+              >
+                <label htmlFor="start-date-from" className="pt-1">
+                  <Icons.Calendar />
+                </label>
+                <div className="pl-2 focus:outline-none">
+                  <DatePicker
+                    disabled={entityType !== 'CAMPAIGN'}
+                    id="start-date-from"
+                    selected={startAtFrom}
+                    onChange={setStartAtFrom}
+                    className="focus:outline-none "
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-2">
+              <label htmlFor="start-date-to" className="text-sm">
+                <FormattedMessage id="to" />
+              </label>
+              <div
+                disabled={entityType !== 'CAMPAIGN'}
+                className={`flex w-full md:ml-1 rounded-lg shadow-sm border input-primary my-2 px-4 py-2 focus:outline-none ${entityType !== 'CAMPAIGN' ? 'bg-gray-300 hover:bg-gray-300 text-gray-600 cursor-default border-gray-600' : 'text-info'}`}
+              >
+                <label htmlFor="start-date-to" className="pt-1">
+                  <Icons.Calendar />
+                </label>
+                <div className="pl-2 focus:outline-none">
+                  <DatePicker
+                    disabled={entityType !== 'CAMPAIGN'}
+                    id="start-date-to"
+                    selected={startAtTo}
+                    onChange={setStartAtTo}
+                    className="focus:outline-none"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="my-5 md:hidden">

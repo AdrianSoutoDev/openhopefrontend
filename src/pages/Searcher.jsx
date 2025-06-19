@@ -120,7 +120,7 @@ function Searcher() {
             updateShow={setShow}
           />
         </div>
-        <div className="w-full flex flex-col justify-between mt-5 md:mt-10 px-2">
+        <div className="w-full flex flex-col mt-5 md:mt-10 px-2">
           <div className="flex flex-col md:flex-row justify-between">
             <h2 className="mb-2 text-2xl text-info font-semibold flex justify-between">
               <FormattedMessage id="results" />

@@ -115,4 +115,6 @@ export default {
   campaign_closed: 'Cerrada',
   filter: 'Filtrar',
   show: 'Mostrar',
+  from: 'Desde',
+  to: 'Hasta',
 }
