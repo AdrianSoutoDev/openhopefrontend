@@ -5,15 +5,21 @@ import { FormattedMessage, useIntl } from 'react-intl'
 import SimpleSelector from '../components/shared/SimpleSelector'
 import SearchResults from '../components/searcher/SearchResults'
 import { useCallback, useEffect, useState } from 'react'
+import Icons from '../components/shared/Icons'
 
 function Searcher() {
   const intl = useIntl()
   const location = useLocation()
   const searchParams = location.state?.searchParams
   const [previousScroll, setPreviousScroll] = useState(0)
+  const [isOpen, setIsOpen] = useState(false)
+
+  const toggleSideBar = () => {
+    setIsOpen(!isOpen)
+  }
 
   const { results, updateParams, nextPage } = useSearch({
-    searchParams: searchParams,
+    searchParams: searchParams || { show: 'CAMPAIGN' },
   })
 
   const ordersBy = [
@@ -95,13 +101,25 @@ function Searcher() {
   return (
     <>
       <div className="flex">
-        <div>
-          <SideBarFilters />
+        <div
+          className={`${isOpen ? 'flex' : 'hidden'} md:flex md:static fixed inset-0 z-40 bg-white px-2`}
+        >
+          <SideBarFilters
+            updateParams={updateParams}
+            searchParams={searchParams}
+            toggleSideBar={toggleSideBar}
+          />
         </div>
-        <div className="w-full flex flex-col justify-between mt-10 px-2">
+        <div className="w-full flex flex-col justify-between mt-5 md:mt-10 px-2">
           <div className="flex flex-col md:flex-row justify-between">
-            <h2 className="mb-2 text-2xl text-info font-semibold">
+            <h2 className="mb-2 text-2xl text-info font-semibold flex justify-between">
               <FormattedMessage id="results" />
+              <div
+                className="flex md:hidden mr-2 items-end"
+                onClick={() => toggleSideBar()}
+              >
+                <Icons.Filters />
+              </div>
             </h2>
             <SimpleSelector
               sourceItems={

@@ -97,6 +97,23 @@ const Icons = {
       </svg>
     </div>
   ),
+
+  Filters: () => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="currentColor"
+      className="size-5"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M3 4.5h18M6 9.75h12M10 15h4"
+      />
+    </svg>
+  ),
 }
 
 export default Icons

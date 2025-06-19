@@ -27,7 +27,7 @@ function NavBar() {
   return (
     <>
       {/* Mobile view*/}
-      <nav className="bg-primary text-white md:hidden">
+      <nav className="bg-primary text-white md:hidden relative z-50">
         <div className="flex justify-between items-center p-4">
           {showGoBack ? (
             <Link to={whereWeGo}>

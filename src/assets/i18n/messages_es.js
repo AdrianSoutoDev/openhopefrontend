@@ -113,4 +113,5 @@ export default {
   finish_date: 'Fecha Fin: {date}',
   target_and_collected: 'Objetivo {amount}, Recaudado {percentage}',
   campaign_closed: 'Cerrada',
+  filter: 'Filtrar',
 }
