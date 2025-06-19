@@ -24,8 +24,12 @@ const useFilters = (searchParams, updateParams, updateShow) => {
   const [hasCampaignsOnGoing, setHasCampaignsOnGoing] = useState(
     searchParams.hasCampaignsOnGoing || false,
   )
-
-  const localDateFormat = 'yyyy-MM-dd'
+  const [finalizeDateFrom, setFinalizeDateFrom] = useState(
+    searchParams.finalizeDateFrom || null,
+  )
+  const [finalizeDateTo, setFinalizeDateTo] = useState(
+    searchParams.finalizeDateTo || null,
+  )
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -42,28 +46,26 @@ const useFilters = (searchParams, updateParams, updateShow) => {
     }))
   }, [debouncedText, updateParams])
 
+  const formatDate = (date) => {
+    const localDateFormat = 'yyyy-MM-dd'
+    return date ? format(date, localDateFormat) : date
+  }
+
   useEffect(() => {
-    const startAtFromFormated = startAtFrom
-      ? format(startAtFrom, localDateFormat)
-      : startAtFrom
-
-    const startAtToFormated = startAtTo
-      ? format(startAtTo, localDateFormat)
-      : startAtTo
-
     updateShow(entityType)
-
     updateParams((prevParams) => ({
       ...prevParams,
       show: entityType,
       categories: categoriesSelected,
-      startDateFrom: startAtFromFormated,
-      startDateTo: startAtToFormated,
+      startDateFrom: formatDate(startAtFrom),
+      startDateTo: formatDate(startAtTo),
       campaignState: campaignState === 'ALL' ? null : campaignState,
       campaignFinalizeType:
         campaignFinalizeType === 'ALL' ? null : campaignFinalizeType,
       hasMinimumDonation: hasMinimumDonation,
       hasCampaignsOnGoing: hasCampaignsOnGoing,
+      finalizeDateFrom: formatDate(finalizeDateFrom),
+      finalizeDateTo: formatDate(finalizeDateTo),
     }))
   }, [
     entityType,
@@ -74,6 +76,8 @@ const useFilters = (searchParams, updateParams, updateShow) => {
     campaignFinalizeType,
     hasMinimumDonation,
     hasCampaignsOnGoing,
+    finalizeDateFrom,
+    finalizeDateTo,
     updateParams,
     updateShow,
   ])
@@ -97,6 +101,10 @@ const useFilters = (searchParams, updateParams, updateShow) => {
     setHasMinimumDonation,
     hasCampaignsOnGoing,
     setHasCampaignsOnGoing,
+    finalizeDateFrom,
+    setFinalizeDateFrom,
+    finalizeDateTo,
+    setFinalizeDateTo,
   }
 }
 

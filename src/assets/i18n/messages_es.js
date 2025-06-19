@@ -125,4 +125,5 @@ export default {
   donations: 'Donaciones',
   dont_has_minimum_donation: 'Sin donación mínima',
   has_campaigns_in_course: 'Con campañas en curso',
+  campaign_finalize_date: 'Fecha de finalización',
 }

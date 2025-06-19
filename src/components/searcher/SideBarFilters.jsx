@@ -31,6 +31,10 @@ function SideBarFilters({
     setHasMinimumDonation,
     hasCampaignsOnGoing,
     setHasCampaignsOnGoing,
+    finalizeDateFrom,
+    setFinalizeDateFrom,
+    finalizeDateTo,
+    setFinalizeDateTo,
   } = useFilters(searchParams, updateParams, updateShow)
 
   const categoriesSource = {
@@ -305,6 +309,56 @@ function SideBarFilters({
             <label htmlFor="organizations-has-campaigns">
               <InfoMessage id="has_campaigns_in_course" />
             </label>
+          </div>
+        </div>
+
+        <div className="mt-2 pt-2">
+          <FormattedMessage id="campaign_finalize_date" />
+          <div>
+            <div className="mt-2">
+              <label htmlFor="finalize-date-from" className="text-sm">
+                <FormattedMessage id="from" />
+              </label>
+              <div
+                className={`flex w-full md:ml-1 rounded-lg shadow-sm border input-primary my-2 px-4 py-2 focus:outline-none ${entityType !== 'CAMPAIGN' ? 'bg-gray-300 hover:bg-gray-300 text-gray-600 cursor-default border-gray-600' : 'text-info'}`}
+              >
+                <label htmlFor="finalize-date-from" className="pt-1">
+                  <Icons.Calendar />
+                </label>
+                <div className="pl-2 focus:outline-none">
+                  <DatePicker
+                    disabled={entityType !== 'CAMPAIGN'}
+                    id="finalize-date-from"
+                    selected={finalizeDateFrom}
+                    onChange={setFinalizeDateFrom}
+                    className="focus:outline-none "
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-2">
+              <label htmlFor="finalize-date-to" className="text-sm">
+                <FormattedMessage id="to" />
+              </label>
+              <div
+                disabled={entityType !== 'CAMPAIGN'}
+                className={`flex w-full md:ml-1 rounded-lg shadow-sm border input-primary my-2 px-4 py-2 focus:outline-none ${entityType !== 'CAMPAIGN' ? 'bg-gray-300 hover:bg-gray-300 text-gray-600 cursor-default border-gray-600' : 'text-info'}`}
+              >
+                <label htmlFor="finalize-date-to" className="pt-1">
+                  <Icons.Calendar />
+                </label>
+                <div className="pl-2 focus:outline-none">
+                  <DatePicker
+                    disabled={entityType !== 'CAMPAIGN'}
+                    id="finalize-date-to"
+                    selected={finalizeDateTo}
+                    onChange={setFinalizeDateTo}
+                    className="focus:outline-none"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
