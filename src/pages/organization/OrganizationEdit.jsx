@@ -153,6 +153,7 @@ function OrganizationEdit() {
                       selectedItems={categoriesSelected}
                       setSelectedItems={setCategoriesSelected}
                       className="my-2"
+                      maxItems={3}
                     />
                   </div>
                 </div>

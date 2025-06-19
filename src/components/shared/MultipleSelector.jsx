@@ -8,7 +8,7 @@ function MultipleSelector({
   sourceItems,
   selectedItems,
   setSelectedItems,
-  maxCategories,
+  maxItems,
   className,
 }) {
   const { data, loading, fetch } = useFetch()
@@ -37,7 +37,7 @@ function MultipleSelector({
   const handleSelection = (itemName) => {
     if (selectedItems.includes(itemName)) {
       setSelectedItems(selectedItems.filter((i) => i !== itemName))
-    } else if (selectedItems.length < (maxCategories || 3)) {
+    } else if (selectedItems.length < (maxItems || items?.length)) {
       setSelectedItems([...selectedItems, itemName])
     }
   }
@@ -63,13 +63,16 @@ function MultipleSelector({
     <div className={`${className} relative`} ref={dropdownRef}>
       <button
         type="button"
-        className="block w-full px-4 py-3 my-2 text-start text-sm shadow-sm rounded-lg text-info border border-gray-400 cursor-pointer focus:outline-none hover:border-emerald-400"
+        className="block w-full px-4 py-3 my-2 text-start text-sm shadow-sm rounded-lg text-info border border-gray-400 cursor-pointer focus:outline-none hover:border-emerald-400
+        disabled:bg-gray-300 disabled:hover:bg-gray-300 disabled:text-gray-600 disabled:cursor-default
+              disabled:hover:text-gray-600 disabled:border-gray-600"
         onClick={toggleDropdown}
+        disabled={!items?.length}
       >
         <div className="flex justify-between">
           <span>
             <InfoMessage id="select_categories" /> {selectedItems.length}/
-            {maxCategories || 3}
+            {maxItems || items?.length}
           </span>
           <span
             className={`transform transition-transform text-end ${isOpen ? 'rotate-180' : ''}`}

@@ -3,6 +3,7 @@ import Icons from '../shared/Icons'
 import { Button } from '../shared/Buttons'
 import { InfoMessage } from '../shared/Messages'
 import useFilters from '../../hooks/useFilters'
+import MultipleSelector from '../shared/MultipleSelector'
 
 function SideBarFilters({
   updateParams,
@@ -10,8 +11,19 @@ function SideBarFilters({
   toggleSideBar,
   updateShow,
 }) {
-  const { entityType, searchText, setSearchText, handleRadioEntityType } =
-    useFilters(searchParams, updateParams, updateShow)
+  const {
+    entityType,
+    searchText,
+    setSearchText,
+    setEntityType,
+    categoriesSelected,
+    setCategoriesSelected,
+  } = useFilters(searchParams, updateParams, updateShow)
+
+  const categoriesSource = {
+    endpoint: '/categories',
+    options: { method: 'GET' },
+  }
 
   return (
     <>
@@ -31,26 +43,31 @@ function SideBarFilters({
 
         {/* common */}
         <div className="mt-2 pt-1">
-          <FormattedMessage id="what_search" />
+          <label htmlFor="searchText">
+            <FormattedMessage id="what_search" />
+          </label>
           <input
             type="text"
-            id="search"
+            id="searchText"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
             className="text-info rounded-lg shadow-sm border input-primary w-full my-2 px-4 py-2 focus:outline-none"
           />
         </div>
 
-        <div className="mt-2 pt-1">
-          <FormattedMessage id="show" />
-          <div className="items-center">
+        <div className="mt-2 pt-2">
+          <label htmlFor="radioShow">
+            <FormattedMessage id="show" />
+          </label>
+
+          <div id="radioShow" className="items-center">
             <input
               type="radio"
               name="entityTypes"
               id="radioCampaign"
               value="CAMPAIGN"
               checked={entityType === 'CAMPAIGN'}
-              onChange={handleRadioEntityType}
+              onChange={(e) => setEntityType(e.target.value)}
               className="h-4 w-4 text-emerald-500 mr-1"
             />
             <label htmlFor="radioCampaign">
@@ -65,13 +82,25 @@ function SideBarFilters({
               id="radioOrganization"
               value="ORGANIZATION"
               checked={entityType === 'ORGANIZATION'}
-              onChange={handleRadioEntityType}
+              onChange={(e) => setEntityType(e.target.value)}
               className="h-4 w-4 text-emerald-500 mr-1 mt-1"
             />
             <label htmlFor="radioOrganization">
               <InfoMessage id="organizations" />
             </label>
           </div>
+        </div>
+
+        <div className="mt-2 pt-2">
+          <label htmlFor="categories">
+            <FormattedMessage id="label_categories" />
+          </label>
+          <MultipleSelector
+            source={categoriesSource}
+            selectedItems={categoriesSelected}
+            setSelectedItems={setCategoriesSelected}
+            className="my-2"
+          />
         </div>
 
         <div className="my-5 md:hidden">

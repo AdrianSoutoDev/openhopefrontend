@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react'
 const useFilters = (searchParams, updateParams, updateShow) => {
   const [searchText, setSearchText] = useState(searchParams.text || '')
   const [entityType, setEntityType] = useState(searchParams.show || 'CAMPAIGN')
-
   const [debouncedText, setDebouncedText] = useState(searchParams.text || '')
+  const [categoriesSelected, setCategoriesSelected] = useState([])
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -21,20 +21,29 @@ const useFilters = (searchParams, updateParams, updateShow) => {
     }))
   }, [debouncedText, updateParams])
 
-  const handleRadioEntityType = (e) => {
-    setEntityType(e.target.value)
-    updateShow(e.target.value)
+  useEffect(() => {
+    updateShow(entityType)
     updateParams((prevParams) => ({
       ...prevParams,
-      show: e.target.value,
+      show: entityType,
     }))
-  }
+  }, [entityType, updateParams, updateShow])
+
+  useEffect(() => {
+    console.log(categoriesSelected)
+    updateParams((prevParams) => ({
+      ...prevParams,
+      categories: categoriesSelected,
+    }))
+  }, [categoriesSelected, updateParams])
 
   return {
     entityType,
     searchText,
     setSearchText,
-    handleRadioEntityType,
+    setEntityType,
+    categoriesSelected,
+    setCategoriesSelected,
   }
 }
 

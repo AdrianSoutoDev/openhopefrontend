@@ -203,7 +203,7 @@ function CampaignCreate() {
                     sourceItems={organization ? organization.categories : []}
                     selectedItems={categoriesSelected}
                     setSelectedItems={setCategoriesSelected}
-                    maxCategories={
+                    maxItems={
                       organization
                         ? organization.categories
                           ? organization.categories.length
