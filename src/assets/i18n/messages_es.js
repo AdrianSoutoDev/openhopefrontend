@@ -113,8 +113,13 @@ export default {
   finish_date: 'Fecha Fin: {date}',
   target_and_collected: 'Objetivo {amount}, Recaudado {percentage}',
   campaign_closed: 'Cerrada',
+  campaigns_closed: 'Cerradas',
   filter: 'Filtrar',
   show: 'Mostrar',
   from: 'Desde',
   to: 'Hasta',
+  all: 'Todas',
+  campaigns_finalize_types: 'Finalización de campañas',
+  by_date: 'Por fecha',
+  by_target: 'Por objetivo económico',
 }

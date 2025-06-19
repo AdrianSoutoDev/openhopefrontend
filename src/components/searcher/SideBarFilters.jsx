@@ -23,6 +23,10 @@ function SideBarFilters({
     setStartAtFrom,
     startAtTo,
     setStartAtTo,
+    campaignState,
+    setCampaignState,
+    campaignFinalizeType,
+    setCampaignFinalizeType,
   } = useFilters(searchParams, updateParams, updateShow)
 
   const categoriesSource = {
@@ -157,6 +161,110 @@ function SideBarFilters({
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        <div className="mt-2 pt-2">
+          <FormattedMessage id="campaigns" />
+
+          <div className="items-center">
+            <input
+              type="radio"
+              name="campaign-state"
+              id="campaign-ongoing"
+              value="ONGOING"
+              checked={campaignState === 'ONGOING'}
+              onChange={(e) => setCampaignState(e.target.value)}
+              className="h-4 w-4 text-emerald-500 mr-1"
+              disabled={entityType !== 'CAMPAIGN'}
+            />
+            <label htmlFor="campaign-ongoing">
+              <InfoMessage id="in_course" />
+            </label>
+          </div>
+
+          <div className="items-center">
+            <input
+              type="radio"
+              name="campaign-state"
+              id="campaign-closed"
+              value="FINALIZED"
+              checked={campaignState === 'FINALIZED'}
+              onChange={(e) => setCampaignState(e.target.value)}
+              className="h-4 w-4 text-emerald-500 mr-1 mt-1"
+              disabled={entityType !== 'CAMPAIGN'}
+            />
+            <label htmlFor="campaign-closed">
+              <InfoMessage id="campaigns_closed" />
+            </label>
+          </div>
+
+          <div className="items-center">
+            <input
+              type="radio"
+              name="campaign-state"
+              id="campaigns-state-all"
+              value="ALL"
+              checked={campaignState === 'ALL'}
+              onChange={(e) => setCampaignState(e.target.value)}
+              className="h-4 w-4 text-emerald-500 mr-1 mt-1"
+              disabled={entityType !== 'CAMPAIGN'}
+            />
+            <label htmlFor="campaigns-state-all">
+              <InfoMessage id="all" />
+            </label>
+          </div>
+        </div>
+
+        <div className="mt-2 pt-2">
+          <FormattedMessage id="campaigns_finalize_types" />
+
+          <div className="items-center">
+            <input
+              type="radio"
+              name="campaign-finalization"
+              id="campaign-finalize-date"
+              value="DATE"
+              checked={campaignFinalizeType === 'DATE'}
+              onChange={(e) => setCampaignFinalizeType(e.target.value)}
+              className="h-4 w-4 text-emerald-500 mr-1"
+              disabled={entityType !== 'CAMPAIGN'}
+            />
+            <label htmlFor="campaign-finalize-date">
+              <InfoMessage id="by_date" />
+            </label>
+          </div>
+
+          <div className="items-center">
+            <input
+              type="radio"
+              name="campaign-finalization"
+              id="campaign-finalize-target"
+              value="TARGET"
+              checked={campaignFinalizeType === 'TARGET'}
+              onChange={(e) => setCampaignFinalizeType(e.target.value)}
+              className="h-4 w-4 text-emerald-500 mr-1 mt-1"
+              disabled={entityType !== 'CAMPAIGN'}
+            />
+            <label htmlFor="campaign-finalize-target">
+              <InfoMessage id="by_target" />
+            </label>
+          </div>
+
+          <div className="items-center">
+            <input
+              type="radio"
+              name="campaign-finalization"
+              id="campaign-finalize-all"
+              value="ALL"
+              checked={campaignFinalizeType === 'ALL'}
+              onChange={(e) => setCampaignFinalizeType(e.target.value)}
+              className="h-4 w-4 text-emerald-500 mr-1 mt-1"
+              disabled={entityType !== 'CAMPAIGN'}
+            />
+            <label htmlFor="campaign-finalize-all">
+              <InfoMessage id="all" />
+            </label>
           </div>
         </div>
 
