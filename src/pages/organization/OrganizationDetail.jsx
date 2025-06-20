@@ -170,7 +170,7 @@ function OrganizationDetail() {
                   handleClickRow={clickRow}
                 />
 
-                {isAuthenticated && whoAmI === organization.email && (
+                {isAuthenticated() && whoAmI?.id === organization.id && (
                   <>
                     <h3 className="text-center mt-10 font-semibold text-3xl text-gray-900">
                       <InfoMessage id="organization_admin" />

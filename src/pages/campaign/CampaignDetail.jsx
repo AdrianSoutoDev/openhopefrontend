@@ -158,9 +158,9 @@ function CampaignDetail() {
                 campaignId={campaign.id}
                 hasBankAccount={campaign.hasBankAccount}
                 isOwner={
-                  isAuthenticated &&
+                  isAuthenticated() &&
                   campaign.organization &&
-                  whoAmI === campaign.organization.email
+                  whoAmI?.id === campaign.organization.id
                 }
                 donationsDisabled={!campaign.isOnGoing}
               />

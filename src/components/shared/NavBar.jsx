@@ -46,7 +46,7 @@ function NavBar() {
         </div>
 
         <div className={`${isOpen ? 'block' : 'hidden'}`}>
-          {!isAuthenticated && (
+          {!isAuthenticated() && (
             <>
               <Link
                 to="/register"
@@ -65,7 +65,7 @@ function NavBar() {
               </Link>
             </>
           )}
-          {isAuthenticated && (
+          {isAuthenticated() && (
             <button className="block px-4 py-2" onClick={handleLogout}>
               <FormattedMessage id="signout" />
             </button>
@@ -90,7 +90,7 @@ function NavBar() {
             </Link>
           )}
 
-          {!isAuthenticated && (
+          {!isAuthenticated() && (
             <div className="flex">
               <ButtonLink
                 link="/register"
@@ -104,7 +104,7 @@ function NavBar() {
               </ButtonLink>
             </div>
           )}
-          {isAuthenticated && (
+          {isAuthenticated() && (
             <Button className="min-w-28 mx-2" onClick={handleLogout}>
               <FormattedMessage id="signout" />
             </Button>
