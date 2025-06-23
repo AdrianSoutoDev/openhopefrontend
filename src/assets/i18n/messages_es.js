@@ -130,4 +130,9 @@ export default {
   select_date_start: 'selecciona aquí la fecha',
   default_euros: '0€',
   clear: 'limpiar',
+  profile: 'Perfil',
+  select_bank_entity_user:
+    'Selecciona el banco donde tienes la cuenta que buscas.',
+  save_bank_account_user:
+    'Pulsa en guardar para añadir esta cuenta bancaría a tu perfil: ',
 }

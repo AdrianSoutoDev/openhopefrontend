@@ -6,7 +6,12 @@ const useOAuth = ({ campaignId, userId }) => {
 
   const oAuthAutenticate = (aspspSelected) => {
     let endpoint = `/providers/${aspspSelected.provider}/${aspspSelected.code}/oauth`
-    endpoint = campaignId ? `${endpoint}?campaign=${campaignId}` : endpoint
+
+    if (campaignId) {
+      endpoint = `${endpoint}?campaign=${campaignId}`
+    } else {
+      endpoint = `${endpoint}?user=${userId}`
+    }
 
     const options = {
       method: 'GET',

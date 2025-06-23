@@ -18,7 +18,12 @@ const useBankAccountSelection = (aspspParam, { campaignId, userId }) => {
   useEffect(() => {
     if (aspspSelected && !hasFetched.current) {
       let endpoint = `/providers/${aspspSelected.provider}/${aspspSelected.code}/accounts`
-      endpoint = campaignId ? `${endpoint}?campaign=${campaignId}` : endpoint
+
+      if (campaignId) {
+        endpoint = `${endpoint}?campaign=${campaignId}`
+      } else {
+        endpoint = `${endpoint}?user=${userId}`
+      }
 
       const options = {
         method: 'GET',
@@ -28,7 +33,7 @@ const useBankAccountSelection = (aspspParam, { campaignId, userId }) => {
       fetch(endpoint, options)
       hasFetched.current = true
     }
-  }, [aspspSelected, campaignId, fetch])
+  }, [aspspSelected, campaignId, fetch, userId])
 
   useEffect(() => {
     if (data) {

@@ -24,6 +24,10 @@ function NavBar() {
     navigate('/')
   }
 
+  const handleProfile = () => {
+    navigate('/me')
+  }
+
   return (
     <>
       {/* Mobile view*/}
@@ -105,9 +109,14 @@ function NavBar() {
             </div>
           )}
           {isAuthenticated() && (
-            <Button className="min-w-28 mx-2" onClick={handleLogout}>
-              <FormattedMessage id="signout" />
-            </Button>
+            <div className="flex">
+              <Button className="min-w-28 mx-2" onClick={handleProfile}>
+                <FormattedMessage id="profile" />
+              </Button>
+              <Button className="min-w-28 mx-2" onClick={handleLogout}>
+                <FormattedMessage id="signout" />
+              </Button>
+            </div>
           )}
         </div>
       </nav>
