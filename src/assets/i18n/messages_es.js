@@ -36,7 +36,10 @@ export default {
   table_headers_amount_collected: 'Cantidad recaudada',
   table_headers_bank: 'Banco',
   table_headers_iban: 'Iban',
-  table_headers_account: 'cuenta',
+  table_headers_account: 'Cuenta',
+  table_headers_campaign: 'Campaña',
+  table_headers_amount: 'Importe',
+  table_headers_date: 'Fecha',
   campaigns: 'Campañas',
   organizations: 'Organizaciones',
   results: 'Resultados',
@@ -138,4 +141,7 @@ export default {
     'Selecciona el banco donde tienes la cuenta que buscas.',
   save_bank_account_user:
     'Pulsa en guardar para añadir esta cuenta bancaría a tu perfil: ',
+  my_bank_accounts: 'Mis cuentas bancarias',
+  my_donations: 'Mis donaciones',
+  add_bank_account: 'Añadir cuenta bancaria',
 }

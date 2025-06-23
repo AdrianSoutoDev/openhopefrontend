@@ -22,6 +22,7 @@ function DataTable({ source, tableHeaders, mapper, handleClickRow }) {
       setPageInfo({
         first: data.first,
         last: data.last,
+        onlyOnePage: data.totalPages === 1,
       })
     }
   }, [data, mapper])
@@ -62,9 +63,9 @@ function DataTable({ source, tableHeaders, mapper, handleClickRow }) {
                     </tr>
                   </thead>
                   <tbody>
-                    {items.map((item) => (
+                    {items.map((item, index) => (
                       <tr
-                        key={item.id}
+                        key={index}
                         onClick={() =>
                           handleClickRow ? handleClickRow(item.id) : true
                         }
@@ -84,7 +85,7 @@ function DataTable({ source, tableHeaders, mapper, handleClickRow }) {
                 </table>
               </div>
               <div
-                className={`flex w-full px-2 ${pageInfo.first ? 'justify-end' : pageInfo.last ? 'justify-start' : 'justify-between'}`}
+                className={`flex w-full px-2 ${pageInfo.onlyOnePage ? '' : pageInfo.first ? 'justify-end' : pageInfo.last ? 'justify-start' : 'justify-between'}`}
               >
                 {!pageInfo.first && (
                   <Link onClick={previousPage}>
