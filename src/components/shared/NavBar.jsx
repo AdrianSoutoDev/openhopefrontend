@@ -70,9 +70,15 @@ function NavBar() {
             </>
           )}
           {isAuthenticated() && (
-            <button className="block px-4 py-2" onClick={handleLogout}>
-              <FormattedMessage id="signout" />
-            </button>
+            <>
+              <button className="block px-4 py-2" onClick={handleProfile}>
+                <FormattedMessage id="profile" />
+              </button>
+
+              <button className="block px-4 py-2" onClick={handleLogout}>
+                <FormattedMessage id="signout" />
+              </button>
+            </>
           )}
         </div>
       </nav>
