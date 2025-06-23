@@ -65,7 +65,9 @@ function DataTable({ source, tableHeaders, mapper, handleClickRow }) {
                     {items.map((item) => (
                       <tr
                         key={item.id}
-                        onClick={() => handleClickRow(item.id)}
+                        onClick={() =>
+                          handleClickRow ? handleClickRow(item.id) : true
+                        }
                         className={`cursor-pointer hover:bg-gray-300 ${items.indexOf(item) % 2 !== 0 ? 'bg-gray-100' : 'bg-white'}`}
                       >
                         {item.values.map((value, index) => (

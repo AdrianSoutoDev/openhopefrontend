@@ -29,7 +29,6 @@ const AppRoutes = () => (
     />
     <Route path="/searcher" element={<Searcher />} />
     <Route path="/me" element={<UserProfile />} />
-    <Route path="*" element={<Home />} />
   </Routes>
 )
 
