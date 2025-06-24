@@ -11,7 +11,7 @@ function UserProfile() {
   const navigate = useNavigate()
 
   const bankAccountsSource = {
-    endpoint: `/bankAccounts`,
+    endpoint: `/bank-accounts`,
     options: { method: 'GET' },
   }
 
