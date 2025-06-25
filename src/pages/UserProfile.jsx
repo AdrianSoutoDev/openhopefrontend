@@ -16,7 +16,7 @@ function UserProfile() {
 
   //BANK ACCOUNTS
   const bankAccountsHeaders = [
-    <FormattedMessage id="table_headers_favorite" />,
+    '',
     <FormattedMessage id="table_headers_bank" />,
     <FormattedMessage id="table_headers_name" />,
     <FormattedMessage id="table_headers_iban" />,
@@ -46,16 +46,33 @@ function UserProfile() {
       const mappedObjects = []
       objects.forEach((obj) => {
         const values = [
-          <input
-            type="radio"
-            name="favoriteAccount"
-            checked={
-              favoriteAccount === null
-                ? obj.favorite
-                : favoriteAccount === obj.iban
-            }
-            onChange={() => updateFavoriteAccount(objects, obj.iban)}
-          />,
+          <label
+            htmlFor={`favorite-${obj.iban}`}
+            className="cursor-pointer text-2xl"
+          >
+            <input
+              id={`favorite-${obj.iban}`}
+              type="radio"
+              name="favoriteAccount"
+              checked={
+                favoriteAccount === null
+                  ? obj.favorite
+                  : favoriteAccount === obj.iban
+              }
+              onChange={() => updateFavoriteAccount(objects, obj.iban)}
+              className="hidden"
+            />
+            <span
+              className={`${
+                favoriteAccount === obj.iban ||
+                (favoriteAccount === null && obj.favorite)
+                  ? 'text-amber-400'
+                  : 'text-gray-200'
+              }`}
+            >
+              ★
+            </span>
+          </label>,
           obj.aspsp?.name,
           obj.name?.split('-')[0].trim(),
           obj.iban,
@@ -149,15 +166,19 @@ function UserProfile() {
               <InfoMessage id="my_bank_accounts" />
             </h3>
             <DataTable
+              className={'mt-5'}
               items={bankAccounts}
               tableHeaders={bankAccountsHeaders}
               nextPage={nextBankAccountPage}
               previousPage={previousBankAccountPage}
               pageInfo={bankAccountsPageInfo}
             />
+            <span className="text-sm">
+              <InfoMessage id="favorite_instructions" />
+            </span>
 
             <ButtonLink
-              className="w-full md:w-6/12"
+              className="max-w-56 mt-3"
               link={`/openbanking/bank-selection?user=me`}
             >
               <FormattedMessage id="add_bank_account" />
@@ -169,6 +190,7 @@ function UserProfile() {
               <InfoMessage id="my_donations" />
             </h3>
             <DataTable
+              className={'mt-5'}
               items={donations}
               tableHeaders={donationsHeaders}
               nextPage={donationsNextPage}

@@ -9,16 +9,19 @@ function DataTable({
   nextPage,
   previousPage,
   pageInfo,
+  className,
 }) {
   return (
     <>
       {!items.length ? (
-        <div className="mt-5">
+        <div className={`${className}`}>
           <InfoMessage id="no_results" />
         </div>
       ) : (
         <>
-          <div className="my-5 w-screen md:w-full overflow-x-auto rounded-sm shadow-xs">
+          <div
+            className={`${className} w-screen md:w-full overflow-x-auto rounded-sm shadow-xs`}
+          >
             <table className="w-full border-collapse border border-gray-300 shadow-xs">
               <thead className="text-left text-info">
                 <tr className="bg-gray-200">

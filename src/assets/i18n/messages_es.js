@@ -145,4 +145,6 @@ export default {
   my_bank_accounts: 'Mis cuentas bancarias',
   my_donations: 'Mis donaciones',
   add_bank_account: 'Añadir cuenta bancaria',
+  favorite_instructions:
+    'Puedes seleccionar una cuenta favorita pulsando sobre las estrellas',
 }

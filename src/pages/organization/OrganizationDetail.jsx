@@ -182,6 +182,7 @@ function OrganizationDetail() {
             {organization?.id && (
               <>
                 <DataTable
+                  className={'mt-5'}
                   items={campaigns}
                   tableHeaders={campaignTableHeaders}
                   nextPage={nextCampaignsPage}
