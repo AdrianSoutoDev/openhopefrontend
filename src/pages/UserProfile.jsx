@@ -6,6 +6,7 @@ import { FormattedDate, FormattedMessage, FormattedNumber } from 'react-intl'
 import { InfoMessage } from '../components/shared/Messages'
 import useFetch from '../hooks/useFetch'
 import DataTable from '../components/shared/DataTable'
+import PageTitle from '../components/shared/PageTitle'
 import useDataTableData from '../hooks/useDataTableData'
 
 function UserProfile() {
@@ -160,6 +161,17 @@ function UserProfile() {
   return (
     <>
       <div>
+        <div className="flex justify-center text-center">
+          <PageTitle
+            title={
+              <FormattedMessage
+                id="hello_user"
+                values={{ user: whoAmI?.email.split('@')[0] }}
+              />
+            }
+            className="mb-[2rem]"
+          />
+        </div>
         <div className="flex md:flex-row flex-col">
           <div className="md:w-1/2 px-1 md:py-2 md:px-2">
             <h3 className="mt-10 font-semibold text-3xl text-gray-900">

@@ -147,4 +147,5 @@ export default {
   add_bank_account: 'Añadir cuenta bancaria',
   favorite_instructions:
     'Puedes seleccionar una cuenta favorita pulsando sobre las estrellas',
+  hello_user: 'Hola {user}',
 }
