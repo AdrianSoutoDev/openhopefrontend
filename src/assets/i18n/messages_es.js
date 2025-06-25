@@ -40,6 +40,7 @@ export default {
   table_headers_campaign: 'Campaña',
   table_headers_amount: 'Importe',
   table_headers_date: 'Fecha',
+  table_headers_favorite: 'Favorita',
   campaigns: 'Campañas',
   organizations: 'Organizaciones',
   results: 'Resultados',

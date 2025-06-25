@@ -1,14 +1,17 @@
-import { useContext, useEffect } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AuthContext from '../context/AuthContext'
 import { ButtonLink } from '../components/shared/Buttons'
 import DataTable from '../components/shared/DataTable'
 import { FormattedDate, FormattedMessage, FormattedNumber } from 'react-intl'
 import { InfoMessage } from '../components/shared/Messages'
+import useFetch from '../hooks/useFetch'
 
 function UserProfile() {
   const { isAuthenticated, whoAmI } = useContext(AuthContext)
   const navigate = useNavigate()
+  const [favoriteAccount, setFavoriteAccount] = useState(null)
+  const { fetch: updateFavoriteBankAccountFetch } = useFetch()
 
   const bankAccountsSource = {
     endpoint: `/bank-accounts`,
@@ -16,24 +19,58 @@ function UserProfile() {
   }
 
   const bankAccountsHeaders = [
+    <FormattedMessage id="table_headers_favorite" />,
     <FormattedMessage id="table_headers_bank" />,
     <FormattedMessage id="table_headers_name" />,
     <FormattedMessage id="table_headers_iban" />,
   ]
 
-  const bankAccountsMapper = (objects) => {
-    const mappedObjects = []
-    objects.forEach((obj) => {
-      const values = [obj.aspsp?.name, obj.name?.split('-')[0].trim(), obj.iban]
+  const updateFavoriteAccount = (objects, value) => {
+    const bankAccount = objects.find((o) => o.iban === value)
 
-      mappedObjects.push({
-        id: obj.id,
-        values: values,
-      })
-    })
+    let endpoint = `/users/bank-account`
+    const options = {
+      method: 'PUT',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(bankAccount),
+    }
 
-    return mappedObjects
+    updateFavoriteBankAccountFetch(endpoint, options)
+    setFavoriteAccount(value)
   }
+
+  const bankAccountsMapper = useCallback(
+    (objects) => {
+      const mappedObjects = []
+      objects.forEach((obj) => {
+        const values = [
+          <input
+            type="radio"
+            name="favoriteAccount"
+            checked={
+              favoriteAccount === null
+                ? obj.favorite
+                : favoriteAccount === obj.iban
+            }
+            onChange={() => updateFavoriteAccount(objects, obj.iban)}
+          />,
+          obj.aspsp?.name,
+          obj.name?.split('-')[0].trim(),
+          obj.iban,
+        ]
+
+        mappedObjects.push({
+          id: obj.id,
+          values: values,
+        })
+      })
+
+      return mappedObjects
+    },
+    [favoriteAccount],
+  )
 
   const donationsSource = {
     endpoint: `/donations`,
