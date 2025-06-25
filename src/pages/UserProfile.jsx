@@ -5,7 +5,7 @@ import { ButtonLink } from '../components/shared/Buttons'
 import { FormattedDate, FormattedMessage, FormattedNumber } from 'react-intl'
 import { InfoMessage } from '../components/shared/Messages'
 import useFetch from '../hooks/useFetch'
-import DataTableSimple from '../components/shared/DataTableSimple'
+import DataTable from '../components/shared/DataTable'
 import useDataTableData from '../hooks/useDataTableData'
 
 function UserProfile() {
@@ -81,7 +81,6 @@ function UserProfile() {
   )
 
   const {
-    loading: bankAccountsLoading,
     items: bankAccounts,
     pageInfo: bankAccountsPageInfo,
     nextPage: nextBankAccountPage,
@@ -97,7 +96,7 @@ function UserProfile() {
     <FormattedMessage id="table_headers_account" />,
   ]
 
-  const donationsMapper = (objects) => {
+  const donationsMapper = useCallback((objects) => {
     const mappedObjects = []
     objects.forEach((obj) => {
       const values = [
@@ -120,7 +119,7 @@ function UserProfile() {
     })
 
     return mappedObjects
-  }
+  }, [])
 
   const donationsSource = useMemo(
     () => ({
@@ -131,7 +130,6 @@ function UserProfile() {
   )
 
   const {
-    loading: donationsLoading,
     items: donations,
     pageInfo: donationsPageInfo,
     nextPage: donationsNextPage,
@@ -150,9 +148,8 @@ function UserProfile() {
             <h3 className="mt-10 font-semibold text-3xl text-gray-900">
               <InfoMessage id="my_bank_accounts" />
             </h3>
-            <DataTableSimple
+            <DataTable
               items={bankAccounts}
-              loading={bankAccountsLoading}
               tableHeaders={bankAccountsHeaders}
               nextPage={nextBankAccountPage}
               previousPage={previousBankAccountPage}
@@ -171,9 +168,8 @@ function UserProfile() {
             <h3 className="mt-10 font-semibold text-3xl text-gray-900">
               <InfoMessage id="my_donations" />
             </h3>
-            <DataTableSimple
+            <DataTable
               items={donations}
-              loading={donationsLoading}
               tableHeaders={donationsHeaders}
               nextPage={donationsNextPage}
               previousPage={donationsPreviousPage}

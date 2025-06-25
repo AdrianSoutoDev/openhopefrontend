@@ -1,14 +1,22 @@
-import { useContext, useEffect, useRef, useState } from 'react'
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import useFetch from '../../hooks/useFetch'
 import Spinner from '../../components/shared/Spinner'
 import AuthContext from '../../context/AuthContext'
 import { getImgFromServer } from '../../utils/utils'
-import DataTable from '../../components/shared/DataTable'
 import { FormattedMessage, FormattedDate, FormattedNumber } from 'react-intl'
 import { InfoMessage } from '../../components/shared/Messages'
 import { ButtonLink } from '../../components/shared/Buttons'
 import PageTitle from '../../components/shared/PageTitle'
+import useDataTableData from '../../hooks/useDataTableData'
+import DataTable from '../../components/shared/DataTable'
 
 function OrganizationDetail() {
   const { id } = useParams()
@@ -18,11 +26,6 @@ function OrganizationDetail() {
   const { isAuthenticated, whoAmI } = useContext(AuthContext)
   const navigate = useNavigate()
 
-  const campaignsSource = {
-    endpoint: `/organizations/${id}/campaigns`,
-    options: { method: 'GET' },
-  }
-
   const campaignTableHeaders = [
     <FormattedMessage id="table_headers_name" />,
     <FormattedMessage id="table_headers_start_at" />,
@@ -30,7 +33,7 @@ function OrganizationDetail() {
     <FormattedMessage id="table_headers_amount_collected" />,
   ]
 
-  const campaignsMapper = (objects) => {
+  const campaignsMapper = useCallback((objects) => {
     const mappedObjects = []
     objects.forEach((obj) => {
       const values = [
@@ -72,7 +75,22 @@ function OrganizationDetail() {
     })
 
     return mappedObjects
-  }
+  }, [])
+
+  const campaignsSource = useMemo(
+    () => ({
+      endpoint: `/organizations/${id}/campaigns`,
+      options: { method: 'GET' },
+    }),
+    [id],
+  )
+
+  const {
+    items: campaigns,
+    pageInfo: campaignsPageInfo,
+    nextPage: nextCampaignsPage,
+    previousPage: previousCampaignsPage,
+  } = useDataTableData(campaignsSource, campaignsMapper)
 
   const clickRow = (id) => {
     navigate(`/campaign/${id}`)
@@ -164,9 +182,11 @@ function OrganizationDetail() {
             {organization?.id && (
               <>
                 <DataTable
-                  source={campaignsSource}
+                  items={campaigns}
                   tableHeaders={campaignTableHeaders}
-                  mapper={campaignsMapper}
+                  nextPage={nextCampaignsPage}
+                  previousPage={previousCampaignsPage}
+                  pageInfo={campaignsPageInfo}
                   handleClickRow={clickRow}
                 />
 

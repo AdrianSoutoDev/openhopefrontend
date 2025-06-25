@@ -20,8 +20,9 @@ const useDataTableData = (source, mapper) => {
   }
 
   useEffect(() => {
-    fetch(`${source.endpoint}?page=${page}`, source.options)
-  }, [fetch, page, source.endpoint, source.options])
+    const { endpoint, options } = source
+    fetch(`${endpoint}?page=${page}`, options)
+  }, [fetch, page, source])
 
   useEffect(() => {
     if (data) {
