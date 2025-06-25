@@ -1,11 +1,12 @@
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AuthContext from '../context/AuthContext'
 import { ButtonLink } from '../components/shared/Buttons'
-import DataTable from '../components/shared/DataTable'
 import { FormattedDate, FormattedMessage, FormattedNumber } from 'react-intl'
 import { InfoMessage } from '../components/shared/Messages'
 import useFetch from '../hooks/useFetch'
+import DataTableSimple from '../components/shared/DataTableSimple'
+import useDataTableData from '../hooks/useDataTableData'
 
 function UserProfile() {
   const { isAuthenticated, whoAmI } = useContext(AuthContext)
@@ -13,11 +14,7 @@ function UserProfile() {
   const [favoriteAccount, setFavoriteAccount] = useState(null)
   const { fetch: updateFavoriteBankAccountFetch } = useFetch()
 
-  const bankAccountsSource = {
-    endpoint: `/bank-accounts`,
-    options: { method: 'GET' },
-  }
-
+  //BANK ACCOUNTS
   const bankAccountsHeaders = [
     <FormattedMessage id="table_headers_favorite" />,
     <FormattedMessage id="table_headers_bank" />,
@@ -25,55 +22,73 @@ function UserProfile() {
     <FormattedMessage id="table_headers_iban" />,
   ]
 
-  const updateFavoriteAccount = (objects, value) => {
-    const bankAccount = objects.find((o) => o.iban === value)
+  const updateFavoriteAccount = useCallback(
+    (objects, value) => {
+      const bankAccount = objects.find((o) => o.iban === value)
 
-    let endpoint = `/users/bank-account`
-    const options = {
-      method: 'PUT',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify(bankAccount),
-    }
+      let endpoint = `/users/bank-account`
+      const options = {
+        method: 'PUT',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify(bankAccount),
+      }
 
-    updateFavoriteBankAccountFetch(endpoint, options)
-    setFavoriteAccount(value)
-  }
+      updateFavoriteBankAccountFetch(endpoint, options)
+      setFavoriteAccount(value)
+    },
+    [updateFavoriteBankAccountFetch],
+  )
 
-  const bankAccountsMapper = (objects) => {
-    const mappedObjects = []
-    objects.forEach((obj) => {
-      const values = [
-        <input
-          type="radio"
-          name="favoriteAccount"
-          checked={
-            favoriteAccount === null
-              ? obj.favorite
-              : favoriteAccount === obj.iban
-          }
-          onChange={() => updateFavoriteAccount(objects, obj.iban)}
-        />,
-        obj.aspsp?.name,
-        obj.name?.split('-')[0].trim(),
-        obj.iban,
-      ]
+  const bankAccountsMapper = useCallback(
+    (objects) => {
+      const mappedObjects = []
+      objects.forEach((obj) => {
+        const values = [
+          <input
+            type="radio"
+            name="favoriteAccount"
+            checked={
+              favoriteAccount === null
+                ? obj.favorite
+                : favoriteAccount === obj.iban
+            }
+            onChange={() => updateFavoriteAccount(objects, obj.iban)}
+          />,
+          obj.aspsp?.name,
+          obj.name?.split('-')[0].trim(),
+          obj.iban,
+        ]
 
-      mappedObjects.push({
-        id: obj.id,
-        values: values,
+        mappedObjects.push({
+          id: obj.id,
+          values: values,
+        })
       })
-    })
 
-    return mappedObjects
-  }
+      return mappedObjects
+    },
+    [favoriteAccount, updateFavoriteAccount],
+  )
 
-  const donationsSource = {
-    endpoint: `/donations`,
-    options: { method: 'GET' },
-  }
+  const bankAccountsSource = useMemo(
+    () => ({
+      endpoint: `/bank-accounts`,
+      options: { method: 'GET' },
+    }),
+    [],
+  )
 
+  const {
+    loading: bankAccountsLoading,
+    items: bankAccounts,
+    pageInfo: bankAccountsPageInfo,
+    nextPage: nextBankAccountPage,
+    previousPage: previousBankAccountPage,
+  } = useDataTableData(bankAccountsSource, bankAccountsMapper)
+
+  //DONATIONS
   const donationsHeaders = [
     <FormattedMessage id="table_headers_campaign" />,
     <FormattedMessage id="table_headers_amount" />,
@@ -107,6 +122,22 @@ function UserProfile() {
     return mappedObjects
   }
 
+  const donationsSource = useMemo(
+    () => ({
+      endpoint: `/donations`,
+      options: { method: 'GET' },
+    }),
+    [],
+  )
+
+  const {
+    loading: donationsLoading,
+    items: donations,
+    pageInfo: donationsPageInfo,
+    nextPage: donationsNextPage,
+    previousPage: donationsPreviousPage,
+  } = useDataTableData(donationsSource, donationsMapper)
+
   useEffect(() => {
     if (whoAmI?.type === 'ORGANIZATION') navigate(`/organization/${whoAmI?.id}`)
   }, [isAuthenticated, navigate, whoAmI])
@@ -119,10 +150,13 @@ function UserProfile() {
             <h3 className="mt-10 font-semibold text-3xl text-gray-900">
               <InfoMessage id="my_bank_accounts" />
             </h3>
-            <DataTable
-              source={bankAccountsSource}
+            <DataTableSimple
+              items={bankAccounts}
+              loading={bankAccountsLoading}
               tableHeaders={bankAccountsHeaders}
-              mapper={bankAccountsMapper}
+              nextPage={nextBankAccountPage}
+              previousPage={previousBankAccountPage}
+              pageInfo={bankAccountsPageInfo}
             />
 
             <ButtonLink
@@ -137,10 +171,13 @@ function UserProfile() {
             <h3 className="mt-10 font-semibold text-3xl text-gray-900">
               <InfoMessage id="my_donations" />
             </h3>
-            <DataTable
-              source={donationsSource}
+            <DataTableSimple
+              items={donations}
+              loading={donationsLoading}
               tableHeaders={donationsHeaders}
-              mapper={donationsMapper}
+              nextPage={donationsNextPage}
+              previousPage={donationsPreviousPage}
+              pageInfo={donationsPageInfo}
             />
           </div>
         </div>
