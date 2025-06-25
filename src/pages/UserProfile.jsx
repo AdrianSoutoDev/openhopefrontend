@@ -41,36 +41,33 @@ function UserProfile() {
     setFavoriteAccount(value)
   }
 
-  const bankAccountsMapper = useCallback(
-    (objects) => {
-      const mappedObjects = []
-      objects.forEach((obj) => {
-        const values = [
-          <input
-            type="radio"
-            name="favoriteAccount"
-            checked={
-              favoriteAccount === null
-                ? obj.favorite
-                : favoriteAccount === obj.iban
-            }
-            onChange={() => updateFavoriteAccount(objects, obj.iban)}
-          />,
-          obj.aspsp?.name,
-          obj.name?.split('-')[0].trim(),
-          obj.iban,
-        ]
+  const bankAccountsMapper = (objects) => {
+    const mappedObjects = []
+    objects.forEach((obj) => {
+      const values = [
+        <input
+          type="radio"
+          name="favoriteAccount"
+          checked={
+            favoriteAccount === null
+              ? obj.favorite
+              : favoriteAccount === obj.iban
+          }
+          onChange={() => updateFavoriteAccount(objects, obj.iban)}
+        />,
+        obj.aspsp?.name,
+        obj.name?.split('-')[0].trim(),
+        obj.iban,
+      ]
 
-        mappedObjects.push({
-          id: obj.id,
-          values: values,
-        })
+      mappedObjects.push({
+        id: obj.id,
+        values: values,
       })
+    })
 
-      return mappedObjects
-    },
-    [favoriteAccount],
-  )
+    return mappedObjects
+  }
 
   const donationsSource = {
     endpoint: `/donations`,
