@@ -32,6 +32,7 @@ function CampaignDetail() {
                 <h1 className="block font-semibold text-6xl text-gray-900">
                   {campaign.name}
                 </h1>
+
                 <h2 className="mt-3 block font-semibold text-4xl text-gray-700">
                   <Link to={`/organization/${campaign.organization?.id}`}>
                     {campaign.organization?.name}

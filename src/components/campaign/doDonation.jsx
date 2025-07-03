@@ -2,6 +2,7 @@ import { FormattedMessage, FormattedNumber, useIntl } from 'react-intl'
 import { InfoMessage } from '../shared/Messages'
 import { useState } from 'react'
 import { Button, ButtonLink } from '../shared/Buttons'
+import DonationModal from './DonationModal'
 
 function DoDonation({
   campaignId,
@@ -13,13 +14,13 @@ function DoDonation({
 }) {
   const [amount, setAmount] = useState('')
   const intl = useIntl()
+  const [modalOpen, setModalOpen] = useState(false)
 
-  const handleDonation = () => {
-    console.log('donate: ', amount)
-  }
-
-  const handleFastDonation = (suggestion) => {
-    console.log('donate: ', suggestion)
+  const handleDonation = (amount) => {
+    if (amount) {
+      console.log('donate: ', amount)
+      setModalOpen(true)
+    }
   }
 
   return (
@@ -33,7 +34,7 @@ function DoDonation({
               <button
                 disabled={!hasBankAccount || donationsDisabled || isOwner}
                 key={index}
-                onClick={() => handleFastDonation(suggestion)}
+                onClick={() => handleDonation(suggestion)}
                 className="rounded-full w-19 h-19 aspect-square bg-emerald-400 hover:bg-emerald-600 cursor-pointer shadow-sm mx-2 mt-2 flex justify-center items-center
                 disabled:bg-gray-300 disabled:hover:bg-gray-300 disabled:text-gray-600 disabled:cursor-default
                 disabled:hover:text-gray-600 disabled:border-gray-600"
@@ -85,8 +86,10 @@ function DoDonation({
               disabled:hover:text-gray-600 disabled:border-gray-600"
             />
             <Button
-              disabled={!hasBankAccount || donationsDisabled || isOwner}
-              onClick={handleDonation}
+              disabled={
+                !hasBankAccount || donationsDisabled || isOwner || !amount
+              }
+              onClick={() => handleDonation(amount)}
               type="button"
               className="ml-2 mt-2"
             >
@@ -105,6 +108,7 @@ function DoDonation({
           )}
         </div>
       </div>
+      <DonationModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
     </>
   )
 }

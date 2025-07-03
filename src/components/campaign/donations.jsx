@@ -21,7 +21,8 @@ function CampaignDonations({ className, amountCollected }) {
           />
           {'!'}
         </p>
-        {/* tabla de donations */}
+
+        {/*TODO tabla de donations */}
       </div>
     </>
   )
