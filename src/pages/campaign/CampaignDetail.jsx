@@ -14,11 +14,6 @@ function CampaignDetail() {
   const { campaign, loading } = useCampaign(id)
   const { isAuthenticated, whoAmI } = useContext(AuthContext)
 
-  //TODO Añadir sugerencias de donaciones;
-  const doDonationData = {
-    suggestions: [0.5, 5, 25],
-  }
-
   function RenderHTML({ htmlString }) {
     return <div dangerouslySetInnerHTML={{ __html: htmlString }} />
   }
@@ -151,7 +146,7 @@ function CampaignDetail() {
               </div>
 
               <CampaignSideBar
-                doDonationData={doDonationData}
+                suggestions={campaign.suggestions}
                 minimumDonation={campaign.minimumDonation}
                 categories={campaign.categories}
                 organizationId={campaign.organization?.id}

@@ -3,7 +3,7 @@ import useLogin from '../hooks/useLogin'
 import { useLocation, useNavigate } from 'react-router-dom'
 import AuthContext from '../context/AuthContext'
 import { FormattedMessage } from 'react-intl'
-import { Button } from '../components/shared/Buttons'
+import { Button, ButtonLink } from '../components/shared/Buttons'
 import useValidation from '../hooks/useValidation'
 import PageTitle from '../components/shared/PageTitle'
 import EmailPasswordForm from '../components/shared/EmailPasswordForm'
@@ -65,6 +65,10 @@ function Login() {
             <Button type="submit" disabled={loading} className="w-full my-2">
               {loading ? <Spinner /> : <FormattedMessage id="signin" />}
             </Button>
+
+            <ButtonLink link="/register" className="w-full my-2">
+              <FormattedMessage id="signup" />
+            </ButtonLink>
 
             {location.state?.msg && (
               <p className="text-danger">

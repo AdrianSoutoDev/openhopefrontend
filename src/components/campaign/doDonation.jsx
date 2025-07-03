@@ -29,7 +29,7 @@ function DoDonation({
         <FormattedMessage id="suggestions" className="mt-2" />
         <div className="flex w-full justify-center">
           <div className="flex flex-wrap w-full justify-around my-5">
-            {suggestions.map((suggestion, index) => (
+            {suggestions?.map((suggestion, index) => (
               <button
                 disabled={!hasBankAccount || donationsDisabled || isOwner}
                 key={index}
