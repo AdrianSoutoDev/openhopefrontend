@@ -134,6 +134,7 @@ function CampaignDetail() {
                 {Number(campaign.amountCollected) > 0 ? (
                   <CampaignDonations
                     amountCollected={campaign.amountCollected}
+                    campaignId={campaign.id}
                     className="hidden md:block mx-3"
                   />
                 ) : (
@@ -165,6 +166,7 @@ function CampaignDetail() {
             {Number(campaign.amountCollected) > 0 ? (
               <CampaignDonations
                 amountCollected={campaign.amountCollected}
+                campaignId={campaign.id}
                 className="md:hidden"
               />
             ) : (

@@ -41,6 +41,8 @@ export default {
   table_headers_amount: 'Importe',
   table_headers_date: 'Fecha',
   table_headers_favorite: 'Favorita',
+  table_headers_date_donation: 'Fecha del donativo',
+  table_headers_donation_amount: 'Importe de la donación',
   campaigns: 'Campañas',
   organizations: 'Organizaciones',
   results: 'Resultados',
@@ -148,4 +150,5 @@ export default {
   favorite_instructions:
     'Puedes seleccionar una cuenta favorita pulsando sobre las estrellas',
   hello_user: 'Hola {user}',
+  amount_collected: 'Ya se han recaudado {amount}',
 }
