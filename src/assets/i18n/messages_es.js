@@ -153,6 +153,6 @@ export default {
   amount_collected: 'Ya se han recaudado {amount}',
   need_init_sesion: 'Todavía no has iniciado sesión',
   login_to_realize_donation:
-    'Necesitamos que te identifiques para poder reslizar tu aportación a esta campaña.',
+    'Necesitamos que te identifiques para poder realizar tu aportación a esta campaña.',
   cancel: 'Cancelar',
 }

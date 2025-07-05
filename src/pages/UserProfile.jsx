@@ -185,10 +185,11 @@ function UserProfile() {
               previousPage={previousBankAccountPage}
               pageInfo={bankAccountsPageInfo}
             />
-            <span className="text-sm">
-              <InfoMessage id="favorite_instructions" />
-            </span>
-
+            {bankAccounts && (
+              <span className="text-sm">
+                <InfoMessage id="favorite_instructions" />
+              </span>
+            )}
             <ButtonLink
               className="max-w-56 mt-3"
               link={`/openbanking/bank-selection?user=me`}
