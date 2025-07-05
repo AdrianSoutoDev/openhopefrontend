@@ -151,4 +151,8 @@ export default {
     'Puedes seleccionar una cuenta favorita pulsando sobre las estrellas',
   hello_user: 'Hola {user}',
   amount_collected: 'Ya se han recaudado {amount}',
+  need_init_sesion: 'Todavía no has iniciado sesión',
+  login_to_realize_donation:
+    'Necesitamos que te identifiques para poder reslizar tu aportación a esta campaña.',
+  cancel: 'Cancelar',
 }

@@ -16,6 +16,7 @@ function Login() {
   const navigate = useNavigate()
   const location = useLocation()
   const registered = location.state?.registered
+  const redirectUrl = location.state?.redirecturl
 
   const emailValidation = useValidation('', {
     required: true,
@@ -44,8 +45,14 @@ function Login() {
   }
 
   useEffect(() => {
-    if (isAuthenticated()) navigate('/')
-  }, [isAuthenticated, navigate])
+    if (isAuthenticated()) {
+      if (redirectUrl) {
+        navigate(redirectUrl)
+      } else {
+        navigate('/')
+      }
+    }
+  }, [isAuthenticated, navigate, redirectUrl])
 
   return (
     <>

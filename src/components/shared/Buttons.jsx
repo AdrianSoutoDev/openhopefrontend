@@ -17,6 +17,22 @@ export function Button({ onClick, className, type, disabled, children }) {
   )
 }
 
+export function ButtonDanger({ onClick, className, type, disabled, children }) {
+  return (
+    <button
+      type={type}
+      disabled={disabled}
+      onClick={onClick}
+      className={`font-semibold block rounded-sm text-center shadow-sm btn-danger border px-4 py-2 cursor-pointer 
+                disabled:bg-gray-300 disabled:hover:bg-gray-300 disabled:text-gray-600 disabled:cursor-default
+              disabled:hover:text-gray-600 disabled:border-gray-600 
+                ${className}`}
+    >
+      {children}
+    </button>
+  )
+}
+
 export function ButtonLink({ link, onClick, className, children }) {
   return (
     <Link

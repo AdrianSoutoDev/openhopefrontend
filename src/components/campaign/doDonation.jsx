@@ -1,8 +1,10 @@
 import { FormattedMessage, FormattedNumber, useIntl } from 'react-intl'
 import { InfoMessage } from '../shared/Messages'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Button, ButtonLink } from '../shared/Buttons'
 import DonationModal from './DonationModal'
+import LoginModal from './LoginModal'
+import AuthContext from '../../context/AuthContext'
 
 function DoDonation({
   campaignId,
@@ -14,12 +16,17 @@ function DoDonation({
 }) {
   const [amount, setAmount] = useState('')
   const intl = useIntl()
-  const [modalOpen, setModalOpen] = useState(false)
+  const [modalDonationOpen, setModalDonationOpen] = useState(false)
+  const [modalLoginOpen, setModalLoginOpen] = useState(false)
+  const { isAuthenticated, whoAmI } = useContext(AuthContext)
 
   const handleDonation = (amount) => {
-    if (amount) {
+    console.log(whoAmI)
+    if (!isAuthenticated()) {
+      setModalLoginOpen(true)
+    } else {
       console.log('donate: ', amount)
-      setModalOpen(true)
+      setModalDonationOpen(true)
     }
   }
 
@@ -108,7 +115,15 @@ function DoDonation({
           )}
         </div>
       </div>
-      <DonationModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
+      <DonationModal
+        modalOpen={modalDonationOpen}
+        setModalOpen={setModalDonationOpen}
+      />
+      <LoginModal
+        modalOpen={modalLoginOpen}
+        setModalOpen={setModalLoginOpen}
+        campaignId={campaignId}
+      />
     </>
   )
 }
