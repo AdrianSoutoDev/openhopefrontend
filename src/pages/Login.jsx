@@ -44,6 +44,16 @@ function Login() {
     }
   }
 
+  const handleRegisterButton = () => {
+    if (redirectUrl) {
+      navigate(`/register`, {
+        state: { redirecturl: redirectUrl },
+      })
+    } else {
+      navigate('/register')
+    }
+  }
+
   useEffect(() => {
     if (isAuthenticated()) {
       if (redirectUrl) {
@@ -73,9 +83,13 @@ function Login() {
               {loading ? <Spinner /> : <FormattedMessage id="signin" />}
             </Button>
 
-            <ButtonLink link="/register" className="w-full my-2">
+            <Button
+              type="button"
+              onClick={handleRegisterButton}
+              className="w-full my-2"
+            >
               <FormattedMessage id="signup" />
-            </ButtonLink>
+            </Button>
 
             {location.state?.msg && (
               <p className="text-danger">

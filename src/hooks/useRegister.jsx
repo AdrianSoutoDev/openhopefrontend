@@ -2,13 +2,19 @@ import { useCallback, useEffect } from 'react'
 import useFetch from './useFetch'
 import { useNavigate } from 'react-router-dom'
 
-const useRegister = () => {
+const useRegister = ({ redirectUrl }) => {
   const { data, loading, fetch } = useFetch()
   const navigate = useNavigate()
 
   const onSuccess = useCallback(() => {
-    navigate('/login', { state: { registered: true } })
-  }, [navigate])
+    if (redirectUrl) {
+      navigate('/login', {
+        state: { registered: true, redirecturl: redirectUrl },
+      })
+    } else {
+      navigate('/login', { state: { registered: true } })
+    }
+  }, [navigate, redirectUrl])
 
   const register = (
     email,

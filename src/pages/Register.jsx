@@ -10,11 +10,14 @@ import EmailPasswordForm from '../components/shared/EmailPasswordForm'
 import Spinner from '../components/shared/Spinner'
 import TextEditor from '../components/shared/TextEditor'
 import useTopics from '../hooks/useTopics'
+import { useLocation } from 'react-router-dom'
 
 function Register() {
+  const location = useLocation()
+  const redirectUrl = location.state?.redirecturl
   const [typeAccount, setTypeAccount] = useState('')
   const [moreInfoEnabled, setMoreInfoEnable] = useState(false)
-  const { register, loading } = useRegister()
+  const { register, loading } = useRegister({ redirectUrl: redirectUrl })
   const [description, setDescription] = useState('')
   const [image, setImage] = useState(null)
   const [categoriesSelected, setCategoriesSelected] = useState([])
