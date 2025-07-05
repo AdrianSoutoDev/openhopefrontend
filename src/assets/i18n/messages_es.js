@@ -155,4 +155,9 @@ export default {
   login_to_realize_donation:
     'Necesitamos que te identifiques para poder realizar tu aportación a esta campaña.',
   cancel: 'Cancelar',
+  select_bank_account_donation:
+    'Sólo queda seleccionar con que cuenta vas a realizar la donación.',
+  you_gonna_donate: 'La donación de {amount} se realizará con la cuenta:',
+  accept: 'Aceptar',
+  select_another_account: 'Puedes seleccionar otra de tus cuentas',
 }

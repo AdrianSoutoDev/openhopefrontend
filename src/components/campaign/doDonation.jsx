@@ -26,6 +26,7 @@ function DoDonation({
       setModalLoginOpen(true)
     } else {
       console.log('donate: ', amount)
+      setAmount(amount)
       setModalDonationOpen(true)
     }
   }
@@ -118,6 +119,7 @@ function DoDonation({
       <DonationModal
         modalOpen={modalDonationOpen}
         setModalOpen={setModalDonationOpen}
+        amount={amount}
       />
       <LoginModal
         modalOpen={modalLoginOpen}
