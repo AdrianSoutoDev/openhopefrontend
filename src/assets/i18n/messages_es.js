@@ -163,4 +163,7 @@ export default {
   you_can_add_new_account:
     'Puedes añadir una nueva cuenta bancaria desde {link}',
   your_profile: 'tu perfil',
+  no_bank_accounts:
+    'No tiene ninguna cuenta bancaria asociada a su cuenta de usuario',
+  go_to_proifile: 'Ir a su perfil',
 }

@@ -1,5 +1,5 @@
 import { FormattedMessage, FormattedNumber } from 'react-intl'
-import { Button, ButtonDanger } from '../shared/Buttons'
+import { Button, ButtonDanger, ButtonLink } from '../shared/Buttons'
 import { useEffect, useRef, useState } from 'react'
 import useFetch from '../../hooks/useFetch'
 import BankAccountPill from '../shared/BankAccountPill'
@@ -48,42 +48,52 @@ function DonationModal({ modalOpen, setModalOpen, amount }) {
       {modalOpen && (
         <div className="fixed inset-0 bg-transparent bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded shadow-lg max-w-2xl w-full">
-            <h2 className="text-xl font-bold mb-4">
-              <InfoMessage id="select_bank_account_donation" />
-            </h2>
-            <p className="mb-2 text-info">
-              <FormattedMessage
-                id="you_gonna_donate"
-                values={{
-                  amount: (
-                    <span className="font-bold">
-                      <FormattedNumber
-                        value={amount}
-                        style="currency"
-                        currency="EUR"
-                      />
-                    </span>
-                  ),
-                }}
-              />
-            </p>
+            {bankAccounts && bankAccounts?.length > 0 ? (
+              <>
+                <h2 className="text-xl font-bold mb-4">
+                  <InfoMessage id="select_bank_account_donation" />
+                </h2>
+                <p className="mb-2 text-info">
+                  <FormattedMessage
+                    id="you_gonna_donate"
+                    values={{
+                      amount: (
+                        <span className="font-bold">
+                          <FormattedNumber
+                            value={amount}
+                            style="currency"
+                            currency="EUR"
+                          />
+                        </span>
+                      ),
+                    }}
+                  />
+                </p>
 
-            <BankAccountPill bankAccount={AccountOnPill} />
+                <BankAccountPill bankAccount={AccountOnPill} />
 
-            {bankAccounts?.length > 1 && (
-              <div className="pt-5">
-                <label className="text-info">
-                  <FormattedMessage id="select_another_account" />
-                </label>
+                {bankAccounts?.length > 1 && (
+                  <div className="pt-5">
+                    <label className="text-info">
+                      <FormattedMessage id="select_another_account" />
+                    </label>
 
-                <UserBankAccountSelector
-                  emptyText={<FormattedMessage id="selection_bank_entity" />}
-                  sourceItems={bankAccounts}
-                  setItemSelected={setBankAccountSelected}
-                  disabled={loading}
-                  defaultItem={AccountOnPill}
-                />
-              </div>
+                    <UserBankAccountSelector
+                      emptyText={
+                        <FormattedMessage id="selection_bank_entity" />
+                      }
+                      sourceItems={bankAccounts}
+                      setItemSelected={setBankAccountSelected}
+                      disabled={loading}
+                      defaultItem={AccountOnPill}
+                    />
+                  </div>
+                )}
+              </>
+            ) : (
+              <h2 className="text-xl font-bold mb-4">
+                <InfoMessage id="no_bank_accounts" />
+              </h2>
             )}
 
             <label className="text-info">
@@ -100,13 +110,19 @@ function DonationModal({ modalOpen, setModalOpen, amount }) {
             </label>
 
             <div className="flex mt-5">
-              <Button
-                type="button"
-                onClick={() => console.log('ok')}
-                className={'mr-1'}
-              >
-                <FormattedMessage id="accept" />
-              </Button>
+              {bankAccounts && bankAccounts?.length > 0 ? (
+                <Button
+                  type="button"
+                  onClick={() => console.log('ok')}
+                  className={'mr-1'}
+                >
+                  <FormattedMessage id="accept" />
+                </Button>
+              ) : (
+                <ButtonLink type="button" link="/me" className={'mr-1'}>
+                  <FormattedMessage id="go_to_proifile" />
+                </ButtonLink>
+              )}
               <ButtonDanger
                 onClick={() => setModalOpen(false)}
                 className={'ml-1'}
