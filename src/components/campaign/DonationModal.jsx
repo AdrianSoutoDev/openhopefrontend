@@ -5,6 +5,7 @@ import useFetch from '../../hooks/useFetch'
 import BankAccountPill from '../shared/BankAccountPill'
 import { InfoMessage } from '../shared/Messages'
 import UserBankAccountSelector from '../shared/UserBankAccountSelector'
+import { Link } from 'react-router-dom'
 
 function DonationModal({ modalOpen, setModalOpen, amount }) {
   const { data, loading, fetch } = useFetch()
@@ -82,6 +83,19 @@ function DonationModal({ modalOpen, setModalOpen, amount }) {
                 defaultItem={AccountOnPill}
               />
             </div>
+
+            <label className="text-info">
+              <FormattedMessage
+                id="you_can_add_new_account"
+                values={{
+                  link: (
+                    <Link to={`/me`} className="underline">
+                      <FormattedMessage id="your_profile" />
+                    </Link>
+                  ),
+                }}
+              />
+            </label>
 
             <div className="flex mt-5">
               <Button

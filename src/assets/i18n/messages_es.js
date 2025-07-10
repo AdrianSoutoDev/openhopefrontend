@@ -160,4 +160,7 @@ export default {
   you_gonna_donate: 'La donación de {amount} se realizará con la cuenta:',
   accept: 'Aceptar',
   select_another_account: 'Puedes seleccionar otra de tus cuentas',
+  you_can_add_new_account:
+    'Puedes añadir una nueva cuenta bancaria desde {link}',
+  your_profile: 'tu perfil',
 }

@@ -18,14 +18,12 @@ function DoDonation({
   const intl = useIntl()
   const [modalDonationOpen, setModalDonationOpen] = useState(false)
   const [modalLoginOpen, setModalLoginOpen] = useState(false)
-  const { isAuthenticated, whoAmI } = useContext(AuthContext)
+  const { isAuthenticated } = useContext(AuthContext)
 
   const handleDonation = (amount) => {
-    console.log(whoAmI)
     if (!isAuthenticated()) {
       setModalLoginOpen(true)
     } else {
-      console.log('donate: ', amount)
       setAmount(amount)
       setModalDonationOpen(true)
     }
