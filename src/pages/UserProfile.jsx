@@ -185,7 +185,7 @@ function UserProfile() {
               previousPage={previousBankAccountPage}
               pageInfo={bankAccountsPageInfo}
             />
-            {bankAccounts && (
+            {bankAccounts?.length > 1 && (
               <span className="text-sm">
                 <InfoMessage id="favorite_instructions" />
               </span>

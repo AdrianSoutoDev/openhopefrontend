@@ -15,16 +15,26 @@ function DoDonation({
   donationsDisabled,
 }) {
   const [amount, setAmount] = useState('')
+  const [inputAmount, setInputAmount] = useState('')
   const intl = useIntl()
   const [modalDonationOpen, setModalDonationOpen] = useState(false)
   const [modalLoginOpen, setModalLoginOpen] = useState(false)
   const { isAuthenticated } = useContext(AuthContext)
 
-  const handleDonation = (amount) => {
+  const handleFastDonation = (amount) => {
     if (!isAuthenticated()) {
       setModalLoginOpen(true)
     } else {
       setAmount(amount)
+      setModalDonationOpen(true)
+    }
+  }
+
+  const handleInputAmount = () => {
+    if (!isAuthenticated()) {
+      setModalLoginOpen(true)
+    } else {
+      setAmount(inputAmount)
       setModalDonationOpen(true)
     }
   }
@@ -40,7 +50,7 @@ function DoDonation({
               <button
                 disabled={!hasBankAccount || donationsDisabled || isOwner}
                 key={index}
-                onClick={() => handleDonation(suggestion)}
+                onClick={() => handleFastDonation(suggestion)}
                 className="rounded-full w-19 h-19 aspect-square bg-emerald-400 hover:bg-emerald-600 cursor-pointer shadow-sm mx-2 mt-2 flex justify-center items-center
                 disabled:bg-gray-300 disabled:hover:bg-gray-300 disabled:text-gray-600 disabled:cursor-default
                 disabled:hover:text-gray-600 disabled:border-gray-600"
@@ -84,18 +94,18 @@ function DoDonation({
               disabled={!hasBankAccount || donationsDisabled || isOwner}
               type="number"
               id="minimumDonation"
-              value={amount}
+              value={inputAmount}
               placeholder={intl.formatMessage({ id: 'insert_in_euros' })}
-              onChange={(e) => setAmount(e.target.value)}
+              onChange={(e) => setInputAmount(e.target.value)}
               className="px-4 py-3 mr-2 mt-2 block text-sm shadow-sm rounded-lg text-info border input-primary focus:outline-none hover:border-emerald-400
               disabled:bg-gray-300 disabled:hover:bg-gray-300 disabled:text-gray-600 disabled:cursor-default
               disabled:hover:text-gray-600 disabled:border-gray-600"
             />
             <Button
               disabled={
-                !hasBankAccount || donationsDisabled || isOwner || !amount
+                !hasBankAccount || donationsDisabled || isOwner || !inputAmount
               }
-              onClick={() => handleDonation(amount)}
+              onClick={() => handleInputAmount(amount)}
               type="button"
               className="ml-2 mt-2"
             >

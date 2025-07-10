@@ -47,7 +47,7 @@ function DonationModal({ modalOpen, setModalOpen, amount }) {
     <>
       {modalOpen && (
         <div className="fixed inset-0 bg-transparent bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded shadow-lg max-w-xl w-full">
+          <div className="bg-white p-6 rounded shadow-lg max-w-2xl w-full">
             <h2 className="text-xl font-bold mb-4">
               <InfoMessage id="select_bank_account_donation" />
             </h2>
@@ -70,19 +70,21 @@ function DonationModal({ modalOpen, setModalOpen, amount }) {
 
             <BankAccountPill bankAccount={AccountOnPill} />
 
-            <div className="pt-5">
-              <label className="text-info">
-                <FormattedMessage id="select_another_account" />
-              </label>
+            {bankAccounts?.length > 1 && (
+              <div className="pt-5">
+                <label className="text-info">
+                  <FormattedMessage id="select_another_account" />
+                </label>
 
-              <UserBankAccountSelector
-                emptyText={<FormattedMessage id="selection_bank_entity" />}
-                sourceItems={bankAccounts}
-                setItemSelected={setBankAccountSelected}
-                disabled={loading}
-                defaultItem={AccountOnPill}
-              />
-            </div>
+                <UserBankAccountSelector
+                  emptyText={<FormattedMessage id="selection_bank_entity" />}
+                  sourceItems={bankAccounts}
+                  setItemSelected={setBankAccountSelected}
+                  disabled={loading}
+                  defaultItem={AccountOnPill}
+                />
+              </div>
+            )}
 
             <label className="text-info">
               <FormattedMessage
