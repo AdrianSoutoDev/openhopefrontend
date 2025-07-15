@@ -5,6 +5,7 @@ import { Button, ButtonLink } from '../shared/Buttons'
 import DonationModal from './DonationModal'
 import LoginModal from './LoginModal'
 import AuthContext from '../../context/AuthContext'
+import useDonate from '../../hooks/useDonate'
 
 function DoDonation({
   campaignId,
@@ -20,6 +21,7 @@ function DoDonation({
   const [modalDonationOpen, setModalDonationOpen] = useState(false)
   const [modalLoginOpen, setModalLoginOpen] = useState(false)
   const { isAuthenticated } = useContext(AuthContext)
+  const { data, loading, donate } = useDonate(campaignId)
 
   const handleFastDonation = (amount) => {
     if (!isAuthenticated()) {
@@ -128,6 +130,7 @@ function DoDonation({
         modalOpen={modalDonationOpen}
         setModalOpen={setModalDonationOpen}
         amount={amount}
+        acceptDonation={donate}
       />
       <LoginModal
         modalOpen={modalLoginOpen}

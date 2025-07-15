@@ -6,8 +6,9 @@ import BankAccountPill from '../shared/BankAccountPill'
 import { InfoMessage } from '../shared/Messages'
 import UserBankAccountSelector from '../shared/UserBankAccountSelector'
 import { Link } from 'react-router-dom'
+import Spinner from '../shared/Spinner'
 
-function DonationModal({ modalOpen, setModalOpen, amount }) {
+function DonationModal({ modalOpen, setModalOpen, amount, acceptDonation }) {
   const { data, loading, fetch } = useFetch()
   const hasFetched = useRef(false)
   const [bankAccounts, setBankAccounts] = useState()
@@ -45,7 +46,13 @@ function DonationModal({ modalOpen, setModalOpen, amount }) {
 
   return (
     <>
-      {modalOpen && (
+      {modalOpen && loading && (
+        <div className="h-128 flex justify-center items-center">
+          <Spinner />
+        </div>
+      )}
+
+      {modalOpen && !loading && (
         <div className="fixed inset-0 bg-transparent bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded shadow-lg max-w-2xl w-full">
             {bankAccounts && bankAccounts?.length > 0 ? (
@@ -113,7 +120,7 @@ function DonationModal({ modalOpen, setModalOpen, amount }) {
               {bankAccounts && bankAccounts?.length > 0 ? (
                 <Button
                   type="button"
-                  onClick={() => console.log('ok')}
+                  onClick={() => acceptDonation(amount, AccountOnPill)}
                   className={'mr-1'}
                 >
                   <FormattedMessage id="accept" />
