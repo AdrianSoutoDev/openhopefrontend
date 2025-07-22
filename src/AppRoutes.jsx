@@ -9,6 +9,7 @@ import CampaignCreate from './pages/campaign/CampaignCreate.jsx'
 import CampaignDetail from './pages/campaign/CampaignDetail.jsx'
 import BankAccountSelection from './pages/openbanking/BankAccountSelection.jsx'
 import Searcher from './pages/Searcher.jsx'
+import UserProfile from './pages/UserProfile.jsx'
 
 const AppRoutes = () => (
   <Routes>
@@ -27,6 +28,7 @@ const AppRoutes = () => (
       element={<BankAccountSelection />}
     />
     <Route path="/searcher" element={<Searcher />} />
+    <Route path="/me" element={<UserProfile />} />
   </Routes>
 )
 

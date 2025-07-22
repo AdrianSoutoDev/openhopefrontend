@@ -10,24 +10,25 @@ import { InfoMessage } from '../../components/shared/Messages'
 import PageTitle from '../../components/shared/PageTitle'
 import useCampaign from '../../hooks/useCampaign'
 import Icons from '../../components/shared/Icons'
-import { useCallback, useEffect } from 'react'
+import { useCallback, useContext, useEffect } from 'react'
+import AuthContext from '../../context/AuthContext'
 
 function BankAccountSelection() {
+  const { whoAmI } = useContext(AuthContext)
   const [searchParams] = useSearchParams()
   const campaignId = searchParams.get('campaign')
-  const userId = searchParams.get('user')
   const aspspParam = searchParams.get('aspsp')
 
   const { campaign } = useCampaign(campaignId)
 
   const { oAuthAutenticate } = useOAuth({
     campaignId: campaignId,
-    userId: userId,
+    userId: whoAmI?.id,
   })
 
   const { saveBankAccount } = useSaveBankAccount({
     campaignId: campaignId,
-    userId: userId,
+    userId: whoAmI?.id,
   })
 
   const {
@@ -41,7 +42,7 @@ function BankAccountSelection() {
     setAccountSelected,
   } = useBankAccountSelection(aspspParam, {
     campaignId: campaignId,
-    userId: userId,
+    userId: whoAmI?.id,
   })
 
   const handleAcceptConsent = useCallback(() => {
@@ -76,7 +77,7 @@ function BankAccountSelection() {
         <div className="flex flex-col justify-center items-center">
           <div className="p-4 max-w-96 md:max-w-3xl">
             <PageTitle
-              title={campaignId ? campaign?.name : ''}
+              title={campaignId ? campaign?.name : whoAmI?.email.split('@')[0]}
               className="mb-[5rem]"
             />
 
@@ -85,20 +86,20 @@ function BankAccountSelection() {
 
               {!aspspSelected && (
                 <InfoMessage
-                  id={campaignId ? 'select_bank_entity_campaign' : ''}
+                  id={
+                    campaignId
+                      ? 'select_bank_entity_campaign'
+                      : 'select_bank_entity_user'
+                  }
                 />
               )}
 
               {aspspSelected && bankAccounts?.notAllowed && (
-                <InfoMessage
-                  id={campaignId ? 'authenticate_bank_entity' : ''}
-                />
+                <InfoMessage id="authenticate_bank_entity" />
               )}
 
               {aspspSelected && bankAccounts?.redirection && (
-                <InfoMessage
-                  id={campaignId ? 'accept_consent_bank_entity' : ''}
-                />
+                <InfoMessage id={'accept_consent_bank_entity'} />
               )}
 
               {!accountSelected &&
@@ -111,7 +112,11 @@ function BankAccountSelection() {
               {accountSelected && (
                 <>
                   <InfoMessage
-                    id={campaignId ? 'save_bank_account_campaign' : ''}
+                    id={
+                      campaignId
+                        ? 'save_bank_account_campaign'
+                        : 'save_bank_account_user'
+                    }
                   />
                   <span className="mt-1 text-info font-bold">
                     {accountSelected?.name}

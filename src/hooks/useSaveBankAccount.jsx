@@ -10,7 +10,7 @@ const useSaveBankAccount = ({ campaignId, userId }) => {
     if (campaignId) {
       updateCampaignBankAccount(accountSelected, aspspSelected)
     } else if (userId) {
-      //Add user bank account
+      saveUserBankAccount(accountSelected, aspspSelected)
     }
   }
 
@@ -30,11 +30,28 @@ const useSaveBankAccount = ({ campaignId, userId }) => {
     fetch(endpoint, options)
   }
 
+  const saveUserBankAccount = (accountSelected, aspspSelected) => {
+    let endpoint = `/users/bank-account`
+
+    accountSelected.aspsp = aspspSelected
+
+    const options = {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(accountSelected),
+    }
+
+    fetch(endpoint, options)
+  }
+
   useEffect(() => {
     if (data) {
       if (campaignId) navigate(`/campaign/${campaignId}`)
+      if (userId) navigate('/me')
     }
-  }, [campaignId, data, navigate])
+  }, [campaignId, data, navigate, userId])
 
   return { saveBankAccount, loadingSaveBankAccount }
 }

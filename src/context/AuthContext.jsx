@@ -5,8 +5,7 @@ import { sendLogout, validateToken } from '../services/authService'
 const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [whoAmI, setWhoAmI] = useState('')
+  const [whoAmI, setWhoAmI] = useState(null)
   const hasValidated = useRef(false)
 
   useEffect(() => {
@@ -16,8 +15,7 @@ export const AuthProvider = ({ children }) => {
         const res = await validateToken()
         if (res.status === 200) {
           const json = await res.json()
-          setWhoAmI(json.email)
-          setIsAuthenticated(true)
+          setWhoAmI({ id: json.id, email: json.email, type: json.accountType })
         } else {
           removeToken()
         }
@@ -28,17 +26,19 @@ export const AuthProvider = ({ children }) => {
     hasValidated.current = true
   }, [])
 
-  const login = (token, email) => {
+  const login = (token, userData) => {
     setToken(token)
-    setWhoAmI(email)
-    setIsAuthenticated(true)
+    setWhoAmI(userData)
   }
 
   const logout = async () => {
     sendLogout()
     removeToken()
-    setIsAuthenticated(false)
-    setWhoAmI('')
+    setWhoAmI(null)
+  }
+
+  const isAuthenticated = () => {
+    return whoAmI !== null
   }
 
   return (

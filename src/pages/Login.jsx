@@ -44,7 +44,7 @@ function Login() {
   }
 
   useEffect(() => {
-    if (isAuthenticated) navigate('/')
+    if (isAuthenticated()) navigate('/')
   }, [isAuthenticated, navigate])
 
   return (

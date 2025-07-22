@@ -24,6 +24,10 @@ function NavBar() {
     navigate('/')
   }
 
+  const handleProfile = () => {
+    navigate('/me')
+  }
+
   return (
     <>
       {/* Mobile view*/}
@@ -46,7 +50,7 @@ function NavBar() {
         </div>
 
         <div className={`${isOpen ? 'block' : 'hidden'}`}>
-          {!isAuthenticated && (
+          {!isAuthenticated() && (
             <>
               <Link
                 to="/register"
@@ -65,10 +69,16 @@ function NavBar() {
               </Link>
             </>
           )}
-          {isAuthenticated && (
-            <button className="block px-4 py-2" onClick={handleLogout}>
-              <FormattedMessage id="signout" />
-            </button>
+          {isAuthenticated() && (
+            <>
+              <button className="block px-4 py-2" onClick={handleProfile}>
+                <FormattedMessage id="profile" />
+              </button>
+
+              <button className="block px-4 py-2" onClick={handleLogout}>
+                <FormattedMessage id="signout" />
+              </button>
+            </>
           )}
         </div>
       </nav>
@@ -90,7 +100,7 @@ function NavBar() {
             </Link>
           )}
 
-          {!isAuthenticated && (
+          {!isAuthenticated() && (
             <div className="flex">
               <ButtonLink
                 link="/register"
@@ -104,10 +114,15 @@ function NavBar() {
               </ButtonLink>
             </div>
           )}
-          {isAuthenticated && (
-            <Button className="min-w-28 mx-2" onClick={handleLogout}>
-              <FormattedMessage id="signout" />
-            </Button>
+          {isAuthenticated() && (
+            <div className="flex">
+              <Button className="min-w-28 mx-2" onClick={handleProfile}>
+                <FormattedMessage id="profile" />
+              </Button>
+              <Button className="min-w-28 mx-2" onClick={handleLogout}>
+                <FormattedMessage id="signout" />
+              </Button>
+            </div>
           )}
         </div>
       </nav>
