@@ -14,6 +14,7 @@ import MultipleSelector from '../../components/shared/MultipleSelector'
 import PageTitle from '../../components/shared/PageTitle'
 import GoBackContext from '../../context/GoBackContext'
 import TextEditor from '../../components/shared/TextEditor'
+import useTopics from '../../hooks/useTopics'
 
 function CampaignCreate() {
   const { id } = useParams()
@@ -27,6 +28,7 @@ function CampaignCreate() {
   const [image, setImage] = useState(null)
   const [categoriesSelected, setCategoriesSelected] = useState([])
   const [description, setDescription] = useState('')
+  const { topicString, handleTopics, topics, topicsError } = useTopics()
 
   useEffect(() => {
     setShowGoBack(true)
@@ -88,7 +90,12 @@ function CampaignCreate() {
       Number(minimumDonationValidation.value) === 0 ||
       minimumDonationValidation.validate()
 
-    if (isNameValid && isEconomicTargetValid && isMinimumDonationValid) {
+    if (
+      isNameValid &&
+      isEconomicTargetValid &&
+      isMinimumDonationValid &&
+      !topicsError
+    ) {
       const localDateFormat = 'yyyy-MM-dd'
       const startAtFormated = format(startAt, localDateFormat)
       let dateLimitFormated = dateLimit
@@ -104,6 +111,7 @@ function CampaignCreate() {
         description,
         categoriesSelected,
         image,
+        topics,
       )
     }
   }
@@ -195,7 +203,7 @@ function CampaignCreate() {
                     sourceItems={organization ? organization.categories : []}
                     selectedItems={categoriesSelected}
                     setSelectedItems={setCategoriesSelected}
-                    maxCategories={
+                    maxItems={
                       organization
                         ? organization.categories
                           ? organization.categories.length
@@ -206,6 +214,19 @@ function CampaignCreate() {
                   />
                 </div>
               </div>
+
+              <label htmlFor="topics">
+                <InfoMessage id="label_topics" />
+                <span> ({topics.length}/5)</span>
+              </label>
+              <input
+                type="text"
+                id="topics"
+                value={topicString}
+                onChange={handleTopics}
+                className="text-info rounded-lg shadow-sm border input-primary w-full my-2 px-4 py-2 focus:outline-none"
+              />
+              {topicsError && <p className="text-danger mb-2">{topicsError}</p>}
 
               <div className="md:flex">
                 <div className="w-full md:mr-1">

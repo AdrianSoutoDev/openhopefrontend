@@ -4,7 +4,7 @@ import AppRoutes from '../../AppRoutes'
 
 const Layout = () => {
   return (
-    <div className="md:px-16">
+    <div className="md:px-16 mb-10">
       <NavBar />
       <AppRoutes />
     </div>

@@ -9,6 +9,7 @@ import { FormattedMessage } from 'react-intl'
 import EmailPasswordForm from '../components/shared/EmailPasswordForm'
 import Spinner from '../components/shared/Spinner'
 import TextEditor from '../components/shared/TextEditor'
+import useTopics from '../hooks/useTopics'
 
 function Register() {
   const [typeAccount, setTypeAccount] = useState('')
@@ -17,6 +18,7 @@ function Register() {
   const [description, setDescription] = useState('')
   const [image, setImage] = useState(null)
   const [categoriesSelected, setCategoriesSelected] = useState([])
+  const { topicString, handleTopics, topics, topicsError } = useTopics()
 
   const categoriesSource = {
     endpoint: '/categories',
@@ -81,7 +83,7 @@ function Register() {
     }
 
     if (typeAccount === 'organization') {
-      if (isEmailValid && isPasswordValid && isNameValid) {
+      if (isEmailValid && isPasswordValid && isNameValid && !topicsError) {
         register(
           emailValidation.value,
           passwordValidation.value,
@@ -90,6 +92,7 @@ function Register() {
           categoriesSelected,
           image,
           typeAccount,
+          topics,
         )
       }
     }
@@ -178,9 +181,25 @@ function Register() {
                               selectedItems={categoriesSelected}
                               setSelectedItems={setCategoriesSelected}
                               className="my-2"
+                              maxItems={3}
                             />
                           </div>
                         </div>
+
+                        <label htmlFor="topics">
+                          <InfoMessage id="label_topics" />
+                          <span> ({topics.length}/5)</span>
+                        </label>
+                        <input
+                          type="text"
+                          id="topics"
+                          value={topicString}
+                          onChange={handleTopics}
+                          className="text-info rounded-lg shadow-sm border input-primary w-full my-2 px-4 py-2 focus:outline-none"
+                        />
+                        {topicsError && (
+                          <p className="text-danger mb-2">{topicsError}</p>
+                        )}
 
                         <label htmlFor="description">
                           <InfoMessage id="organization_description" />

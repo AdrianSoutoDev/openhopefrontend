@@ -8,6 +8,7 @@ import OrganizationEdit from './pages/organization/OrganizationEdit.jsx'
 import CampaignCreate from './pages/campaign/CampaignCreate.jsx'
 import CampaignDetail from './pages/campaign/CampaignDetail.jsx'
 import BankAccountSelection from './pages/openbanking/BankAccountSelection.jsx'
+import Searcher from './pages/Searcher.jsx'
 
 const AppRoutes = () => (
   <Routes>
@@ -25,6 +26,7 @@ const AppRoutes = () => (
       path="/openbanking/bank-selection"
       element={<BankAccountSelection />}
     />
+    <Route path="/searcher" element={<Searcher />} />
   </Routes>
 )
 

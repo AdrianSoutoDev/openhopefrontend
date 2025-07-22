@@ -11,6 +11,7 @@ import useUpdateOrganization from '../../hooks/useUpdateOrganization'
 import Spinner from '../../components/shared/Spinner'
 import PageTitle from '../../components/shared/PageTitle'
 import GoBackContext from '../../context/GoBackContext'
+import useTopics from '../../hooks/useTopics'
 
 function OrganizationEdit() {
   const { id } = useParams()
@@ -20,6 +21,14 @@ function OrganizationEdit() {
   const [image, setImage] = useState(null)
   const [name, setName] = useState('')
   const { setShowGoBack, setWhereWeGo } = useContext(GoBackContext)
+  const {
+    topicString,
+    handleTopics,
+    topics,
+    topicsError,
+    getOrganizationTopics,
+    loading: loadingTopics,
+  } = useTopics()
 
   const hasFetched = useRef(false)
   const { data, loading, fetch } = useFetch()
@@ -31,6 +40,11 @@ function OrganizationEdit() {
       required: <FormattedMessage id="name_error_empty" />,
     },
   })
+
+  const categoriesSource = {
+    endpoint: '/categories',
+    options: { method: 'GET' },
+  }
 
   useEffect(() => {
     setShowGoBack(true)
@@ -55,10 +69,9 @@ function OrganizationEdit() {
     }
   }, [data])
 
-  const categoriesSource = {
-    endpoint: '/categories',
-    options: { method: 'GET' },
-  }
+  useEffect(() => {
+    getOrganizationTopics(id)
+  }, [getOrganizationTopics, id])
 
   const handleEditorChange = (text) => {
     setDescription(text)
@@ -78,8 +91,14 @@ function OrganizationEdit() {
   const handleSubmit = (e) => {
     e.preventDefault()
     const isNameValid = nameValidation.validate()
-    if (isNameValid) {
-      update(nameValidation.value, description, categoriesSelected, image)
+    if (isNameValid && !topicsError) {
+      update(
+        nameValidation.value,
+        description,
+        categoriesSelected,
+        image,
+        topics,
+      )
     }
   }
 
@@ -87,7 +106,7 @@ function OrganizationEdit() {
     <>
       <PageTitle title={<FormattedMessage id="editing" />} className="mb-5" />
 
-      {loading ? (
+      {loading || loadingTopics ? (
         <div className="h-128 flex justify-center items-center">
           <Spinner />
         </div>
@@ -134,9 +153,25 @@ function OrganizationEdit() {
                       selectedItems={categoriesSelected}
                       setSelectedItems={setCategoriesSelected}
                       className="my-2"
+                      maxItems={3}
                     />
                   </div>
                 </div>
+
+                <label htmlFor="topics">
+                  <InfoMessage id="label_topics" />
+                  <span> ({topics.length}/5)</span>
+                </label>
+                <input
+                  type="text"
+                  id="topics"
+                  value={topicString}
+                  onChange={handleTopics}
+                  className="text-info rounded-lg shadow-sm border input-primary w-full my-2 px-4 py-2 focus:outline-none"
+                />
+                {topicsError && (
+                  <p className="text-danger mb-2">{topicsError}</p>
+                )}
 
                 <label htmlFor="description">
                   <InfoMessage id="organization_description" />

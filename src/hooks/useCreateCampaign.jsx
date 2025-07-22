@@ -24,6 +24,7 @@ const useCreateCampaign = () => {
     description,
     categories,
     file,
+    topics,
   ) => {
     const endpoint = '/campaigns'
 
@@ -37,6 +38,7 @@ const useCreateCampaign = () => {
     if (minimumDonation) formData.append('minimumDonation', minimumDonation)
     if (description) formData.append('description', description)
     if (categories) formData.append('categories', categories.join(','))
+    formData.append('topics', topics.join(','))
 
     formData.append('file', file)
 

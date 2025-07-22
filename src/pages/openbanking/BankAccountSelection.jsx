@@ -10,6 +10,7 @@ import { InfoMessage } from '../../components/shared/Messages'
 import PageTitle from '../../components/shared/PageTitle'
 import useCampaign from '../../hooks/useCampaign'
 import Icons from '../../components/shared/Icons'
+import { useCallback, useEffect } from 'react'
 
 function BankAccountSelection() {
   const [searchParams] = useSearchParams()
@@ -17,14 +18,14 @@ function BankAccountSelection() {
   const userId = searchParams.get('user')
   const aspspParam = searchParams.get('aspsp')
 
-  const { campaign, loading: loadingCampaign } = useCampaign(campaignId)
+  const { campaign } = useCampaign(campaignId)
 
-  const { oAuthAutenticate, loadingOAuth } = useOAuth({
+  const { oAuthAutenticate } = useOAuth({
     campaignId: campaignId,
     userId: userId,
   })
 
-  const { saveBankAccount, loadingSaveBankAccount } = useSaveBankAccount({
+  const { saveBankAccount } = useSaveBankAccount({
     campaignId: campaignId,
     userId: userId,
   })
@@ -35,7 +36,6 @@ function BankAccountSelection() {
     aspspSelected,
     setAspspSelected,
     bankAccounts,
-    loadingBankAccounts,
     clearBankAccounts,
     accountSelected,
     setAccountSelected,
@@ -44,10 +44,14 @@ function BankAccountSelection() {
     userId: userId,
   })
 
-  const handleAcceptConsent = () => {
-    if (bankAccounts.redirection)
+  const handleAcceptConsent = useCallback(() => {
+    if (aspspSelected && bankAccounts && bankAccounts.redirection)
       window.location.href = bankAccounts.redirection
-  }
+  }, [aspspSelected, bankAccounts])
+
+  useEffect(() => {
+    handleAcceptConsent()
+  }, [handleAcceptConsent])
 
   const handleAspspSelectedChange = (aspsp) => {
     clearBankAccounts()

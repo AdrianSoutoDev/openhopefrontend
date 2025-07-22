@@ -9,3 +9,15 @@ body {
 pre {
   @apply font-sans whitespace-normal break-words;
 }
+
+@layer utilities {
+  .no-scroll {
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) {
+    .no-scroll {
+      overflow: auto;
+    }
+  }
+}
