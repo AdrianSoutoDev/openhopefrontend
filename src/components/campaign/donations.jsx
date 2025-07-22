@@ -1,10 +1,15 @@
 import { FormattedDate, FormattedMessage, FormattedNumber } from 'react-intl'
 import { InfoMessage } from '../shared/Messages'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import useDataTableData from '../../hooks/useDataTableData'
 import DataTable from '../shared/DataTable'
 
-function CampaignDonations({ className, amountCollected, campaignId }) {
+function CampaignDonations({
+  className,
+  amountCollected,
+  campaignId,
+  donationTrigger,
+}) {
   const donationsHeaders = [
     <FormattedMessage id="table_headers_date_donation" />,
     <FormattedMessage id="table_headers_donation_amount" />,
@@ -45,7 +50,12 @@ function CampaignDonations({ className, amountCollected, campaignId }) {
     pageInfo: donationsPageInfo,
     nextPage: donationsNextPage,
     previousPage: donationsPreviousPage,
+    refresh,
   } = useDataTableData(donationsSource, donationsMapper)
+
+  useEffect(() => {
+    refresh()
+  }, [donationTrigger, refresh])
 
   return (
     <>

@@ -1,11 +1,9 @@
-import { useEffect } from 'react'
 import useFetch from './useFetch'
 
 const useDonate = (campaignId) => {
   const { data, loading, fetch } = useFetch()
 
   const donate = (amount, bankAccount) => {
-    console.log(bankAccount)
     const endpoint = '/providers/donate'
     const options = {
       method: 'POST',

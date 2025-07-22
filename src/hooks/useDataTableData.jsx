@@ -36,6 +36,11 @@ const useDataTableData = (source, mapper) => {
     }
   }, [data, mapper])
 
+  const refresh = () => {
+    const { endpoint, options } = source
+    fetch(`${endpoint}?page=${page}`, options)
+  }
+
   return {
     data,
     loading,
@@ -48,6 +53,7 @@ const useDataTableData = (source, mapper) => {
     setPageInfo,
     nextPage,
     previousPage,
+    refresh,
   }
 }
 
