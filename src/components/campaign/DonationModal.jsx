@@ -8,7 +8,13 @@ import UserBankAccountSelector from '../shared/UserBankAccountSelector'
 import { Link } from 'react-router-dom'
 import Spinner from '../shared/Spinner'
 
-function DonationModal({ modalOpen, setModalOpen, amount, acceptDonation }) {
+function DonationModal({
+  modalOpen,
+  setModalOpen,
+  amount,
+  acceptDonation,
+  setBankAccount,
+}) {
   const { data, loading, fetch } = useFetch()
   const hasFetched = useRef(false)
   const [bankAccounts, setBankAccounts] = useState()
@@ -41,8 +47,14 @@ function DonationModal({ modalOpen, setModalOpen, amount, acceptDonation }) {
         : data.find((account) => account.favorite)
       setAccountOnPill(favorite)
       setBankAccounts(data)
+      setBankAccount(data.find((account) => account.favorite))
     }
-  }, [data, setBankAccounts, bankAccountSelected])
+  }, [data, setBankAccounts, bankAccountSelected, setBankAccount])
+
+  const handleSelectBankAccount = (selected) => {
+    setBankAccountSelected(selected)
+    setBankAccount(selected)
+  }
 
   return (
     <>
@@ -90,7 +102,9 @@ function DonationModal({ modalOpen, setModalOpen, amount, acceptDonation }) {
                         <FormattedMessage id="selection_bank_entity" />
                       }
                       sourceItems={bankAccounts}
-                      setItemSelected={setBankAccountSelected}
+                      setItemSelected={(selected) =>
+                        handleSelectBankAccount(selected)
+                      }
                       disabled={loading}
                       defaultItem={AccountOnPill}
                     />

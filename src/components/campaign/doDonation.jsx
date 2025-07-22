@@ -1,11 +1,12 @@
 import { FormattedMessage, FormattedNumber, useIntl } from 'react-intl'
 import { InfoMessage } from '../shared/Messages'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Button, ButtonLink } from '../shared/Buttons'
 import DonationModal from './DonationModal'
 import LoginModal from './LoginModal'
 import AuthContext from '../../context/AuthContext'
 import useDonate from '../../hooks/useDonate'
+import useOAuth from '../../hooks/useOAuth'
 
 function DoDonation({
   campaignId,
@@ -20,8 +21,18 @@ function DoDonation({
   const intl = useIntl()
   const [modalDonationOpen, setModalDonationOpen] = useState(false)
   const [modalLoginOpen, setModalLoginOpen] = useState(false)
-  const { isAuthenticated } = useContext(AuthContext)
+  const { isAuthenticated, whoAmI } = useContext(AuthContext)
   const { data, loading, donate } = useDonate(campaignId)
+
+  const {
+    oAuthAutenticate,
+    setAmount: setOauthAmount,
+    setBankAccount: setOauthBankAccount,
+  } = useOAuth({
+    campaignId: campaignId,
+    userId: whoAmI?.id,
+    isDonation: true,
+  })
 
   const handleFastDonation = (amount) => {
     if (!isAuthenticated()) {
@@ -40,6 +51,16 @@ function DoDonation({
       setModalDonationOpen(true)
     }
   }
+
+  useEffect(() => {
+    setOauthAmount(amount)
+  }, [amount, setOauthAmount])
+
+  useEffect(() => {
+    if (data?.notAllowed) {
+      oAuthAutenticate()
+    }
+  }, [data, oAuthAutenticate])
 
   return (
     <>
@@ -131,6 +152,7 @@ function DoDonation({
         setModalOpen={setModalDonationOpen}
         amount={amount}
         acceptDonation={donate}
+        setBankAccount={setOauthBankAccount}
       />
       <LoginModal
         modalOpen={modalLoginOpen}
