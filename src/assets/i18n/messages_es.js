@@ -166,4 +166,8 @@ export default {
   no_bank_accounts:
     'No tiene ninguna cuenta bancaria asociada a su cuenta de usuario',
   go_to_proifile: 'Ir a su perfil',
+  donation_ok: '¡Gracias por tu donación!',
+  donation_ok_message:
+    'Desde {organization} agradecemos que confies en nosotros y contribuyas a nuestra causa. Muchas gracias por tu aportación.',
+  continue: 'Continuar',
 }

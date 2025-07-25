@@ -259,6 +259,7 @@ function CampaignDetail() {
             modalOpen={confirmationDonateModalOpen}
             setModalOpen={setConfirmationDonateModalOpen}
             loading={loadingConfirmation}
+            organization={campaign?.organization?.name}
           />
         </>
       )}
