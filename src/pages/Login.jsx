@@ -3,7 +3,7 @@ import useLogin from '../hooks/useLogin'
 import { useLocation, useNavigate } from 'react-router-dom'
 import AuthContext from '../context/AuthContext'
 import { FormattedMessage } from 'react-intl'
-import { Button } from '../components/shared/Buttons'
+import { Button, ButtonLink } from '../components/shared/Buttons'
 import useValidation from '../hooks/useValidation'
 import PageTitle from '../components/shared/PageTitle'
 import EmailPasswordForm from '../components/shared/EmailPasswordForm'
@@ -16,6 +16,7 @@ function Login() {
   const navigate = useNavigate()
   const location = useLocation()
   const registered = location.state?.registered
+  const redirectUrl = location.state?.redirecturl
 
   const emailValidation = useValidation('', {
     required: true,
@@ -43,9 +44,25 @@ function Login() {
     }
   }
 
+  const handleRegisterButton = () => {
+    if (redirectUrl) {
+      navigate(`/register`, {
+        state: { redirecturl: redirectUrl },
+      })
+    } else {
+      navigate('/register')
+    }
+  }
+
   useEffect(() => {
-    if (isAuthenticated()) navigate('/')
-  }, [isAuthenticated, navigate])
+    if (isAuthenticated()) {
+      if (redirectUrl) {
+        navigate(redirectUrl)
+      } else {
+        navigate('/')
+      }
+    }
+  }, [isAuthenticated, navigate, redirectUrl])
 
   return (
     <>
@@ -64,6 +81,14 @@ function Login() {
 
             <Button type="submit" disabled={loading} className="w-full my-2">
               {loading ? <Spinner /> : <FormattedMessage id="signin" />}
+            </Button>
+
+            <Button
+              type="button"
+              onClick={handleRegisterButton}
+              className="w-full my-2"
+            >
+              <FormattedMessage id="signup" />
             </Button>
 
             {location.state?.msg && (

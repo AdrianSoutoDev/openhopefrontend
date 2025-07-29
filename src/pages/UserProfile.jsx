@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import AuthContext from '../context/AuthContext'
 import { ButtonLink } from '../components/shared/Buttons'
 import { FormattedDate, FormattedMessage, FormattedNumber } from 'react-intl'
@@ -118,7 +118,9 @@ function UserProfile() {
     const mappedObjects = []
     objects.forEach((obj) => {
       const values = [
-        obj.campaign?.name,
+        <Link to={`/campaign/${obj.campaign?.id}`} className="underline">
+          {obj.campaign?.name}
+        </Link>,
         <FormattedNumber value={obj.amount} style="currency" currency="EUR" />,
         <FormattedDate
           value={new Date(obj.date)}
@@ -185,10 +187,11 @@ function UserProfile() {
               previousPage={previousBankAccountPage}
               pageInfo={bankAccountsPageInfo}
             />
-            <span className="text-sm">
-              <InfoMessage id="favorite_instructions" />
-            </span>
-
+            {bankAccounts?.length > 1 && (
+              <span className="text-sm">
+                <InfoMessage id="favorite_instructions" />
+              </span>
+            )}
             <ButtonLink
               className="max-w-56 mt-3"
               link={`/openbanking/bank-selection?user=me`}

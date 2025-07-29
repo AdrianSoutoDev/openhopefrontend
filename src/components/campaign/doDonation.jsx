@@ -1,7 +1,12 @@
 import { FormattedMessage, FormattedNumber, useIntl } from 'react-intl'
 import { InfoMessage } from '../shared/Messages'
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Button, ButtonLink } from '../shared/Buttons'
+import DonationModal from './DonationModal'
+import LoginModal from './LoginModal'
+import AuthContext from '../../context/AuthContext'
+import useDonate from '../../hooks/useDonate'
+import useOAuth from '../../hooks/useOAuth'
 
 function DoDonation({
   campaignId,
@@ -12,15 +17,52 @@ function DoDonation({
   donationsDisabled,
 }) {
   const [amount, setAmount] = useState('')
+  const [inputAmount, setInputAmount] = useState('')
   const intl = useIntl()
+  const [modalDonationOpen, setModalDonationOpen] = useState(false)
+  const [modalLoginOpen, setModalLoginOpen] = useState(false)
+  const { isAuthenticated, whoAmI } = useContext(AuthContext)
+  const { data, donate } = useDonate(campaignId)
 
-  const handleDonation = () => {
-    console.log('donate: ', amount)
+  const {
+    oAuthAutenticate,
+    setAmount: setOauthAmount,
+    setBankAccount: setOauthBankAccount,
+  } = useOAuth({
+    campaignId: campaignId,
+    userId: whoAmI?.id,
+    isDonation: true,
+  })
+
+  const handleFastDonation = (amount) => {
+    if (!isAuthenticated()) {
+      setModalLoginOpen(true)
+    } else {
+      setAmount(amount)
+      setModalDonationOpen(true)
+    }
   }
 
-  const handleFastDonation = (suggestion) => {
-    console.log('donate: ', suggestion)
+  const handleInputAmount = () => {
+    if (!isAuthenticated()) {
+      setModalLoginOpen(true)
+    } else {
+      setAmount(inputAmount)
+      setModalDonationOpen(true)
+    }
   }
+
+  useEffect(() => {
+    setOauthAmount(amount)
+  }, [amount, setOauthAmount])
+
+  useEffect(() => {
+    if (data?.notAllowed) {
+      oAuthAutenticate()
+    } else if (data?.redirection) {
+      window.location.href = data.redirection
+    }
+  }, [data, oAuthAutenticate])
 
   return (
     <>
@@ -29,7 +71,7 @@ function DoDonation({
         <FormattedMessage id="suggestions" className="mt-2" />
         <div className="flex w-full justify-center">
           <div className="flex flex-wrap w-full justify-around my-5">
-            {suggestions.map((suggestion, index) => (
+            {suggestions?.map((suggestion, index) => (
               <button
                 disabled={!hasBankAccount || donationsDisabled || isOwner}
                 key={index}
@@ -77,16 +119,18 @@ function DoDonation({
               disabled={!hasBankAccount || donationsDisabled || isOwner}
               type="number"
               id="minimumDonation"
-              value={amount}
+              value={inputAmount}
               placeholder={intl.formatMessage({ id: 'insert_in_euros' })}
-              onChange={(e) => setAmount(e.target.value)}
+              onChange={(e) => setInputAmount(e.target.value)}
               className="px-4 py-3 mr-2 mt-2 block text-sm shadow-sm rounded-lg text-info border input-primary focus:outline-none hover:border-emerald-400
               disabled:bg-gray-300 disabled:hover:bg-gray-300 disabled:text-gray-600 disabled:cursor-default
               disabled:hover:text-gray-600 disabled:border-gray-600"
             />
             <Button
-              disabled={!hasBankAccount || donationsDisabled || isOwner}
-              onClick={handleDonation}
+              disabled={
+                !hasBankAccount || donationsDisabled || isOwner || !inputAmount
+              }
+              onClick={() => handleInputAmount(amount)}
               type="button"
               className="ml-2 mt-2"
             >
@@ -105,6 +149,18 @@ function DoDonation({
           )}
         </div>
       </div>
+      <DonationModal
+        modalOpen={modalDonationOpen}
+        setModalOpen={setModalDonationOpen}
+        amount={amount}
+        acceptDonation={donate}
+        setBankAccount={setOauthBankAccount}
+      />
+      <LoginModal
+        modalOpen={modalLoginOpen}
+        setModalOpen={setModalLoginOpen}
+        campaignId={campaignId}
+      />
     </>
   )
 }

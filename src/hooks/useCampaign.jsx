@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import useFetch from './useFetch'
 
 const useCampaign = (id) => {
@@ -25,7 +25,13 @@ const useCampaign = (id) => {
     hasFetched.current = false
   }, [id])
 
-  return { campaign, loading }
+  const refresh = useCallback(() => {
+    const endpoint = `/campaigns/${id}`
+    const options = { method: 'GET' }
+    fetch(endpoint, options)
+  }, [fetch, id])
+
+  return { campaign, loading, refresh }
 }
 
 export default useCampaign

@@ -41,6 +41,8 @@ export default {
   table_headers_amount: 'Importe',
   table_headers_date: 'Fecha',
   table_headers_favorite: 'Favorita',
+  table_headers_date_donation: 'Fecha del donativo',
+  table_headers_donation_amount: 'Importe de la donación',
   campaigns: 'Campañas',
   organizations: 'Organizaciones',
   results: 'Resultados',
@@ -148,4 +150,24 @@ export default {
   favorite_instructions:
     'Puedes seleccionar una cuenta favorita pulsando sobre las estrellas',
   hello_user: 'Hola {user}',
+  amount_collected: 'Ya se han recaudado {amount}',
+  need_init_sesion: 'Todavía no has iniciado sesión',
+  login_to_realize_donation:
+    'Necesitamos que te identifiques para poder realizar tu aportación a esta campaña.',
+  cancel: 'Cancelar',
+  select_bank_account_donation:
+    'Sólo queda seleccionar con que cuenta vas a realizar la donación.',
+  you_gonna_donate: 'La donación de {amount} se realizará con la cuenta:',
+  accept: 'Aceptar',
+  select_another_account: 'Puedes seleccionar otra de tus cuentas',
+  you_can_add_new_account:
+    'Puedes añadir una nueva cuenta bancaria desde {link}',
+  your_profile: 'tu perfil',
+  no_bank_accounts:
+    'No tiene ninguna cuenta bancaria asociada a su cuenta de usuario',
+  go_to_proifile: 'Ir a su perfil',
+  donation_ok: '¡Gracias por tu donación!',
+  donation_ok_message:
+    'Desde {organization} agradecemos que confies en nosotros y contribuyas a nuestra causa. Muchas gracias por tu aportación.',
+  continue: 'Continuar',
 }

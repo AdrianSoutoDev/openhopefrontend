@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import useFetch from './useFetch'
 
 const useDataTableData = (source, mapper) => {
@@ -36,6 +36,11 @@ const useDataTableData = (source, mapper) => {
     }
   }, [data, mapper])
 
+  const refresh = useCallback(() => {
+    const { endpoint, options } = source
+    fetch(`${endpoint}?page=${page}`, options)
+  }, [fetch, page, source])
+
   return {
     data,
     loading,
@@ -48,6 +53,7 @@ const useDataTableData = (source, mapper) => {
     setPageInfo,
     nextPage,
     previousPage,
+    refresh,
   }
 }
 

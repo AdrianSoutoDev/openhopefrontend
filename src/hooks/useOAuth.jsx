@@ -1,13 +1,23 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import useFetch from './useFetch'
 
-const useOAuth = ({ campaignId, userId }) => {
+const useOAuth = ({ campaignId, userId, isDonation }) => {
   const { data, loading: loadingOAuth, fetch } = useFetch()
+  const [amount, setAmount] = useState()
+  const [bankAccount, setBankAccount] = useState()
 
   const oAuthAutenticate = (aspspSelected) => {
-    let endpoint = `/providers/${aspspSelected.provider}/${aspspSelected.code}/oauth`
+    const aspsp = aspspSelected ? aspspSelected.code : bankAccount?.aspsp?.code
 
-    if (campaignId) {
+    const provider = aspspSelected
+      ? aspspSelected.provider
+      : bankAccount?.aspsp?.provider
+
+    let endpoint = `/providers/${provider}/${aspsp}/oauth`
+
+    if (isDonation) {
+      endpoint = `${endpoint}?campaign=${campaignId}&isDonation=true&amount=${amount}&bankAccount=${bankAccount?.id}`
+    } else if (campaignId) {
       endpoint = `${endpoint}?campaign=${campaignId}`
     } else {
       endpoint = `${endpoint}?user=${userId}`
@@ -26,7 +36,13 @@ const useOAuth = ({ campaignId, userId }) => {
     }
   }, [data])
 
-  return { oAuthAutenticate, loadingOAuth }
+  return {
+    oAuthAutenticate,
+    loadingOAuth,
+    setAmount,
+    setBankAccount,
+    bankAccount,
+  }
 }
 
 export default useOAuth

@@ -4,7 +4,7 @@ import DoDonation from './doDonation'
 
 function CampaignSideBar({
   className,
-  doDonationData,
+  suggestions,
   minimumDonation,
   categories,
   organizationId,
@@ -17,7 +17,7 @@ function CampaignSideBar({
     <>
       <div className={`md:w-4/12 ${className}`}>
         <DoDonation
-          suggestions={doDonationData.suggestions}
+          suggestions={suggestions}
           minimumDonation={minimumDonation}
           hasBankAccount={hasBankAccount}
           isOwner={isOwner}
