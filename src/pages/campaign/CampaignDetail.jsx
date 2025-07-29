@@ -1,4 +1,4 @@
-import { Link, useParams, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useContext, useEffect, useRef, useState } from 'react'
 import Spinner from '../../components/shared/Spinner'
 import { getImgFromServer } from '../../utils/utils'
@@ -14,10 +14,10 @@ import useDonate from '../../hooks/useDonate'
 
 function CampaignDetail() {
   const { id } = useParams()
-  const { campaign, loading } = useCampaign(id)
+  const { campaign, loading, refresh } = useCampaign(id)
   const { isAuthenticated, whoAmI } = useContext(AuthContext)
   const { data: dataDonate, donate } = useDonate(id)
-  const [trigger, setTrigger] = useState(0)
+  const navigate = useNavigate()
 
   const {
     data: dataConfirmation,
@@ -73,7 +73,7 @@ function CampaignDetail() {
       if (!hasFetched.current) {
         const endpoint = `/providers/${provider}/${aspsp}/payment/validate?donation=${donation}`
         const options = {
-          method: 'GET',
+          method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
@@ -87,11 +87,12 @@ function CampaignDetail() {
   }, [aspsp, donation, fetchConfirmation, provider, status])
 
   useEffect(() => {
-    if (dataConfirmation && dataConfirmation?.isConfirmed) {
-      setTrigger((prev) => prev + 1)
+    if (dataConfirmation && dataConfirmation?.validated) {
+      refresh()
       setConfirmationDonateModalOpen(true)
+      navigate(`/campaign/${id}`)
     }
-  }, [dataConfirmation])
+  }, [dataConfirmation, refresh])
 
   return (
     <>
@@ -212,7 +213,6 @@ function CampaignDetail() {
                       amountCollected={campaign.amountCollected}
                       campaignId={campaign.id}
                       className="hidden md:block mx-3"
-                      donationTrigger={trigger}
                     />
                   ) : (
                     campaign.hasBankAccount && (
