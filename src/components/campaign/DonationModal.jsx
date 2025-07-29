@@ -18,7 +18,7 @@ function DonationModal({
   const { data, loading, fetch } = useFetch()
   const hasFetched = useRef(false)
   const [bankAccounts, setBankAccounts] = useState()
-  const [AccountOnPill, setAccountOnPill] = useState()
+  const [accountOnPill, setAccountOnPill] = useState()
   const [bankAccountSelected, setBankAccountSelected] = useState()
 
   useEffect(() => {
@@ -89,7 +89,7 @@ function DonationModal({
                   />
                 </p>
 
-                <BankAccountPill bankAccount={AccountOnPill} />
+                <BankAccountPill bankAccount={accountOnPill} />
 
                 {bankAccounts?.length > 1 && (
                   <div className="pt-5">
@@ -106,7 +106,7 @@ function DonationModal({
                         handleSelectBankAccount(selected)
                       }
                       disabled={loading}
-                      defaultItem={AccountOnPill}
+                      defaultItem={accountOnPill}
                     />
                   </div>
                 )}
@@ -134,7 +134,7 @@ function DonationModal({
               {bankAccounts && bankAccounts?.length > 0 ? (
                 <Button
                   type="button"
-                  onClick={() => acceptDonation(amount, AccountOnPill)}
+                  onClick={() => acceptDonation(amount, accountOnPill)}
                   className={'mr-1'}
                 >
                   <FormattedMessage id="accept" />

@@ -22,7 +22,7 @@ function DoDonation({
   const [modalDonationOpen, setModalDonationOpen] = useState(false)
   const [modalLoginOpen, setModalLoginOpen] = useState(false)
   const { isAuthenticated, whoAmI } = useContext(AuthContext)
-  const { data, loading, donate } = useDonate(campaignId)
+  const { data, donate } = useDonate(campaignId)
 
   const {
     oAuthAutenticate,
@@ -59,6 +59,8 @@ function DoDonation({
   useEffect(() => {
     if (data?.notAllowed) {
       oAuthAutenticate()
+    } else if (data?.redirection) {
+      window.location.href = data.redirection
     }
   }, [data, oAuthAutenticate])
 
