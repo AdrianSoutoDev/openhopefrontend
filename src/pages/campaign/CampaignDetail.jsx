@@ -87,7 +87,7 @@ function CampaignDetail() {
   }, [aspsp, donation, fetchConfirmation, provider, status])
 
   useEffect(() => {
-    if (dataConfirmation) {
+    if (dataConfirmation && dataConfirmation?.isConfirmed) {
       setTrigger((prev) => prev + 1)
       setConfirmationDonateModalOpen(true)
     }
