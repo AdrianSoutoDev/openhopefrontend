@@ -69,21 +69,22 @@ function CampaignDetail() {
   }, [dataDonate])
 
   useEffect(() => {
-    if (status === 'OK' && donation) {
+    if (donation) {
       if (!hasFetched.current) {
-        const endpoint = `/donations/payment/callback?status=${status}&donation=${donation}`
+        const endpoint = `/providers/${provider}/${aspsp}/payment/validate?donation=${donation}`
         const options = {
-          method: 'PUT',
+          method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },
+          credentials: 'include',
         }
 
         fetchConfirmation(endpoint, options)
         hasFetched.current = true
       }
     }
-  }, [donation, fetchConfirmation, status])
+  }, [aspsp, donation, fetchConfirmation, provider, status])
 
   useEffect(() => {
     if (dataConfirmation) {
