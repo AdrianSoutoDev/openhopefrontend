@@ -1,0 +1,23 @@
+@import 'tailwindcss';
+@import './colors.css';
+@import 'react-datepicker/dist/react-datepicker.css';
+
+body {
+  @apply font-sans;
+}
+
+pre {
+  @apply font-sans whitespace-normal break-words;
+}
+
+@layer utilities {
+  .no-scroll {
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) {
+    .no-scroll {
+      overflow: auto;
+    }
+  }
+}
