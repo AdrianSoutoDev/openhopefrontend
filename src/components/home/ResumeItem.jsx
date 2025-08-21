@@ -70,6 +70,8 @@ function ResumeItem({ className, item, resumeType }) {
                     <FormattedNumber
                       value={item?.percentageCollected}
                       style="percent"
+                      minimumFractionDigits={1}
+                      maximumFractionDigits={1}
                     />
                   ),
                 }}

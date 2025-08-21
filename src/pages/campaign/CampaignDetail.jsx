@@ -189,6 +189,8 @@ function CampaignDetail() {
                                     <FormattedNumber
                                       value={campaign.percentageCollected}
                                       style="percent"
+                                      minimumFractionDigits={1}
+                                      maximumFractionDigits={1}
                                     />
                                   ),
                                 }}

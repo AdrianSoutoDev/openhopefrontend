@@ -8,6 +8,10 @@ function OrganizationResult({ item }) {
     navigate(`/organization/${item.id}`)
   }
 
+  function RenderHTML({ htmlString }) {
+    return <div dangerouslySetInnerHTML={{ __html: htmlString }} />
+  }
+
   return (
     <>
       <div
@@ -29,10 +33,7 @@ function OrganizationResult({ item }) {
             {item.name}
           </div>
           <div className="text-info line-clamp-3">
-            {item.description
-              ?.replace(/<\/?[^>]+(>|$)/g, '')
-              .replace(/\n/g, ' ')
-              .replace(/&nbsp;/g, ' ')}
+            <RenderHTML htmlString={item.description} />
           </div>
         </div>
       </div>

@@ -9,6 +9,10 @@ function CampaignResult({ item }) {
     navigate(`/campaign/${item.id}`)
   }
 
+  function RenderHTML({ htmlString }) {
+    return <div dangerouslySetInnerHTML={{ __html: htmlString }} />
+  }
+
   return (
     <>
       <div
@@ -90,6 +94,8 @@ function CampaignResult({ item }) {
                     <FormattedNumber
                       value={item.percentageCollected}
                       style="percent"
+                      minimumFractionDigits={1}
+                      maximumFractionDigits={1}
                     />
                   ),
                 }}
@@ -175,6 +181,8 @@ function CampaignResult({ item }) {
                         <FormattedNumber
                           value={item.percentageCollected}
                           style="percent"
+                          minimumFractionDigits={1}
+                          maximumFractionDigits={1}
                         />
                       ),
                     }}
@@ -185,10 +193,7 @@ function CampaignResult({ item }) {
           </div>
 
           <div className="text-info line-clamp-3">
-            {item?.description
-              ?.replace(/<\/?[^>]+(>|$)/g, '')
-              .replace(/\n/g, ' ')
-              .replace(/&nbsp;/g, ' ')}
+            <RenderHTML htmlString={item.description} />
           </div>
         </div>
       </div>
